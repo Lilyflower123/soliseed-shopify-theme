@@ -1,0 +1,234 @@
+<style>
+  #shopify-section-{{ section.id }} .soliseed-space-grid {
+    display: grid;
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-space-card {
+    padding: 24px;
+    background: rgb(var(--secondary-background));
+    border-radius: var(--block-border-radius);
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-space-card__media {
+    margin-bottom: 16px;
+    overflow: hidden;
+    border-radius: var(--block-border-radius);
+    background: rgb(var(--section-background));
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-space-card__media img,
+  #shopify-section-{{ section.id }} .soliseed-space-card__placeholder {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-space-card__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} .soliseed-space-grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    }
+  }
+</style>
+
+<section class="section">
+  <div class="section__color-wrapper section--padding">
+    <div class="container">
+      {%- if section.settings.title != blank or section.settings.content != blank -%}
+        <header class="section__header section__header--center text-container mx-auto">
+          {%- if section.settings.title != blank -%}
+            <h2 class="heading h2">{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.content != blank -%}
+            <div class="rte">
+              {{ section.settings.content }}
+            </div>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+
+      <div class="soliseed-space-grid">
+        {%- for block in section.blocks -%}
+          <article class="soliseed-space-card text-container" {{ block.shopify_attributes }}>
+            {%- if block.type == 'product' -%}
+              {%- assign featured_product = block.settings.product -%}
+
+              <a href="{{ featured_product.url | default: '#' }}" class="soliseed-space-card__media">
+                {%- if featured_product.featured_media != blank -%}
+                  {{-
+                    featured_product.featured_media
+                    | image_url: width: 700
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: '(max-width: 740px) 100vw, 33vw',
+                      widths: '350,500,700'
+                  -}}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'soliseed-space-card__placeholder' }}
+                {%- endif -%}
+              </a>
+
+              <h3 class="heading h4">
+                {%- if featured_product != blank -%}
+                  <a href="{{ featured_product.url }}">{{ featured_product.title | escape }}</a>
+                {%- else -%}
+                  {{ block.settings.title | escape }}
+                {%- endif -%}
+              </h3>
+            {%- else -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="heading h4">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if block.settings.content != blank -%}
+              <div class="rte">
+                {{ block.settings.content }}
+              </div>
+            {%- endif -%}
+
+            <div class="soliseed-space-card__buttons">
+              {%- if block.type == 'product' -%}
+                {%- render 'buy-on-amazon-button', product: featured_product, button_class: 'button button--primary' -%}
+              {%- endif -%}
+
+              {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="button button--secondary">
+                  {{- block.settings.link_label | escape -}}
+                </a>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Soliseed space page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Choose by growing spot."
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Content card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Recommended product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Fallback title",
+          "default": "Soliseed grow light"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Secondary link label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Secondary link"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Answer"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soliseed space page"
+    }
+  ]
+}
+{% endschema %}
