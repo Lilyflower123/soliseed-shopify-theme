@@ -1,0 +1,282 @@
+{%- if section.settings.message_width == 'boxed' -%}
+  {%- assign is_boxed = true -%}
+{%- else -%}
+  {%- assign is_boxed = false -%}
+{%- endif -%}
+
+{%- if section.blocks.size > 0 -%}
+  <style>
+    :root {
+      --enable-sticky-announcement-bar: {% if section.settings.position == 'non_sticky' or section.settings.position == 'sticky_desktop' %}0{% else %}1{% endif %};
+    }
+
+    #shopify-section-{{ section.id }} {
+      --text-color: {{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }};
+      --section-background: {{ section.settings.background.red }}, {{ section.settings.background.green }}, {{ section.settings.background.blue }};
+
+      {%- if section.settings.position == 'sticky' or section.settings.position == 'sticky_mobile' -%}
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 6;
+      {%- else -%}
+        position: relative;
+      {%- endif -%}
+    }
+
+    @media screen and (min-width: 741px) {
+      :root {
+        --enable-sticky-announcement-bar: {% if section.settings.position == 'non_sticky' or section.settings.position == 'sticky_mobile' %}0{% else %}1{% endif %};
+      }
+
+      #shopify-section-{{ section.id }} {
+        {%- if section.settings.position == 'sticky' or section.settings.position == 'sticky_desktop' -%}
+          position: -webkit-sticky;
+          position: sticky;
+          top: 0;
+          z-index: 6;
+        {%- else -%}
+          position: relative;
+        {%- endif -%}
+      }
+    }
+  </style>
+
+  <section>
+    {%- if section.settings.navigation_mode == 'scrolling' -%}
+      <div class="announcement-bar announcement-bar--scrolling">
+        <marquee-text scrolling-speed="{{ section.settings.scrolling_speed }}" class="announcement-bar__scrolling-list">
+          {%- for i in (1..10) -%}
+            <span class="announcement-bar__item">
+              {%- for block in section.blocks -%}
+                <span {{ block.shopify_attributes }}>
+                  {%- case section.settings.text_size -%}
+                    {%- when 'small' -%}
+                      {%- assign text_size_class = 'text--xsmall' -%}
+                    {%- when 'normal' -%}
+                      {%- assign text_size_class = 'text--small' -%}
+                    {%- when 'large' -%}
+                      {%- assign text_size_class = '' -%}
+                  {%- endcase -%}
+
+                  <p class="announcement-bar__message {{ text_size_class }}">{{ block.settings.text }}</p>
+                </span>
+
+                <span class="square-separator"></span>
+              {%- endfor -%}
+            </span>
+          {%- endfor -%}
+        </marquee-text>
+      </div>
+    {%- else -%}
+      <announcement-bar
+        class="announcement-bar {% if section.blocks.size > 1 %}announcement-bar--multiple{% endif %} {% unless section.settings.show_arrows %}announcement-bar--hide-arrows{% endunless %}"
+        {% if section.blocks.size > 1 and section.settings.autoplay %}
+          auto-play cycle-speed="{{ section.settings.cycle_speed | escape }}"
+        {% endif %}
+      >
+        {%- if section.blocks.size > 1 and section.settings.show_arrows == true -%}
+          <button data-action="prev" class="tap-area tap-area--large">
+            <span class="visually-hidden">{{ 'general.accessibility.previous' | t }}</span>
+            {% render 'icon' with 'arrow-left', width: 16, height: 16, direction_aware: true %}
+          </button>
+        {%- endif -%}
+
+        <div class="announcement-bar__list {% if is_boxed %}announcement-bar__list--boxed{% endif %}">
+          {%- for block in section.blocks -%}
+            <announcement-bar-item
+              class="announcement-bar__item"
+              {% unless forloop.first %}
+                hidden
+              {% endunless %}
+              {{ block.shopify_attributes }}
+            >
+              {%- case section.settings.text_size -%}
+                {%- when 'small' -%}
+                  {%- assign text_size_class = 'text--xsmall' -%}
+                {%- when 'normal' -%}
+                  {%- assign text_size_class = 'text--small' -%}
+                {%- when 'large' -%}
+                  {%- assign text_size_class = '' -%}
+              {%- endcase -%}
+
+              <div class="announcement-bar__message {% if is_boxed %}announcement-bar__message--boxed{% endif %} {{ text_size_class }}">
+                <p>{{ block.settings.text }}</p>
+              </div>
+            </announcement-bar-item>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.blocks.size > 1 and section.settings.show_arrows == true -%}
+          <button data-action="next" class="tap-area tap-area--large">
+            <span class="visually-hidden">{{ 'general.accessibility.next' | t }}</span>
+            {% render 'icon' with 'arrow-right', width: 16, height: 16, direction_aware: true %}
+          </button>
+        {%- endif -%}
+      </announcement-bar>
+    {%- endif -%}
+  </section>
+
+  <script>
+    document.documentElement.style.setProperty(
+      '--announcement-bar-height',
+      document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px'
+    );
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "class": "shopify-section--announcement-bar",
+  "tag": "aside",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "ANNOUNCE SOMETHING HERE"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "non_sticky",
+          "label": "Non sticky"
+        },
+        {
+          "value": "sticky_desktop",
+          "label": "Sticky on desktop only"
+        },
+        {
+          "value": "sticky_mobile",
+          "label": "Sticky on mobile only"
+        },
+        {
+          "value": "sticky",
+          "label": "Sticky everywhere"
+        }
+      ],
+      "default": "non_sticky"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "select",
+      "id": "navigation_mode",
+      "label": "Multiple message navigation",
+      "options": [
+        {
+          "value": "arrows",
+          "label": "Arrows"
+        },
+        {
+          "value": "scrolling",
+          "label": "Auto-Scrolling"
+        }
+      ],
+      "default": "scrolling"
+    },
+    {
+      "type": "header",
+      "content": "Arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "cycle_speed",
+      "min": 3,
+      "max": 20,
+      "step": 1,
+      "unit": "s",
+      "label": "Change message every",
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "message_width",
+      "label": "Message width",
+      "options": [
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "boxed",
+          "label": "Boxed"
+        }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "header",
+      "content": "Auto-scrolling"
+    },
+    {
+      "type": "range",
+      "id": "scrolling_speed",
+      "label": "Scrolling speed",
+      "min": 10,
+      "max": 30,
+      "unit": "s",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,419 @@
+{%- if section.settings.background_type == 'boxed' -%}
+  {%- assign is_boxed = true -%}
+{%- else -%}
+  {%- assign is_boxed = false -%}
+{%- endif -%}
+
+{%- if section.settings.background != settings.background and section.settings.background != 'rgba(0,0,0,0)' -%}
+  {%- assign blends_with_background = false -%}
+{%- else -%}
+  {%- assign blends_with_background = true -%}
+{%- endif -%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --top-padding: {{ section.settings.mobile_top_padding }}px;
+    --bottom-padding: {{ section.settings.mobile_bottom_padding }}px;
+  }
+
+  #shopify-section-{{ section.id }} .section {
+    {%- if section.settings.background == 'rgba(0,0,0,0)' -%}
+      {%- assign section_background = settings.background -%}
+    {%- else -%}
+      {%- assign section_background = section.settings.background -%}
+    {%- endif -%}
+
+    {%- if section.settings.text_color == 'rgba(0,0,0,0)' -%}
+      {%- assign heading_color = settings.heading_color -%}
+      {%- assign text_color = settings.text_color -%}
+    {%- else -%}
+      {%- assign heading_color = section.settings.text_color -%}
+      {%- assign text_color = section.settings.text_color -%}
+    {%- endif -%}
+
+    {%- if section.settings.indicator_color == 'rgba(0,0,0,0)' -%}
+      {%- assign indicator_color = settings.primary_button_background -%}
+    {%- else -%}
+      {%- assign indicator_color = section.settings.indicator_color -%}
+    {%- endif -%}
+
+    {%- assign border_color = section_background | color_mix: text_color, 85 -%}
+    {%- assign border_color_darker = section_background | color_mix: text_color, 60 -%}
+
+    --heading-color: {{ heading_color.red }}, {{ heading_color.green }}, {{ heading_color.blue }};
+    --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+    --section-background: {{ section_background.red }}, {{ section_background.green }}, {{ section_background.blue }};
+    --border-color: {{ border_color.red }}, {{ border_color.green }}, {{ border_color.blue }};
+    --border-color-darker: {{ border_color_darker.red }}, {{ border_color_darker.green }}, {{ border_color_darker.blue }};
+    --indicator-color: {{ indicator_color.red }}, {{ indicator_color.green }}, {{ indicator_color.blue }};
+  }
+
+  {%- if section.settings.ignore_vertical_spacing -%}
+    #shopify-section-{{ section.id }} .section {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    #block-{{ section.id }}-{{ block.id }} {
+      {%- assign block_text_color = section.settings.text_color -%}
+
+      --heading-color: {{ block_text_color.red }}, {{ block_text_color.green }}, {{ block_text_color.blue }};
+      --text-color: {{ block_text_color.red }}, {{ block_text_color.green }}, {{ block_text_color.blue }};
+    }
+  {%- endfor -%}
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} {
+      --top-padding: {{ section.settings.desktop_top_padding }}px;
+      --bottom-padding: {{ section.settings.desktop_bottom_padding }}px;
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    {%- for block in section.blocks -%}
+      #block-{{ section.id }}-{{ block.id }} {
+        {%- if block.settings.background == 'rgba(0,0,0,0)' -%}
+          {%- assign block_background = settings.background -%}
+        {%- else -%}
+          {%- assign block_background = block.settings.background -%}
+        {%- endif -%}
+
+        {%- if block.settings.text_color == 'rgba(0,0,0,0)' -%}
+          {%- assign block_text_color = settings.text_color -%}
+        {%- else -%}
+          {%- assign block_text_color = block.settings.text_color -%}
+        {%- endif -%}
+
+        --heading-color: {{ block_text_color.red }}, {{ block_text_color.green }}, {{ block_text_color.blue }};
+        --text-color: {{ block_text_color.red }}, {{ block_text_color.green }}, {{ block_text_color.blue }};
+        --section-block-background: {{ block_background.red }}, {{ block_background.green }}, {{ block_background.blue }};
+      }
+    {%- endfor -%}
+  }
+</style>
+
+<section class="section {% unless blends_with_background or is_boxed %}section--flush{% endunless %}">
+  <div
+    {% if is_boxed %}
+      class="container"
+    {% endif %}
+  >
+    <div class="section__color-wrapper section--padding {% if is_boxed %}section__color-wrapper--boxed{% endif %}">
+      <div
+        class="{% unless is_boxed %}container{% endunless %} {% unless blends_with_background or section.settings.ignore_vertical_spacing %}vertical-breather{% endunless %}"
+      >
+        <div class="content-box content-box--{{ section.settings.text_width }} content-box--text-center content-box--center text-container">
+          {%- if section.settings.subheading != blank -%}
+            <h2 class="heading heading--small">{{ section.settings.subheading | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.title != blank -%}
+            {%- if section.settings.subheading != blank -%}
+              <h3 class="heading h2">{{ section.settings.title | escape }}</h3>
+            {%- else -%}
+              <h2 class="heading h2">{{ section.settings.title | escape }}</h2>
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if section.settings.content != blank -%}
+            {{- section.settings.content -}}
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <milestone-list
+            {% if section.settings.reveal_on_scroll %}
+              reveal-on-scroll
+            {% endif %}
+            class="milestone"
+          >
+            <div class="milestone__wrapper">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.title != blank or block.settings.content != blank -%}
+                  <div
+                    {% if section.settings.reveal_on_scroll %}
+                      reveal
+                    {% endif %}
+                    id="block-{{ section.id }}-{{ block.id }}"
+                    class="milestone__item"
+                  >
+                    <div class="milestone__box" {{ block.shopify_attributes }}>
+                      <div class="text-container content-box--text-{% cycle 'right', 'left' %}">
+                        {%- if block.settings.title != blank -%}
+                          <div class="heading h3">{{ block.settings.title | escape }}</div>
+                        {%- endif -%}
+
+                        {%- if block.settings.content != blank -%}
+                          <div class="milestone__box--text-wrapper rte">
+                            {{- block.settings.content -}}
+                          </div>
+                        {%- endif -%}
+                      </div>
+
+                      <div class="milestone__box--image-wrapper">
+                        {%- if block.settings.image != blank -%}
+                          {%- capture class_attribute -%}milestone__box--image {% if block.settings.mobile_image != blank %}hidden-phone{% endif %}{%- endcapture -%}
+                          {%- capture sizes_attribute -%}{{ block.settings.image_width }}px{%- endcapture -%}
+                          {%- capture style_attribute -%}width: {{ block.settings.image_width }}px{%- endcapture -%}
+
+                          {{-
+                            block.settings.image
+                            | image_url: width: block.settings.image.width
+                            | image_tag:
+                              loading: 'lazy',
+                              style: style_attribute,
+                              sizes: sizes_attribute,
+                              widths: '300,400,500,600,800,1000',
+                              class: class_attribute
+                          -}}
+
+                          {%- if block.settings.mobile_image != blank -%}
+                            {%- capture class_attribute -%}milestone__box--image hidden-tablet-and-up{%- endcapture -%}
+
+                            {{-
+                              block.settings.mobile_image
+                              | image_url: width: block.settings.mobile_image.width
+                              | image_tag:
+                                loading: 'lazy',
+                                sizes: sizes_attribute,
+                                widths: '300,400,500,600,700,800,900',
+                                class: class_attribute
+                            -}}
+                          {%- endif -%}
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </milestone-list>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Milestone",
+  "class": "shopify-section--milestone",
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "560 x 420px .jpg recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image",
+          "info": "1000 x 1000px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text",
+          "default": "rgba(0,0,0,0)"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Reveal on scroll",
+      "info": "Show animation when section becomes visible.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Milestone"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "options": [
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "boxed",
+          "label": "Boxed"
+        }
+      ],
+      "default": "full_width"
+    },
+    {
+      "type": "select",
+      "id": "text_width",
+      "label": "Text width",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "fill",
+          "label": "Fill screen"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "indicator_color",
+      "label": "Indicator",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "ignore_vertical_spacing",
+      "label": "Ignore vertical spacing in theme settings.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "desktop_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desktop_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Milestone",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "content": "<p>Welcome to Shopify Milestones, an awards program that celebrates top-performing stores.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Gold Milestone",
+            "content": "<p>You’ve put in the work, 10X’d your business, and reached 1 million total lifetime orders.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Silver Milestone",
+            "content": "<p>You’ve hit your stride and your store reached 100,000 total lifetime orders.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

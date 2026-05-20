@@ -1,0 +1,137 @@
+{%- if section.settings.background_type == 'boxed' -%}
+  {%- assign is_boxed = true -%}
+{%- else -%}
+  {%- assign is_boxed = false -%}
+{%- endif -%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    {%- if section.settings.background == 'rgba(0,0,0,0)' -%}
+      {%- assign background = settings.background | color_mix: settings.text_color, 85 -%}
+    {%- else -%}
+      {%- assign background = section.settings.background -%}
+    {%- endif -%}
+
+    --background: {{ background.red }}, {{ background.green }}, {{ background.blue }};
+
+    --top-padding: {{ section.settings.mobile_top_padding }}px;
+    --bottom-padding: {{ section.settings.mobile_bottom_padding }}px;
+  }
+
+  {%- if section.settings.ignore_vertical_spacing -%}
+    #shopify-section-{{ section.id }} .section {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  {%- endif -%}
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} {
+      --top-padding: {{ section.settings.desktop_top_padding }}px;
+      --bottom-padding: {{ section.settings.desktop_bottom_padding }}px;
+    }
+  }
+</style>
+
+<section class="section {% unless is_boxed %}{% endunless %} section--padding">
+  <div
+    {% if is_boxed %}
+      class="container"
+    {% endif %}
+  >
+    <span class="divider__self"></span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Separator",
+  "class": "shopify-section--separator",
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "options": [
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "boxed",
+          "label": "Boxed"
+        }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "ignore_vertical_spacing",
+      "label": "Ignore vertical spacing in global configuration.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "desktop_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desktop_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Separator"
+    }
+  ]
+}
+{% endschema %}

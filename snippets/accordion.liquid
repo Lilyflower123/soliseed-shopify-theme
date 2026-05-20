@@ -1,0 +1,46 @@
+{%- comment -%}
+  ----------------------------------------------------------------------------------------------------------------------
+  ACCORDION COMPONENT
+  ----------------------------------------------------------------------------------------------------------------------
+
+  ********************************************
+  Supported parameters
+  ********************************************
+
+  * icon: an optional icon attached to the title
+  * custom_icon: an optional icon image attached to the title
+  * title: the title to use for the toggle button
+  * content: the hidden content inside the accordion
+  * class: any additional class
+  * id: an optional ID for the accordion
+{%- endcomment -%}
+
+<div class="{{ class }} product-form__accordion" {{ block.shopify_attributes }}>
+  <button
+    type="button"
+    is="toggle-button"
+    class="collapsible-toggle heading heading--small"
+    aria-controls="{{ id }}"
+    aria-expanded="false"
+  >
+    <span class="inline-flex items-center">
+      {%- if custom_icon != blank -%}
+        <span class="product-form__accordion--item-icon">
+          {{- custom_icon | image_url: width: 24 | image_tag: loading: 'lazy' -}}
+        </span>
+      {%- elsif icon != 'none' -%}
+        <span class="product-form__accordion--item-icon">
+          {% render 'icon' with icon, width: 24 %}
+        </span>
+      {%- endif -%}
+      {{- title -}}
+    </span>
+    {%- render 'icon' with 'caret-down', width: 16, height: 16 -%}
+  </button>
+
+  <collapsible-content id="{{ id }}" class="collapsible">
+    <div class="product-form__accordion-content text-container">
+      {{- content -}}
+    </div>
+  </collapsible-content>
+</div>

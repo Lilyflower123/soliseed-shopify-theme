@@ -1,0 +1,164 @@
+{%- assign heading = 'general.onboarding.product_title' | t -%}
+{%- assign subheading = 'general.onboarding.product_description' | t -%}
+{%- assign avatar_image = block.settings.avatar_image -%}
+{%- assign cover_image = block.settings.cover_image -%}
+{%- assign hover_icon = block.settings.hover_icon -%}
+{%- assign cta_label = block.settings.cta_label -%}
+{%- assign instagram_profile_link = section.settings.instagram_profile_link -%}
+
+{%- if block.settings.heading != blank -%}
+  {%- assign heading = block.settings.heading -%}
+{%- endif -%}
+
+{%- if subheading != blank -%}
+  {%- assign subheading = block.settings.subheading -%}
+{%- endif -%}
+
+<div class="showcase-item__info {% if reduced_font_size %}text--small{% endif %}">
+  <div class="showcase-item-meta">
+    <div class="showcase-item__avatar">
+      {%- if avatar_image == blank -%}
+        {{- 'product-4' | placeholder_svg_tag: 'placeholder-background' -}}
+      {%- else -%}
+        {%- if block.settings.show_avatar_outline == true -%}
+          <div class="showcase-item__avatar-outline" aria-hidden="true"></div>
+        {%- endif -%}
+
+        {% capture class_attribute %}showcase-item__avatar-image {% if block.settings.show_avatar_outline == true %}showcase-item__avatar-image-outline{% endif %}{% endcapture %}
+
+        {{- avatar_image | image_url: width: 42, height: 42 | image_tag: loading: 'lazy', class: class_attribute -}}
+      {%- endif -%}
+    </div>
+
+    <div class="showcase-item__title">
+      <h4 class="heading heading--small">{{ heading }}</h4>
+      <p>{{ subheading }}</p>
+    </div>
+
+    {%- if instagram_profile_link != blank -%}
+      <div class="showcase-item__instagram">
+        <img
+          class="showcase-item__instagram-icon"
+          src="{{ 'Instagram-glyph-gradient.png' | asset_url }}"
+          width="42"
+          height="42"
+          loading="lazy"
+          aria-label="Instagram badge"
+        >
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<div class="showcase-item__image-wrapper {% if cover_image == blank %}showcase-item__image-wrapper--placeholder{% endif %}">
+  {%- if cover_image == blank -%}
+    {{- 'image' | placeholder_svg_tag: 'showcase-image placeholder-background' -}}
+  {%- else -%}
+    {%- assign related_products = block.settings.product_list -%}
+
+    {{-
+      cover_image
+      | image_url: width: cover_image.width
+      | image_tag:
+        loading: 'lazy',
+        sizes: sizes_attribute,
+        widths: '200,300,400,500,600,700,800,900,1000,1100,1200',
+        class: 'showcase-item__primary-image'
+    -}}
+    {%- if related_products.count > 0 -%}
+      <button
+        class="showcase-item__primary-button {% if hover_icon == 'none' and cta_label == blank %}showcase-item__primary-button-transparent{% endif %}"
+        style="{% if always_show_overlay == true %}opacity: 1{% endif %}"
+      >
+        {%- if hover_icon != 'none' -%}
+          {% render 'icon' with hover_icon %}
+        {%- endif -%}
+
+        {%- if cta_label != blank -%}
+          {{ cta_label }}
+        {%- endif -%}
+      </button>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+<modal-content
+  section="{{ section.id }}"
+  id="{{ section.id }}-popup"
+  class="modal"
+  manually
+>
+  <div class="modal__overlay"></div>
+
+  <div class="modal__content">
+    <button
+      type="button"
+      class="modal__close-button tap-area"
+      data-action="close"
+      title="{{ 'general.accessibility.close' | t | escape }}"
+    >
+      {%- render 'icon' with 'close' -%}
+    </button>
+
+    <div
+      id="block-{{ section.id }}-{{ block.id }}"
+      class="showcase__popup"
+    >
+      <div class="showcase__image-wrapper">
+        {%- if cover_image != blank -%}
+          {{-
+            cover_image
+            | image_url: width: cover_image.width
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(max-width: 740px) 81vw, 490px',
+              widths: '400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600',
+              class: 'showcase__image'
+          -}}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'showcase__image placeholder-background' }}
+        {%- endif -%}
+      </div>
+
+      <div class="showcase__content-wrapper">
+        {%- if subheading != blank or instagram_profile_link != blank -%}
+          <div class="showcase__image-folow-on-instagram">
+            {%- if subheading != blank -%}
+              <div class="rte">{{ subheading }}</div>
+            {%- endif -%}
+
+            {%- if instagram_profile_link != blank -%}
+              <a
+                href="{{ instagram_profile_link }}"
+                class="showcase-badge__instagram"
+                target="_blank"
+                aria-label="{{ 'general.social.follow_label' | t: social_media: 'Instagram' }}"
+              >
+                <img
+                  src="{{ 'Instagram_logo_2016.svg' | asset_url }}"
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                  aria-label="Instagram logo"
+                >
+                {{ 'general.social.follow_label' | t: social_media: 'Instagram' }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign related_products = block.settings.product_list -%}
+
+        <div class="showcase__content">
+          {%- for line_item in related_products -%}
+            {%- render 'product-item',
+              product: line_item,
+              hide_quick_action: true,
+              sizes_attribute: '(max-width: 740px) 350px, (max-width: 999px) 450px, 300px'
+            -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</modal-content>

@@ -1,0 +1,42 @@
+{%- case request.locale.iso_code -%}
+  {%- when 'ae',
+    'ar',
+    'arc',
+    'bcc',
+    'bqi',
+    'ckb',
+    'dv',
+    'fa',
+    'glk',
+    'ha',
+    'he',
+    'kwh',
+    'ks',
+    'ku',
+    'mzn',
+    'nqo',
+    'pnb',
+    'ps',
+    'sd',
+    'ug',
+    'ur',
+    'yi'
+  -%}
+    {%- case direction -%}
+      {%- when 'from-direction' -%}
+        right
+      {%- when 'to-direction' -%}
+        left
+      {%- else -%}
+        rtl
+    {%- endcase -%}
+  {%- else -%}
+    {%- case direction -%}
+      {%- when 'from-direction' -%}
+        left
+      {%- when 'to-direction' -%}
+        right
+      {%- else -%}
+        ltr
+    {%- endcase -%}
+{%- endcase -%}

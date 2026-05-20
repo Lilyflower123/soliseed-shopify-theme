@@ -1,0 +1,392 @@
+{%- if section.blocks.size > 0 -%}
+  <style>
+    @media screen and (max-width: 740px) {
+      body {
+        padding-bottom: 50px;
+      }
+    }
+
+    #shopify-section-{{ section.id }} {
+    	{%- if section.settings.background == 'rgba(0,0,0,0)' -%}
+        {%- assign background = settings.background -%}
+      {%- else -%}
+        {%- assign background = section.settings.background -%}
+      {%- endif -%}
+
+    	{%- if section.settings.text_color == 'rgba(0,0,0,0)' -%}
+        {%- assign text_color = settings.text_color -%}
+      {%- else -%}
+        {%- assign text_color = section.settings.text_color -%}
+      {%- endif -%}
+
+      {%- assign border_color = background | color_mix: text_color, 85 -%}
+
+    	--text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+      --border-color: {{ border_color.red }}, {{ border_color.green }}, {{ border_color.blue }};
+    	--background: {{ background.red }}, {{ background.green }}, {{ background.blue }};
+      --blocks-size: {{ section.blocks.size }};
+
+     	display: none;
+     	align-items: center;
+     	height: 50px;
+     	width: 100%;
+     	position: fixed;
+     	right: 0;
+     	bottom: 0;
+     	left: 0;
+     	background: rgb(var(--background));
+     	box-shadow: 0 -1px rgb(var(--border-color));
+     	z-index: 4;
+    }
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'cart' -%}
+          #block-{{ section.id }}-{{ block.id }} {
+            {%- if block.settings.cart_badge_background == 'rgba(0,0,0,0)' -%}
+              {%- assign cart_badge_background = text_color -%}
+            {%- else -%}
+              {%- assign cart_badge_background = block.settings.cart_badge_background -%}
+            {%- endif -%}
+
+            {%- if block.settings.cart_badge_text_color == 'rgba(0,0,0,0)' -%}
+              {%- assign cart_badge_text_color = background -%}
+            {%- else -%}
+              {%- assign cart_badge_text_color = block.settings.cart_badge_text_color -%}
+            {%- endif -%}
+
+            --cart-badge-background: {{ cart_badge_background.red }}, {{ cart_badge_background.green }}, {{ cart_badge_background.blue }};
+            --cart-badge-text-color: {{ cart_badge_text_color.red }}, {{ cart_badge_text_color.green }}, {{ cart_badge_text_color.blue }};
+          }
+      {%- endcase -%}
+    {%- endfor -%}
+
+    @media screen and (max-width: 740px) {
+      #shopify-section-{{ section.id }} {
+        display: flex;
+      }
+    }
+  </style>
+
+  <section class="footer-menu">
+    <div class="footer-menu__wrapper">
+      <nav class="footer-menu__inner">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'cart' -%}
+              <a
+                href="{{ routes.cart_url }}"
+                {% unless settings.cart_type == 'page' or request.page_type == 'cart' %}
+                  is="toggle-link" aria-controls="mini-cart" aria-expanded="false"
+                {% endunless %}
+                id="block-{{ section.id }}-{{ block.id }}"
+                class="footer-menu__item text--xsmall tap-area"
+                aria-label="{{ 'header.general.cart' | t | escape }}"
+                data-no-instant
+                {{ block.shopify_attributes }}
+              >
+                <span style="position: relative">
+                  {%- case settings.cart_icon -%}
+                    {%- when 'shopping_bag' -%}
+                      {%- render 'icon' with 'header-shopping-bag' -%}
+
+                    {%- when 'shopping_cart' -%}
+                      {%- render 'icon' with 'header-shopping-cart' -%}
+
+                    {%- when 'tote_bag' -%}
+                      {%- render 'icon' with 'header-tote-bag' -%}
+                  {%- endcase -%}
+
+                  <cart-count class="header__cart-count header__cart-count--floating bubble-count">
+                    {{- cart.item_count -}}
+                  </cart-count>
+                </span>
+
+                <label for="block-{{ section.id }}-{{ block.id }}">{{ 'header.general.cart' | t | escape }}</label>
+              </a>
+
+            {%- when 'navigation' -%}
+              <a
+                href="{{ block.settings.link | default: '#' }}"
+                id="block-{{ section.id }}-{{ block.id }}"
+                class="footer-menu__item text--xsmall tap-area"
+                aria-label="{{ block.settings.label | escape }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- render 'icon' with block.settings.icon -%}
+                <label for="block-{{ section.id }}-{{ block.id }}">{{ block.settings.label | escape }}</label>
+              </a>
+
+            {%- when 'search' -%}
+              <a
+                href="{{ routes.search_url }}"
+                is="toggle-link"
+                id="block-{{ section.id }}-{{ block.id }}"
+                class="footer-menu__item text--xsmall tap-area"
+                aria-controls="search-drawer"
+                aria-expanded="false"
+                aria-label="{{ 'search.general.title' | t | escape }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- render 'icon' with 'header-search' -%}
+                <label for="block-{{ section.id }}-{{ block.id }}">{{ 'search.general.title' | t | escape }}</label>
+              </a>
+          {%- endcase -%}
+        {%- endfor -%}
+      </nav>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Footer menu (mobile only)",
+  "class": "shopify-section--footer-menu",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "cart",
+      "name": "Cart",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "color",
+          "id": "cart_badge_background",
+          "label": "Cart badge background",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "cart_badge_text_color",
+          "label": "Cart badge text",
+          "default": "rgba(0,0,0,0)"
+        }
+      ]
+    },
+    {
+      "type": "navigation",
+      "name": "Navigation",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "article",
+              "label": "Article"
+            },
+            {
+              "value": "balloon",
+              "label": "Balloon"
+            },
+            {
+              "value": "bell",
+              "label": "Bell"
+            },
+            {
+              "value": "bookmark",
+              "label": "Bookmark"
+            },
+            {
+              "value": "calendar-blank",
+              "label": "Calendar"
+            },
+            {
+              "value": "chat-centered",
+              "label": "Chat"
+            },
+            {
+              "value": "chat-circle",
+              "label": "Chat circle"
+            },
+            {
+              "value": "credit-card",
+              "label": "Credit card"
+            },
+            {
+              "value": "device-mobile",
+              "label": "Device mobile"
+            },
+            {
+              "value": "envelope",
+              "label": "Envelope"
+            },
+            {
+              "value": "envelope-simple",
+              "label": "Envelope simple"
+            },
+            {
+              "value": "face-mask",
+              "label": "Face mask"
+            },
+            {
+              "value": "fingerprint",
+              "label": "Fingerprint"
+            },
+            {
+              "value": "flag",
+              "label": "Flag"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "headset",
+              "label": "Headset"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "house",
+              "label": "House"
+            },
+            {
+              "value": "list",
+              "label": "List"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "map-pin",
+              "label": "Map pin"
+            },
+            {
+              "value": "package",
+              "label": "Package"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "shopping-cart",
+              "label": "Shopping cart"
+            },
+            {
+              "value": "sneaker",
+              "label": "Sneaker"
+            },
+            {
+              "value": "squares-four",
+              "label": "Squares four"
+            },
+            {
+              "value": "storefront",
+              "label": "Storefront"
+            },
+            {
+              "value": "t-shirt",
+              "label": "T-shirt"
+            },
+            {
+              "value": "ticket",
+              "label": "Ticket"
+            },
+            {
+              "value": "timer",
+              "label": "Timer"
+            },
+            {
+              "value": "translate",
+              "label": "Translate"
+            },
+            {
+              "value": "trash",
+              "label": "Trash"
+            },
+            {
+              "value": "trophy",
+              "label": "Trophy"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "umbrella",
+              "label": "Umbrella"
+            },
+            {
+              "value": "user",
+              "label": "User"
+            },
+            {
+              "value": "users",
+              "label": "Users"
+            },
+            {
+              "value": "van",
+              "label": "Van"
+            },
+            {
+              "value": "virus",
+              "label": "Virus"
+            },
+            {
+              "value": "wallet",
+              "label": "Wallet"
+            },
+            {
+              "value": "warning",
+              "label": "Warning"
+            }
+          ],
+          "default": "list"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "search",
+      "name": "Search",
+      "limit": 1
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section is only available on mobile."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    }
+  ]
+}
+{% endschema %}

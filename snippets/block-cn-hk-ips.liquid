@@ -1,0 +1,56 @@
+{% comment %}
+  IMPLEMENTATION NOTE: This feature is used to block users from certain countries/regions from accessing the website. If the user's geographical location is Mainland China or Hong Kong, a warning will be displayed and they will be redirected to a specified unavailable page.
+{% endcomment %}
+
+{%- assign whitelist_ips_list = '' -%}
+
+{%- if settings.block_cn_hk_whitelist_ips != blank -%}
+  {%- assign whitelist_ips = settings.block_cn_hk_whitelist_ips | newline_to_br | split: '<br />' -%}
+
+  {%- for whitelist_ip in whitelist_ips -%}
+    {%- assign ip = whitelist_ip | strip | append: '"' -%}
+    {%- assign ip = '"' | append: ip -%}
+    {%- assign whitelist_ips_list = whitelist_ips_list | append: ip | append: ',' -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{% if settings.unavailable_page != blank and request.path != settings.unavailable_page.url %}
+  <script>
+    rbBlockCountries = function (ips) {
+      const res = fetch('//www.cloudflare.com/cdn-cgi/trace')
+      .then((res) => res.text())
+      .then((data) => {
+        var country_code = data.replace(/(\r\n|\n|\r)/gm, '').split('loc=');
+        country_code = country_code[1].split('tls=');
+        country_code = country_code[0];
+        if (ips) {
+          let ip = data.replace(/(\r\n|\n|\r)/gm, '').split('ip=');
+          ip = ip[1].split('ts=')[0];
+          if (!ips.includes(ip) && (country_code == 'CN' || country_code == 'HK')) {
+            document.querySelector('body').setAttribute('hidden', '')
+            window.location.replace('{{ settings.unavailable_page.url }}');
+          }
+        } else {
+          if (country_code == 'CN' || country_code == 'HK') {
+            document.querySelector('body').setAttribute('hidden', '')
+            window.location.replace('{{ settings.unavailable_page.url }}');
+          }
+        }
+      });
+    };
+
+    {% if settings.block_cn_hk_whitelist_ips != blank and whitelist_ips_list != '' %}
+      document.addEventListener("zalify:plan", function (event) {
+        const planType = event.detail.type;
+        const ips = [{{ whitelist_ips_list }}];
+        if (planType === 'FREE' || planType === 'BASIC') {
+          rbBlockCountries();
+        } else {
+          rbBlockCountries(ips);
+        }
+      })
+    {% else %}
+      rbBlockCountries();
+    {% endif %}
+  </script>
+{% endif %}

@@ -1,0 +1,325 @@
+{%- if section.settings.show_locale_selector and shop.published_locales.size > 1 -%}
+  {%- assign locale_selector = true -%}
+{%- endif -%}
+
+{%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
+  {%- assign country_selector = true -%}
+{%- endif -%}
+
+<mobile-navigation
+  id="mobile-menu-drawer"
+  class="drawer drawer--from-{% render 'direction' with 'from-direction' %}"
+  append-body
+>
+  <span class="drawer__overlay"></span>
+
+  <div class="drawer__header">
+    <button
+      type="button"
+      class="drawer__close-button drawer__close-button--block tap-area"
+      title="{{ 'general.accessibility.close' | t | escape }}"
+      data-action="close"
+    >
+      {%- render 'icon' with 'close' -%}
+    </button>
+  </div>
+
+  <nav class="drawer__content">
+    <ul class="mobile-nav list--unstyled" role="list">
+      {%- for link in menu.links -%}
+        {%- assign link_title_downcase = link.title | strip | downcase -%}
+        {%- assign mega_menu_block = '' -%}
+        {%- assign mega_menu_images = '' -%}
+
+        {%- for block in section.blocks -%}
+          {%- assign menu_item_downcase = block.settings.menu_item | strip | downcase -%}
+
+          {%- if menu_item_downcase == link_title_downcase -%}
+            {%- assign mega_menu_block = block -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if mega_menu_block != '' -%}
+          {%- assign images_count = 0 -%}
+
+          {%- capture mega_menu_images -%}
+            {%- for i in (1..6) -%}
+              {%- capture image_setting -%}image_{{ i }}{%- endcapture -%}
+
+              {%- if mega_menu_block.settings[image_setting] != blank -%}
+                {%- assign images_count = images_count | plus: 1 -%}
+
+                {%- capture image_heading_setting -%}image_{{ i }}_heading{%- endcapture -%}
+                {%- capture image_text_setting -%}image_{{ i }}_text{%- endcapture -%}
+                {%- capture image_link_setting -%}image_{{ i }}_link{%- endcapture -%}
+
+                {%- capture image_push -%}
+                  {%- assign menu_image = mega_menu_block.settings[image_setting] -%}
+                  {{- menu_image | image_url: width: menu_image.width | image_tag: loading: 'lazy', sizes: '270px', sizes: '270,540,810', class: 'mobile-nav__image' -}}
+
+                  {%- if mega_menu_block.settings[image_heading_setting] != '' -%}
+                    <p class="mobile-nav__image-heading heading heading--xsmall">{{ mega_menu_block.settings[image_heading_setting] }}</p>
+                  {%- endif -%}
+
+                  {%- if mega_menu_block.settings[image_text_setting] != '' -%}
+                    <span class="mobile-nav__image-text text--xsmall">{{ mega_menu_block.settings[image_text_setting] }}</span>
+                  {%- endif -%}
+                {%- endcapture -%}
+
+                {%- if mega_menu_block.settings[image_link_setting] != blank -%}
+                  <a href="{{ mega_menu_block.settings[image_link_setting] }}" class="mobile-nav__image-push">
+                    {{- image_push -}}
+                  </a>
+                {%- else -%}
+                  <div class="mobile-nav__image-push">
+                    {{- image_push -}}
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+        {%- endif -%}
+
+        <li class="mobile-nav__item" data-level="1">
+          {%- if link.links.size > 0 or mega_menu_images != blank -%}
+            <div class="mobile-nav__link heading h6">
+              <a href="{{ link.url }}">
+                {{- link.title -}}
+              </a>
+              <button
+                class="mobile-nav__link--button"
+                is="toggle-button"
+                aria-controls="mobile-menu-{{ forloop.index }}"
+                aria-expanded="false"
+              >
+                {%- render 'icon' with 'caret-down', width: 12, height: 12, inline: true -%}
+              </button>
+            </div>
+
+            <collapsible-content id="mobile-menu-{{ forloop.index }}" class="collapsible">
+              {%- if link.links.size > 0 -%}
+                <ul class="mobile-nav list--unstyled" role="list">
+                  {%- for sub_link in link.links -%}
+                    <li class="mobile-nav__item" data-level="2">
+                      {%- if sub_link.links.size > 0 -%}
+                        <div class="mobile-nav__link">
+                          <a href="{{ sub_link.url }}">
+                            {{- sub_link.title -}}
+                          </a>
+                          <button
+                            class="mobile-nav__link--button"
+                            is="toggle-button"
+                            aria-controls="mobile-menu-{{ forloop.parentloop.index }}-{{ forloop.index }}"
+                            aria-expanded="false"
+                          >
+                            {%- render 'icon' with 'caret-down', width: 12, height: 12, inline: true -%}
+                          </button>
+                        </div>
+
+                        <collapsible-content
+                          id="mobile-menu-{{ forloop.parentloop.index }}-{{ forloop.index }}"
+                          class="collapsible"
+                        >
+                          <ul class="mobile-nav list--unstyled" role="list">
+                            {%- for sub_sub_link in sub_link.links -%}
+                              <li class="mobile-nav__item" data-level="3">
+                                <a href="{{ sub_sub_link.url }}" class="mobile-nav__link">{{ sub_sub_link.title }}</a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        </collapsible-content>
+                      {%- else -%}
+                        <a href="{{ sub_link.url }}" class="mobile-nav__link">{{ sub_link.title }}</a>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+              {%- if mega_menu_images != blank -%}
+                <div class="mobile-nav__images-wrapper {% if images_count >= 3 %}mobile-nav__images-wrapper--tight{% endif %} hide-scrollbar">
+                  <div class="mobile-nav__images-scroller">
+                    {{- mega_menu_images -}}
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- if mega_menu_block.settings.button_text != blank -%}
+                <div class="mobile-nav__buttons-wrapper">
+                  <a href="{{ mega_menu_block.settings.button_link }}" class="button button--primary w-full">
+                    {{- mega_menu_block.settings.button_text -}}
+                  </a>
+                </div>
+              {%- endif -%}
+            </collapsible-content>
+          {%- else -%}
+            <a href="{{ link.url }}" class="mobile-nav__link heading h6">
+              {{- link.title -}}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      {%- if locale_selector or country_selector -%}
+        {%- form 'localization', id: 'header-sidebar-localization-form' -%}
+          {%- if country_selector -%}
+            <li class="mobile-nav__item" data-level="1">
+              <button
+                type="button"
+                is="toggle-button"
+                class="mobile-nav__link heading h6"
+                aria-controls="header-sidebar-localization-form-currency"
+                aria-expanded="false"
+              >
+                {{ 'header.general.country' | t }}
+                <span class="mobile-nav__item--action text--small">
+                  {{ localization.country.currency.iso_code }}
+                  {% if localization.country.currency.symbol -%}
+                    {{- localization.country.currency.symbol }}
+                  {%- endif -%}
+                  {%- render 'icon' with 'caret-down', width: 12, height: 12, inline: true -%}
+                </span>
+              </button>
+
+              <popover-content
+                id="header-sidebar-localization-form-currency"
+                class="popover popover--top popover--small"
+              >
+                <span class="popover__overlay"></span>
+
+                <header class="popover__header">
+                  <span class="popover__title heading h6">{{- 'header.general.country' | t -}}</span>
+
+                  <button
+                    type="button"
+                    class="popover__close-button tap-area tap-area--large"
+                    title="{{ 'general.accessibility.close' | t | escape }}"
+                    data-action="close"
+                  >
+                    {%- render 'icon' with 'close' -%}
+                  </button>
+                </header>
+
+                <div class="popover__content">
+                  <div class="popover__choice-list">
+                    {%- for country in localization.available_countries -%}
+                      <button
+                        type="submit"
+                        name="country_code"
+                        value="{{ country.iso_code }}"
+                        class="popover__choice-item"
+                      >
+                        <span
+                          class="popover__choice-label {% if section.settings.show_country_flag %}popover__choice-label-country{% endif %}"
+                          {% if country.iso_code == localization.country.iso_code %}
+                            aria-current="true"
+                          {% endif %}
+                        >
+                          {%- if section.settings.show_country_flag -%}
+                            {{- country | image_url: width: 16 | image_tag -}}
+                          {%- endif -%}
+
+                          {%- if section.settings.show_country_name -%}
+                            {{- country.name }} ({{ country.currency.iso_code }}
+                            {% if country.currency.symbol -%}
+                              {{- country.currency.symbol }}
+                            {%- endif -%}
+                            )
+                          {%- else -%}
+                            {{ country.currency.iso_code }}
+                            {% if country.currency.symbol -%}
+                              {{- country.currency.symbol }}
+                            {%- endif -%}
+                          {%- endif -%}
+                        </span>
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </popover-content>
+            </li>
+          {%- endif -%}
+
+          {%- if locale_selector -%}
+            <li class="mobile-nav__item" data-level="1">
+              <button
+                type="button"
+                is="toggle-button"
+                class="mobile-nav__link heading h6"
+                aria-controls="header-sidebar-localization-form-locale"
+                aria-expanded="false"
+              >
+                {{ 'header.general.language' | t }}
+                <span class="mobile-nav__item--action text--small">
+                  {{- form.current_locale.endonym_name | capitalize -}}
+                  {%- render 'icon' with 'caret-down', width: 12, height: 12, inline: true -%}
+                </span>
+              </button>
+
+              <popover-content
+                id="header-sidebar-localization-form-locale"
+                class="popover popover--top popover--small"
+              >
+                <span class="popover__overlay"></span>
+
+                <header class="popover__header">
+                  <span class="popover__title heading h6">{{- 'header.general.language' | t -}}</span>
+
+                  <button
+                    type="button"
+                    class="popover__close-button tap-area tap-area--large"
+                    title="{{ 'general.accessibility.close' | t | escape }}"
+                    data-action="close"
+                  >
+                    {%- render 'icon' with 'close' -%}
+                  </button>
+                </header>
+
+                <div class="popover__content">
+                  <div class="popover__choice-list">
+                    {%- for locale in form.available_locales -%}
+                      <button
+                        type="submit"
+                        name="locale_code"
+                        value="{{ locale.iso_code }}"
+                        class="popover__choice-item"
+                      >
+                        <span
+                          class="popover__choice-label"
+                          {% if locale.iso_code == form.current_locale.iso_code %}
+                            aria-current="true"
+                          {% endif %}
+                        >
+                          {{- locale.endonym_name | capitalize -}}
+                        </span>
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </popover-content>
+            </li>
+          {%- endif -%}
+        {%- endform -%}
+      {%- endif -%}
+    </ul>
+  </nav>
+
+  {%- if shop.customer_accounts_enabled -%}
+    <div class="drawer__footer drawer__footer--tight drawer__footer--bordered">
+      <div class="mobile-nav__footer">
+        <a
+          class="icon-text"
+          href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+        >
+          {% if customer %}
+            {%- render 'icon' with 'header-customer-logged-in', width: 20, height: 20 -%}
+          {% else %}
+            {%- render 'icon' with 'header-customer', width: 20, height: 20 -%}
+          {% endif %}
+          {{- 'header.general.account' | t -}}
+        </a>
+      </div>
+    </div>
+  {%- endif -%}
+</mobile-navigation>

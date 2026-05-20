@@ -1,0 +1,328 @@
+{%- if section.settings.background != settings.background and section.settings.background != 'rgba(0,0,0,0)' -%}
+  {%- assign blends_with_background = false -%}
+{%- else -%}
+  {%- assign blends_with_background = true -%}
+{%- endif -%}
+
+{%- if section.blocks.size > 0 -%}
+  <style>
+    #shopify-section-{{ section.id }} {
+      {%- if section.settings.background == 'rgba(0,0,0,0)' -%}
+        {%- assign section_background = settings.background -%}
+      {%- else -%}
+        {%- assign section_background = section.settings.background -%}
+      {%- endif -%}
+
+      {%- if section.settings.text_color == 'rgba(0,0,0,0)' -%}
+        {%- assign text_color = settings.text_color -%}
+      {%- else -%}
+        {%- assign text_color = section.settings.text_color -%}
+      {%- endif -%}
+
+      {%- case section.settings.shape -%}
+        {%- when 'circle' -%}
+          --item-border-radius: 50%;
+        {%- when 'square' -%}
+          --item-border-radius: var(--block-border-radius-reduced);
+      {%- endcase -%}
+
+      --vertical-breather: 0;
+      --item-gap: {{ section.settings.gap }}px;
+
+      --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+      --section-background: {{ section_background.red }}, {{ section_background.green }}, {{ section_background.blue }};
+
+      --top-padding: {{ section.settings.top_padding }}px;
+      --bottom-padding: {{ section.settings.bottom_padding }}px;
+    }
+
+    {%- for block in section.blocks -%}
+      #block-{{ section.id }}-{{ block.id }} {
+        {%- if block.settings.background == 'rgba(0,0,0,0)' -%}
+          {%- assign block_background = section_background -%}
+        {%- else -%}
+          {%- assign block_background = block.settings.background -%}
+        {%- endif -%}
+
+        {%- if block.settings.outline_color == 'rgba(0,0,0,0)' -%}
+          {%- assign block_outline_color = section_background -%}
+        {%- else -%}
+          {%- assign block_outline_color = block.settings.outline_color -%}
+        {%- endif -%}
+
+        {%- if block.settings.auto_rotate -%}
+          --item-border-radius: 50%;
+        {%- endif -%}
+
+        --item-width: {{ section.settings.icon_size }}px;
+        --item-background: {{ block_background.red }}, {{ block_background.green }}, {{ block_background.blue }};
+        --item-outline-color: {{ block_outline_color.red }}, {{ block_outline_color.green }}, {{ block_outline_color.blue }};
+        --item-rotate-speed: {{ block.settings.rotate_speed }}s;
+      }
+    {%- endfor -%}
+  </style>
+
+  <section class="section {% unless blends_with_background %}section--flush{% endunless %} hidden-tablet-and-up">
+    <div class="section__color-wrapper section--padding">
+      <stories-carousel
+        {% if section.settings.reveal_on_scroll %}
+          stagger-apparition
+        {% endif %}
+        class="stories vertical-breather"
+      >
+        <div class="hide-scrollbar">
+          <div class="stories__inner">
+            {%- for block in section.blocks -%}
+              <div
+                {% if section.settings.reveal_on_scroll %}
+                  reveal
+                {% endif %}
+                id="block-{{ section.id }}-{{ block.id }}"
+                class="stories__item"
+                {{ block.shopify_attributes }}
+              >
+                <a
+                  {% if block.settings.auto_rotate %}
+                    auto-rotate
+                  {% endif %}
+                  href="{{ block.settings.link_url }}"
+                  class="stories__image-wrapper"
+                  aria-describedby="{{ section.id }}-{{ block.id }}-image"
+                >
+                  <div class="stories__image-wrapper-outline" aria-hidden="true"></div>
+
+                  {%- if block.settings.image != blank -%}
+                    {%- capture id_attribute -%}{{ section.id }}-{{ block.id }}-image{%- endcapture -%}
+                    {{-
+                      block.settings.image
+                      | image_url: width: block.settings.image.width
+                      | image_tag:
+                        loading: 'lazy',
+                        sizes: '120px',
+                        widths: '120',
+                        id: id_attribute,
+                        class: 'stories__image'
+                    -}}
+                  {%- else -%}
+                    {%- capture image_placeholder -%}product-{% cycle '1', '2', '3', '4', '5', '6' %}{%- endcapture -%}
+                    {{ image_placeholder | placeholder_svg_tag: 'stories__image placeholder-background' }}
+                  {%- endif -%}
+                </a>
+
+                {%- if block.settings.label != blank -%}
+                  <div class="stories__label text--xsmall">{{ block.settings.label | escape }}</div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </stories-carousel>
+    </div>
+  </section>
+
+  <script>
+    document.documentElement.style.setProperty(
+      '--stories-height',
+      document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px'
+    );
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Stories (mobile only)",
+  "class": "shopify-section--stories",
+  "disabled_on": {
+    "templates": ["password"],
+    "groups": ["header", "custom.overlay"]
+  },
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Story",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "auto_rotate",
+          "label": "Auto rotate",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "rotate_speed",
+          "label": "Rotate speed",
+          "min": 2,
+          "max": 10,
+          "unit": "s",
+          "default": 6
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "60 x 60px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "label",
+          "default": "Story"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "outline_color",
+          "label": "Outline",
+          "default": "rgba(0,0,0,0)"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section is only available on mobile."
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Reveal on scroll",
+      "info": "Show animation when section becomes visible.",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "shape",
+      "label": "Shape",
+      "options": [
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ],
+      "default": "circle"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 28,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "top_padding",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "bottom_padding",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stories (mobile only)",
+      "blocks": [
+        {
+          "type": "story",
+          "settings": {
+            "label": "Story"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Story"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Story"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Story"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Story"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Story"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,69 @@
+{%- comment -%}
+  ----------------------------------------------------------------------------------------------------------------------
+  FEATURE ICON COMPONENT
+  ----------------------------------------------------------------------------------------------------------------------
+
+  ********************************************
+  Supported variables
+  ********************************************
+
+  * content: the textual content to use
+  * link: if set to false, the link around the link is not set
+  * icon: the name of an icon that is optionally added along the text
+  * custom_icon: an image of an optional icon (if any)
+  * background: an optional background that would override existing color
+  * text_color: an optional text color that would override existing color
+{%- endcomment -%}
+
+{%- capture content -%}
+  <style>
+    #shopify-{{ section.id }}-{{ block.id }} {
+      {%- unless block.settings.background == 'rgba(0,0,0,0)' -%}
+        --product-on-sale-background: {{ block.settings.background.red }}, {{ block.settings.background.green }}, {{ block.settings.background.blue }};
+      {%- endunless -%}
+      {%- unless block.settings.text_color == 'rgba(0,0,0,0)' -%}
+        --product-on-sale-text-color: {{ block.settings.text_color.red }}, {{ block.settings.text_color.green }}, {{ block.settings.text_color.blue }};
+      {%- endunless -%}
+
+      display: inline-flex;
+      align-items: center;
+      line-height: 1.2;
+    }
+
+    #shopify-{{ section.id }}-{{ block.id }} .label-icon {
+      flex: none;
+      display: flex;
+      align-items: center;
+      margin-right: 4px;
+    }
+  </style>
+
+	{%- if block.settings.custom_icon != blank -%}
+		<span class="label-icon">
+			{{- block.settings.custom_icon | image_url: width: 12 | image_tag: loading: 'lazy' -}}
+		</span>
+	{%- elsif block.settings.icon != 'none' -%}
+		<span class="label-icon">
+			{% render 'icon' with block.settings.icon | width: 12 %}
+		</span>
+	{%- endif -%}
+	{{- block.settings.content | escape -}}
+{%- endcapture -%}
+
+{%- if block.settings.link != blank -%}
+  <div class="product-form__feature-with-icon" {{ block.shopify_attributes }}>
+    <a
+      href="{{ block.settings.link.url }}"
+      id="shopify-{{ section.id }}-{{ block.id }}"
+      class="label label--highlight"
+    >
+      {{- content -}}
+    </a>
+  </div>
+{%- else -%}
+  <div class="product-form__feature-with-icon" {{ block.shopify_attributes }}>
+    <span id="shopify-{{ section.id }}-{{ block.id }}" class="label label--highlight">
+      {{- content -}}
+    </span>
+  </div>
+{%- endif -%}

@@ -1,0 +1,143 @@
+{%- if section.settings.background_type == 'boxed' -%}
+  {%- assign is_boxed = true -%}
+{%- else -%}
+  {%- assign is_boxed = false -%}
+{%- endif -%}
+
+{%- if section.settings.content != blank -%}
+  {%- assign has_content = true -%}
+{%- else -%}
+  {%- assign has_content = false -%}
+{%- endif -%}
+
+{%- assign payment_providers = settings.payment_providers | newline_to_br | split: '<br />' -%}
+{%- if section.settings.show_payment_icons and payment_providers != blank or shop.enabled_payment_types.size > 0 -%}
+  {%- assign show_payment_icons = true -%}
+{%- else -%}
+  {%- assign show_payment_icons = false -%}
+{%- endif -%}
+
+{%- if section.settings.navigation_menu != blank -%}
+  {%- assign has_menu = true -%}
+{%- else -%}
+  {%- assign has_menu = false -%}
+{%- endif -%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    {%- assign border_color = settings.footer_background | color_mix: settings.footer_text_color, 85 -%}
+
+    {%- if settings.bottom_bar_background == 'rgba(0,0,0,0)' -%}
+      {%- assign background = settings.background -%}
+    {%- else -%}
+      {%- assign background = settings.bottom_bar_background -%}
+    {%- endif -%}
+
+    {%- if settings.bottom_bar_text_color == 'rgba(0,0,0,0)' -%}
+      {%- assign text_color = settings.text_color -%}
+    {%- else -%}
+      {%- assign text_color = settings.bottom_bar_text_color -%}
+    {%- endif -%}
+
+    --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+    --section-background: {{ background.red }}, {{ background.green }}, {{ background.blue }};
+    --border-color: {{ border_color.red }}, {{ border_color.green }}, {{ border_color.blue }};
+    --reduce-padding: {% if section.settings.reduce_padding %}1{% else %}0{% endif %};
+  }
+</style>
+
+{%- if has_content or show_payment_icons or has_menu -%}
+  <div class="bottom-bar {% if settings.bottom_bar_background == settings.footer_background %}bottom-bar--bordered{% endif %} {% unless is_boxed %}bottom-bar--boxed{% endunless %}">
+    <div
+      {% if is_boxed %}
+        class="container"
+      {% endif %}
+    >
+      <div class="bottom-bar__inner">
+        {%- if has_content -%}
+          <div class="bottom-bar__content">{{ section.settings.content }}</div>
+        {%- endif -%}
+
+        {%- if show_payment_icons -%}
+          <div class="payment-methods-list">
+            {%- if payment_providers != blank -%}
+              {% for provider in payment_providers %}
+                {{ provider | downcase | strip | payment_type_svg_tag }}
+              {% endfor %}
+            {%- else -%}
+              {% for type in shop.enabled_payment_types %}
+                {{ type | payment_type_svg_tag }}
+              {% endfor %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if has_menu -%}
+          <ul class="bottom-bar__linklist linklist list--unstyled" role="list">
+            {%- for link in section.settings.navigation_menu.links -%}
+              <li class="bottom-bar__linklist-item">
+                <a href="{{ link.url }}" class="link">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bottom bar",
+  "class": "shopify-section--bottom-bar",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Streamline your footer, which provides a clean display for copyrights and navigation links. [Learn more](https://www.zalify.com/theme/help/bottom-bar)"
+    },
+    {
+      "type": "checkbox",
+      "id": "reduce_padding",
+      "label": "Reduce padding",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": false
+    },
+    {
+      "type": "link_list",
+      "id": "navigation_menu",
+      "label": "Menu"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "options": [
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "boxed",
+          "label": "Boxed"
+        }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "To configure color, go to your color settings."
+    }
+  ]
+}
+{% endschema %}

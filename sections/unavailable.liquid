@@ -1,0 +1,40 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    --background: {{ settings.header_background.red }}, {{ settings.header_background.green }}, {{ settings.header_background.blue }};
+    --heading-color: {{ settings.header_text_color.red }}, {{ settings.header_text_color.green }}, {{ settings.header_text_color.blue }};
+    --text-color: {{ settings.header_text_color.red }}, {{ settings.header_text_color.green }}, {{ settings.header_text_color.blue }};
+    --primary-button-background: {{ settings.header_text_color.red }}, {{ settings.header_text_color.green }}, {{ settings.header_text_color.blue }};
+    --primary-button-text-color: {{ settings.header_background.red }}, {{ settings.header_background.green }}, {{ settings.header_background.blue }};
+  }
+</style>
+
+<section class="section--flush-bottom">
+  <div class="section__color-wrapper">
+    <div class="empty-state">
+      <span class="empty-state__background-text">403</span>
+
+      <div class="text-container">
+        <h3 class="heading h2">{{ '403.general.title' | t }}</h3>
+        <p>{{ '403.general.description' | t }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if request.design_mode == false %}
+  {% unless settings.block_cn_lang_browsers
+    and settings.unavailable_page != blank
+    and request.path == settings.unavailable_page.url
+  %}
+    <script>
+      location.href = '{{ routes.root_url }}';
+    </script>
+  {% endunless %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Unavaiable",
+  "class": "shopify-section--unavaiable"
+}
+{% endschema %}

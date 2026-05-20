@@ -1,0 +1,658 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    {%- assign border_color = settings.footer_background | color_mix: settings.footer_text_color, 85 -%}
+
+    --background: {{ settings.footer_background.red }}, {{ settings.footer_background.green }}, {{ settings.footer_background.blue }};
+    --heading-color: {{ settings.footer_text_color.red }}, {{ settings.footer_text_color.green }}, {{ settings.footer_text_color.blue }};
+    --text-color: {{ settings.footer_text_color.red }}, {{ settings.footer_text_color.green }}, {{ settings.footer_text_color.blue }};
+    --border-color: {{ border_color.red }}, {{ border_color.green }}, {{ border_color.blue }};
+    --column-gap: 40px;
+  }
+</style>
+
+<footer>
+  <div class="footer {% if settings.footer_background == settings.background %}footer--bordered{% endif %}">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__item-list">
+          {%- for block in section.blocks -%}
+            {%- capture block_title -%}
+              {%- case block.type -%}
+                {%- when 'links' -%}
+                  {%- if block.settings.show_menu_title -%}
+                    {%- assign menu = block.settings.menu -%}
+
+                    {%- if menu != blank -%}
+                      {{- block.settings.menu_title | default: menu.title -}}
+                    {%- endif -%}
+                  {%- endif -%}
+
+                {%- else -%}
+                  {%- if block.settings.title != blank -%}
+                    {{- block.settings.title | escape -}}
+                  {%- endif -%}
+              {%- endcase -%}
+            {%- endcapture -%}
+
+            {%- capture block_content -%}
+              {%- case block.type -%}
+                {%- when 'contact' -%}
+                  {%- if block.settings.email != blank or block.settings.phone != blank or block.settings.address != blank -%}
+                    <div class="footer__item-content">
+                      <ul class="linklist list--unstyled" role="list">
+                        {%- if block.settings.email != blank -%}
+                          <li class="linklist__item">
+                            <a class="link icon-text" href="mailto:{{ block.settings.email }}" aria-label="{{ block.settings.email | escape }}">
+                              {%- render 'icon' with 'envelope-simple', width: 16 -%}
+                              <span>{{ block.settings.email | escape }}</span>
+                            </a>
+                          </li>
+                        {%- endif -%}
+                        {%- if block.settings.phone != blank -%}
+                          <li class="linklist__item">
+                            <a class="link icon-text" href="tel:{{ block.settings.phone }}" aria-label="{{ block.settings.phone | escape }}">
+                              {%- render 'icon' with 'phone', width: 16 -%}
+                              <span>{{ block.settings.phone | escape }}</span>
+                            </a>
+                          </li>
+                        {%- endif -%}
+                        {%- if block.settings.address != blank -%}
+                          <li class="linklist__item">
+                            <div class="footer__item-content icon-text">
+                              {%- render 'icon' with 'map-pin', width: 16 -%}
+                              <span>{{ block.settings.address | escape }}</span>
+                            </div>
+                          </li>
+                        {%- endif -%}
+                      </ul>
+                    </div>
+                  {%- endif -%}
+
+                {%- when 'image' -%}
+                  {%- if block.settings.image != blank -%}
+                    {%- capture sizes_attribute -%}{{ block.settings.image_width }}px{%- endcapture -%}
+                    {%- capture style_attribute -%}width: {{ block.settings.image_width }}px{%- endcapture -%}
+                    {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', style: style_attribute, sizes: sizes_attribute, widths: '100,200,300,400,500,600', class: 'footer__image' -}}
+                  {%- endif -%}
+
+                {%- when 'links' -%}
+                  {%- assign menu = block.settings.menu -%}
+
+                  {%- if menu != blank -%}
+                    <div class="footer__item-content">
+                      <ul class="linklist list--unstyled" role="list">
+                        {%- for link in menu.links -%}
+                          <li class="linklist__item">
+                            <a href="{{ link.url }}" class="link">{{ link.title }}</a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  {%- endif -%}
+
+                {%- when 'newsletter' -%}
+                  <div class="footer__item-content">
+                    {%- if block.settings.content != blank -%}
+                      {{- block.settings.content -}}
+                    {%- endif -%}
+    
+                    {%- form 'customer', id: 'footer-newsletter', class: 'footer__newsletter-form form' -%}
+                      {%- if form.posted_successfully? -%}
+                        <div class="form__banner banner banner--success">
+                          <span class="banner__ribbon">{% render 'icon' with 'form-success' %}</span>
+                          <p class="banner__content">{{ 'footer.newsletter.success' | t }}</p>
+                        </div>
+                      {%- else -%}
+                        {%- if form.errors -%}
+                          <div class="form__banner banner banner--error">
+                            <span class="banner__ribbon">{% render 'icon' with 'form-error' %}</span>
+                            <p class="banner__content">{{ form.errors.translated_fields['email'] }} {{ form.errors.messages['email'] }}</p>
+                          </div>
+                        {%- endif -%}
+    
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+    
+                        <div class="input">
+                          <input type="email" id="footer[contact][email]" name="contact[email]" class="input__field input__field--text" placeholder="{{ 'footer.newsletter.email' | t }}" required>
+                          <button type="submit" class="input__submit-icon tap-area" title="{{ 'footer.newsletter.submit' | t }}">{% render 'icon' with 'arrow-right', direction_aware: true %}</button>
+                        </div>
+                      {%- endif -%}
+                    {%- endform -%}
+                  </div>
+    
+                  {%- if block.settings.show_social_media != blank -%}
+                    <div class="footer__item--newsletter-social-media">
+                      <div class="footer__item-content">
+                        {%- render 'social-media' -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+
+                {%- when 'social_media' -%}
+                  <div class="footer__item-content">
+                    {%- if block.settings.content != blank -%}
+                      {{- block.settings.content -}}
+                    {%- endif -%}
+
+                    {%- render 'social-media' -%}
+                  </div>
+
+                {%- when 'text' -%}
+                  {%- if block.settings.content != blank -%}
+                    <div class="footer__item-content">
+                      {{- block.settings.content -}}
+                    </div>
+                  {%- endif -%}
+              {%- endcase -%}
+            {%- endcapture -%}
+
+            {%- if block_content != blank -%}
+              <div
+                class="footer__item footer__item--{{ block.type | replace: '_', '-' }} {% if block.settings.mobile_width %}footer__item--{{ block.settings.mobile_width }}{% endif %} {% if block.settings.collapse_content_on_mobile %}footer__item--full_width footer__item--collapsed{% endif %} {% if forloop.first %}is-first{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.collapse_content_on_mobile -%}
+                  <div class="hidden-phone">
+                    {%- if block_title != blank -%}
+                      <p class="footer__item-title heading heading--small">
+                        {{- block_title -}}
+                      </p>
+                    {%- endif -%}
+                    {{- block_content -}}
+                  </div>
+
+                  <div
+                    id="block-{{ section.id }}-{{ block.id }}"
+                    class="footer__item-collapse-content hidden-tablet-and-up"
+                  >
+                    <button
+                      is="toggle-button"
+                      class="collapsible-toggle heading heading--small"
+                      aria-controls="block-{{ section.id }}-{{ block.id }}-content"
+                      aria-expanded="false"
+                      style="padding-top: 0"
+                    >
+                      {%- if block_title != blank -%}
+                        {{- block_title -}}
+                      {%- endif -%}
+                      {%- render 'icon' with 'caret-down', width: 16, height: 16 -%}
+                    </button>
+
+                    <collapsible-content id="block-{{ section.id }}-{{ block.id }}-content" class="collapsible">
+                      {{- block_content -}}
+                    </collapsible-content>
+                  </div>
+                {%- else -%}
+                  {%- if block_title != blank -%}
+                    <p class="footer__item-title heading heading--small">
+                      {{- block_title -}}
+                    </p>
+                  {%- endif -%}
+                  {{- block_content -}}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="footer__aside">
+          {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
+            {%- assign country_selector = true -%}
+          {%- endif -%}
+
+          {%- if section.settings.show_locale_selector and localization.available_languages.size > 1 -%}
+            {%- assign locale_selector = true -%}
+          {%- endif -%}
+
+          {%- if country_selector or locale_selector -%}
+            {%- form 'localization', id: 'localization_form_footer', class: 'footer__cross-border' -%}
+              {%- if country_selector -%}
+                <div class="popover-container">
+                  <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+                  <span class="visually-hidden">{{ 'footer.general.country' | t }}</span>
+
+                  <button
+                    type="button"
+                    is="toggle-button"
+                    class="select select--small {% if locale_selector and settings.button_border_radius > 0 %}select--collapse-end{% endif %} text--xsmall popover__country-button"
+                    aria-expanded="false"
+                    aria-controls="footer-currency-selector"
+                  >
+                    {%- if section.settings.show_country_flag -%}
+                      {{ localization.country | image_url: width: 16 | image_tag }}
+                    {%- endif -%}
+
+                    {%- if section.settings.show_country_name -%}
+                      {{- localization.country.name }} ({{ localization.country.currency.iso_code }}
+                      {% if localization.country.currency.symbol -%}
+                        {{- localization.country.currency.symbol }}
+                      {%- endif -%}
+                      )
+                    {%- else -%}
+                      {{ localization.country.currency.iso_code }}
+                      {% if localization.country.currency.symbol -%}
+                        {{- localization.country.currency.symbol }}
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- render 'icon' with 'caret-down', width: 12, height: 12, inline: true -%}
+                  </button>
+
+                  <popover-content
+                    id="footer-currency-selector"
+                    class="popover popover--top popover--left popover--small"
+                  >
+                    <span class="popover__overlay"></span>
+
+                    <header class="popover__header">
+                      <span class="popover__title heading h6">{{- 'footer.general.country' | t -}}</span>
+
+                      <button
+                        type="button"
+                        class="popover__close-button tap-area tap-area--large"
+                        data-action="close"
+                        title="{{ 'general.accessibility.close' | t | escape }}"
+                      >
+                        {%- render 'icon' with 'close' -%}
+                      </button>
+                    </header>
+
+                    <div class="popover__content popover__content--restrict">
+                      <div class="popover__choice-list">
+                        {%- for country in localization.available_countries -%}
+                          <button
+                            type="submit"
+                            name="country_code"
+                            value="{{ country.iso_code }}"
+                            class="popover__choice-item"
+                          >
+                            <span
+                              class="popover__choice-label {% if section.settings.show_country_flag %}popover__choice-label-country{% endif %}"
+                              {% if country.iso_code == localization.country.iso_code %}
+                                aria-current="true"
+                              {% endif %}
+                            >
+                              {%- if section.settings.show_country_flag -%}
+                                {{ country | image_url: width: 16 | image_tag }}
+                              {%- endif -%}
+
+                              {%- if section.settings.show_country_name -%}
+                                {{- country.name }} ({{ country.currency.iso_code }}
+                                {% if country.currency.symbol -%}
+                                  {{- country.currency.symbol }}
+                                {%- endif -%}
+                                )
+                              {%- else -%}
+                                {{ country.currency.iso_code }}
+                                {% if country.currency.symbol -%}
+                                  {{- country.currency.symbol }}
+                                {%- endif -%}
+                              {%- endif -%}
+                            </span>
+                          </button>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  </popover-content>
+                </div>
+              {%- endif -%}
+
+              {%- if locale_selector -%}
+                <div class="popover-container">
+                  <input type="hidden" name="locale_code" value="{{ localization.language.iso_code }}">
+                  <span class="visually-hidden">{{ 'footer.general.language' | t }}</span>
+
+                  <button
+                    type="button"
+                    is="toggle-button"
+                    class="select select--small {% if country_selector and settings.button_border_radius > 0 %}select--collapse-start{% endif %} text--xsmall"
+                    aria-expanded="false"
+                    aria-controls="footer-locale-selector"
+                  >
+                    {{- localization.language.endonym_name | capitalize -}}
+                    {%- render 'icon' with 'caret-down', width: 12, height: 12, inline: true -%}
+                  </button>
+
+                  <popover-content id="footer-locale-selector" class="popover popover--top popover--small">
+                    <span class="popover__overlay"></span>
+
+                    <header class="popover__header">
+                      <span class="popover__title heading h6">{{- 'footer.general.language' | t -}}</span>
+
+                      <button
+                        type="button"
+                        class="popover__close-button tap-area tap-area--large"
+                        data-action="close"
+                        title="{{ 'general.accessibility.close' | t | escape }}"
+                      >
+                        {%- render 'icon' with 'close' -%}
+                      </button>
+                    </header>
+
+                    <div class="popover__content">
+                      <div class="popover__choice-list">
+                        {%- for language in localization.available_languages -%}
+                          <button
+                            type="submit"
+                            name="locale_code"
+                            value="{{ language.iso_code }}"
+                            class="popover__choice-item"
+                          >
+                            <span
+                              class="popover__choice-label"
+                              {% if language.iso_code == localization.language.iso_code %}
+                                aria-current="true"
+                              {% endif %}
+                            >
+                              {{- language.endonym_name | capitalize -}}
+                            </span>
+                          </button>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  </popover-content>
+                </div>
+              {%- endif -%}
+            {%- endform -%}
+          {%- endif -%}
+
+          {%- if section.settings.show_powered_by_shopify -%}
+            <span class="footer__copyright text--xsmall text--subdued">
+              {{- shop.name }}
+              <span class="square-separator square-separator--block square-separator--subdued"></span>
+              {{ powered_by_link | replace: '<a', '<a class="link"' -}}
+            </span>
+          {%- endif -%}
+
+          {%- assign payment_providers = settings.payment_providers | newline_to_br | split: '<br />' -%}
+
+          {%- if section.settings.show_payment_icons
+            and payment_providers != blank
+            or shop.enabled_payment_types.size > 0
+          -%}
+            <div class="footer__payment-methods">
+              <div class="payment-methods-list">
+                {%- if payment_providers != blank -%}
+                  {% for provider in payment_providers %}
+                    {{ provider | downcase | strip | payment_type_svg_tag }}
+                  {% endfor %}
+                {%- else -%}
+                  {% for type in shop.enabled_payment_types %}
+                    {{ type | payment_type_svg_tag }}
+                  {% endfor %}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "shopify-section--footer",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "To sell in multiple currencies, you need to have Shopify Payments enabled in your online store. [Learn more](https://www.zalify.com/theme/help/multi-languages-and-currencies)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_powered_by_shopify",
+      "label": "Show Powered by Shopify",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Country/region selector",
+      "info": "To add a country/region, go to your [markets settings](/admin/settings/markets). [Learn more](https://www.zalify.com/theme/help/multi-languages-and-currencies)"
+    },
+    {
+      "type": "paragraph",
+      "content": "For best user experience, we recommend to keep this setting off and to use the free [Shopify Geolocation app](https://apps.shopify.com/geolocation)."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_selector",
+      "label": "Show country/region selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_flag",
+      "label": "Show country flag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_name",
+      "label": "Show country name",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings](/admin/settings/languages)."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "To configure color, go to your color settings."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact",
+      "name": "Contact",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "About Shopify"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email",
+          "default": "xxx@xxx.com"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone",
+          "default": "(613) XXX-XXXX"
+        },
+        {
+          "type": "text",
+          "id": "address",
+          "label": "Address",
+          "default": "150 Elgin Street in Ottawa, Ontario"
+        },
+        {
+          "type": "select",
+          "id": "mobile_width",
+          "label": "Mobile width",
+          "options": [
+            {
+              "value": "half_width",
+              "label": "1/2"
+            },
+            {
+              "value": "full_width",
+              "label": "Full width"
+            }
+          ],
+          "default": "half_width"
+        },
+        {
+          "type": "checkbox",
+          "id": "collapse_content_on_mobile",
+          "label": "Collapse content on mobile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "300 x 300px .jpg recommended"
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "min": 50,
+          "max": 300,
+          "step": 10,
+          "unit": "px",
+          "label": "Image width",
+          "default": 150
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "name": "Links",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "You can add, remove, change, and view your links and menus from the [Navigation](https://admin.shopify.com/menus) page in your Shopify admin."
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "This menu won't show dropdown items.",
+          "default": "footer"
+        },
+        {
+          "type": "select",
+          "id": "mobile_width",
+          "label": "Mobile width",
+          "options": [
+            {
+              "value": "half_width",
+              "label": "1/2"
+            },
+            {
+              "value": "full_width",
+              "label": "Full width"
+            }
+          ],
+          "default": "half_width"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_menu_title",
+          "label": "Show menu title",
+          "default": true
+        },
+        {
+          "type": "inline_richtext",
+          "id": "menu_title",
+          "label": "Menu title",
+          "info": "Replaces the default menu title."
+        },
+        {
+          "type": "checkbox",
+          "id": "collapse_content_on_mobile",
+          "label": "Collapse content on mobile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Customers who subscribe will have their email address added to the \"accepts marketing\" [customer list](/admin/customers?query=&accepts_marketing=1)."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Newsletter"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>A short sentence describing what someone will receive by subscribing</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social_media",
+          "label": "Show social media",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "social_media",
+      "name": "Social media",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "To configure social media, go to your social media settings."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Follow us"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>To configure social media, go to your social media settings. Change this text in the theme editor.</p>"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "About our store"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme editor.</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+{% if request.design_mode == false %}
+  {% if settings.block_cn_lang_browsers
+    and settings.unavailable_page != blank
+    and request.path != settings.unavailable_page.url
+  %}
+    <script>
+      var language = navigator.language || navigator.browserLanguage;
+      if (language.indexOf('zh') > -1) {
+        document.location.href = '{{ settings.unavailable_page.url }}';
+      }
+    </script>
+  {% endif %}
+
+  {% if settings.block_right_click %}
+    <script>
+      window.oncontextmenu = function (e) {
+        e.preventDefault();
+      };
+    </script>
+  {% endif %}
+
+  {% if settings.block_cn_hk_ips %}
+    {% render 'block-cn-hk-ips' %}
+  {% endif %}
+{% endif %}

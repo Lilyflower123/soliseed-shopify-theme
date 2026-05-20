@@ -1,0 +1,567 @@
+{%- assign should_appear = false -%}
+
+{%- if section.settings.show_only_on_index == true and request.page_type == 'index' -%}
+  {%- assign should_appear = true -%}
+{%- elsif section.settings.show_only_on_index == false -%}
+  {%- assign should_appear = true -%}
+{%- endif -%}
+
+{%- if should_appear and section.settings.preview_video != blank -%}
+  <style>
+    #shopify-section-{{ section.id }} {
+      --block-width: {{ section.settings.mobile_width }}px;
+      --block-border-radius-reduced: {{ section.settings.mobile_border_radius }}px;
+      --block-box-shadow: {% if section.settings.mobile_shadow_effect == 'none' %}none{% else %}var(--box-shadow-{{ section.settings.mobile_shadow_effect }}){% endif %};
+      --block-box-shadow-reduced: {% if section.settings.mobile_shadow_effect == 'none' %}none{% else %}var(--box-shadow-{{ section.settings.mobile_shadow_effect }}-reduced){% endif %};
+      --section-alignment: center;
+    }
+
+    #shopify-section-{{ section.id }} .video-bubble__wrapper {
+      {%- if section.settings.mobile_position == 'bottom_left' -%}
+        left: {{ section.settings.mobile_x_margin }}px;
+      {%- else -%}
+        right: {{ section.settings.mobile_x_margin }}px;
+      {%- endif -%}
+
+      bottom: {{ section.settings.mobile_y_margin }}px;
+      max-width: calc(100% - {{ section.settings.mobile_x_margin }}px * 2);
+    }
+
+    @media screen and (min-width: 741px) {
+      #shopify-section-{{ section.id }} {
+        --block-width: {{ section.settings.desktop_width }}px;
+        --block-border-radius-reduced: {{ section.settings.desktop_border_radius }}px;
+        --block-box-shadow: {% if section.settings.desktop_shadow_effect == 'none' %}none{% else %}var(--box-shadow-{{ section.settings.desktop_shadow_effect }}){% endif %};
+        --block-box-shadow-reduced: {% if section.settings.desktop_shadow_effect == 'none' %}none{% else %}var(--box-shadow-{{ section.settings.desktop_shadow_effect }}-reduced){% endif %};
+      }
+
+      #shopify-section-{{ section.id }} .video-bubble__wrapper {
+        {%- if section.settings.desktop_position == 'bottom_left' -%}
+          right: auto;
+          left: {{ section.settings.desktop_x_margin }}px;
+        {%- else -%}
+          right: {{ section.settings.desktop_x_margin }}px;
+          left: auto;
+        {%- endif -%}
+
+        bottom: {{ section.settings.desktop_y_margin }}px;
+        max-width: calc(100% - {{ section.settings.desktop_x_margin }}px * 2);
+      }
+    }
+  </style>
+
+  {%- assign product = section.settings.product -%}
+  {%- assign preview_video = section.settings.preview_video -%}
+  {%- assign main_video = section.settings.main_video -%}
+  {%- assign main_video_url = section.settings.main_video_url -%}
+
+  <video-bubble
+    class="video-bubble"
+    section-id="{{ section.id }}"
+    {%- if preview_video != blank and main_video != blank or main_video_url != blank -%}
+      has-popup
+    {% endif %}
+    {%- if section.settings.show_only_once -%}
+      only-once
+    {% endif %}
+    hidden
+  >
+    <div class="video-bubble__wrapper">
+      <button
+        class="tap-area bubble__close-button"
+        data-action="close"
+        title="{{ 'general.accessibility.close' | t | escape }}"
+      >
+        {% render 'icon' with 'close', height: 10, width: 10 %}
+      </button>
+
+      <native-video
+        id="{{ section.id }}-{{ preview_video.id }}"
+        class="video-bubble-item__video video-wrapper video-wrapper--native video-wrapper--inert"
+        style="--aspect-ratio: {{ preview_video.aspect_ratio }}"
+        autoplay
+      >
+        <template>
+          {{-
+            preview_video
+            | video_tag: image_size: '200x', controls: false, autoplay: true, muted: true, loop: true
+          -}}
+        </template>
+      </native-video>
+    </div>
+
+    {%- if preview_video != blank and main_video != blank or main_video_url != blank -%}
+      <modal-content id="{{ section.id }}-modal-zoom" class="video-bubble__popup modal">
+        <div class="modal__overlay"></div>
+
+        <div class="modal__content">
+          <div class="bubble-modal">
+            <button
+              type="button"
+              class="modal__close-button tap-area"
+              data-action="close"
+              title="{{ 'general.accessibility.close' | t | escape }}"
+            >
+              {%- render 'icon' with 'close' -%}
+            </button>
+
+            <button
+              type="button"
+              class="modal__close-button pswp__button pswp__button--close prev-next-button"
+              data-action="close"
+              title="{{ 'general.accessibility.close' | t | escape }}"
+            >
+              {% render 'icon' with 'close', width: 20, height: 20 %}
+            </button>
+
+            <div
+              class="bubble-modal__video-wrapper"
+              style="--aspect-ratio: {% if main_video != blank %}{{ main_video.aspect_ratio | at_least: 1 }}{% else %}1.7778{% endif %}"
+            >
+              {%- if main_video != blank -%}
+                <native-video
+                  {% if section.settings.autoplay %}
+                    autoplay
+                  {% endif %}
+                  style="--aspect-ratio: {{ main_video.aspect_ratio | at_least: 1 }}"
+                >
+                  {%- unless section.settings.autoplay -%}
+                    <div class="video-wrapper__poster">
+                      {%- if section.settings.image != blank -%}
+                        {{-
+                          section.settings.image
+                          | image_url: width: section.settings.image.width
+                          | image_tag:
+                            loading: 'lazy',
+                            sizes: '(max-width: 740px) calc(100vw - 24px * 2), 1600px',
+                            widths: '400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800',
+                            class: 'video-wrapper__poster-image'
+                        -}}
+                      {%- else -%}
+                        {{-
+                          'lifestyle-1'
+                          | placeholder_svg_tag: 'video-wrapper__poster-image placeholder-background'
+                        -}}
+                      {%- endif -%}
+
+                      <div class="video-wrapper__poster-content">
+                        <button
+                          type="button"
+                          class="video-wrapper__play-button video-wrapper__play-button--large"
+                          title="{{ 'general.accessibility.play_video' | t | escape }}"
+                        >
+                          {%- render 'icon' with 'play-fill', width: 28, height: 28 -%}
+                        </button>
+                      </div>
+                    </div>
+                  {%- endunless -%}
+
+                  <template>
+                    {{-
+                      main_video
+                      | video_tag:
+                        image_size: '1024x',
+                        controls: section.settings.show_video_controls,
+                        autoplay: section.settings.autoplay,
+                        muted: section.settings.autoplay,
+                        loop: section.settings.autoplay
+                    -}}
+                  </template>
+                </native-video>
+              {%- elsif main_video_url != blank -%}
+                <external-video
+                  {% if section.settings.autoplay %}
+                    autoplay
+                  {% endif %}
+                  provider="{{ main_video_url.type | escape }}"
+                  style="--aspect-ratio: 1.7778"
+                >
+                  <div class="video-wrapper__poster">
+                    {%- if section.settings.image != blank -%}
+                      {{-
+                        section.settings.image
+                        | image_url: width: section.settings.image.width
+                        | image_tag:
+                          loading: 'lazy',
+                          sizes: '(max-width: 740px) calc(100vw - 24px * 2), 1600px',
+                          widths: '400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800',
+                          class: 'video-wrapper__poster-image'
+                      -}}
+                    {%- else -%}
+                      {{- 'lifestyle-1' | placeholder_svg_tag: 'video-wrapper__poster-image placeholder-background' -}}
+                    {%- endif -%}
+
+                    <div class="video-wrapper__poster-content">
+                      {%- unless section.settings.autoplay -%}
+                        <button
+                          type="button"
+                          class="video-wrapper__play-button video-wrapper__play-button--large"
+                          title="{{ 'general.accessibility.play_video' | t | escape }}"
+                        >
+                          {%- render 'icon' with 'play-fill', width: 28, height: 28 -%}
+                        </button>
+                      {%- endunless -%}
+                    </div>
+                  </div>
+
+                  <template>
+                    {%- if main_video_url.type == 'youtube' -%}
+                      <iframe
+                        title="{{ section.settings.title | escape }}"
+                        src="https://www.youtube.com/embed/{{ main_video_url.id }}?playsinline=1&autoplay=1{% if section.settings.autoplay %}&controls=0&mute=1&loop=1{% endif %}&playlist={{ main_video_url.id }}&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}"
+                        allow="autoplay; encrypted-media"
+                        allowfullscreen="allowfullscreen"
+                      ></iframe>
+                    {%- elsif main_video_url.type == 'vimeo' -%}
+                      <iframe
+                        title="{{ section.settings.title | escape }}"
+                        src="https://player.vimeo.com/video/{{ main_video_url.id }}?autoplay=1&autopause=1{% if section.settings.autoplay %}&background=1&loop=1&muted=1{% endif %}&transparent=0&responsive=1&portrait=0&title=0&byline=0&color={{ settings.text_color | remove_first: '#' }}"
+                        allow="autoplay; encrypted-media;"
+                        allowfullscreen="allowfullscreen"
+                      ></iframe>
+                    {%- endif -%}
+                  </template>
+                </external-video>
+              {%- endif -%}
+            </div>
+
+            {%- if product != blank -%}
+              <div class="bubble-modal__content">
+                <div class="bubble-modal__product">
+                  {%- if product.featured_media -%}
+                    {{-
+                      product.featured_media
+                      | image_url: width: product.featured_media.width
+                      | image_tag:
+                        loading: 'lazy',
+                        sizes: '72px',
+                        widths: '72,144,216,288',
+                        class: 'shop-the-look__product-image'
+                    -}}
+                  {%- endif -%}
+
+                  <div class="shop-the-look__product-info">
+                    {%- if settings.show_vendor -%}
+                      <a
+                        class="shop-the-look__product-vendor heading heading--xsmall"
+                        href="{{ product.vendor | url_for_vendor | default: '#' }}"
+                      >
+                        {{- product.vendor -}}
+                      </a>
+                    {%- endif -%}
+
+                    <a href="{{ product.url | default: '#' }}" class="shop-the-look__product-title">
+                      {{- product.title -}}
+                    </a>
+
+                    <div class="shop-the-look__product-bottom-wrapper">
+                      {%- if product.price_varies -%}
+                        {%- capture price_min -%}{{ product.price_min | money }}{%- endcapture -%}
+                        <div class="price">
+                          <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+                          {{- 'collection.product.from_price_html' | t: price_min: price_min -}}
+                        </div>
+                      {%- else -%}
+                        <span class="price">
+                          <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+                          {{- product.price | money -}}
+                        </span>
+                      {%- endif -%}
+
+                      {%- if product.available -%}
+                        {%- if product.variants.size == 1 -%}
+                          {%- capture form_id -%}{{ section.id }}_form_{% increment product_form_index %}{%- endcapture -%}
+                          {%- form 'product', product, id: form_id, is: 'product-form' -%}
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="id" value="{{ product.first_available_variant.id }}">
+                            <button type="submit" class="shop-the-look__product-link link text--subdued">
+                              {{ 'collection.product.add_to_cart' | t }}
+                            </button>
+                          {%- endform -%}
+                        {%- else -%}
+                          <button
+                            is="toggle-button"
+                            class="shop-the-look__product-link link text--subdued"
+                            aria-controls="{{ section.id }}-bubble-drawer"
+                            aria-expanded="false"
+                          >
+                            {{- 'collection.product.quick_view' | t -}}
+                          </button>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </modal-content>
+    {%- endif -%}
+
+    {%- if product != blank -%}
+      <quick-buy-popover
+        href="{{ product.url }}?view=quick-buy-popover"
+        id="{{ section.id }}-bubble-popover"
+        class="popover popover--quick-buy"
+      ></quick-buy-popover>
+
+      {%- if product.available and product.variants.size > 1 -%}
+        <quick-buy-drawer
+          href="{{ product.url }}?view=quick-buy-drawer"
+          id="{{ section.id }}-bubble-drawer"
+          class="drawer drawer--large drawer--quick-buy"
+        ></quick-buy-drawer>
+      {%- endif -%}
+    {%- endif -%}
+  </video-bubble>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Video bubble",
+  "class": "shopify-section--video-bubble",
+  "limit": 1,
+  "disabled_on": {
+    "templates": ["password"],
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Use metafields to configure different bubbles for different product templates. [Learn more](https://www.zalify.com/theme/help/video-bubble-metafield)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_only_on_index",
+      "label": "Show only on home page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_only_once",
+      "label": "Show once to visitors",
+      "default": false
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "video",
+      "id": "preview_video",
+      "label": "Preview video"
+    },
+    {
+      "type": "header",
+      "content": "Main video"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Cover image",
+      "info": "2000 x 1125px .jpg recommended"
+    },
+    {
+      "type": "video",
+      "id": "main_video",
+      "label": "Main video",
+      "info": "When the main video and main video address exist at the same time, only the main video will be displayed."
+    },
+    {
+      "type": "video_url",
+      "id": "main_video_url",
+      "accept": ["vimeo", "youtube"],
+      "label": "Main video URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "info": "Video is muted automatically to allow autoplay.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "Show video controls",
+      "info": "Only applicable with native video.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Desktop settings"
+    },
+    {
+      "type": "select",
+      "id": "desktop_position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "bottom_left"
+    },
+    {
+      "type": "select",
+      "id": "desktop_shadow_effect",
+      "label": "Shadow effect",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width",
+      "label": "Width",
+      "min": 150,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "desktop_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "desktop_x_margin",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Top/Bottom margin",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desktop_y_margin",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Left/Right margin",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Mobile settings"
+    },
+    {
+      "type": "select",
+      "id": "mobile_position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "bottom_left"
+    },
+    {
+      "type": "select",
+      "id": "mobile_shadow_effect",
+      "label": "Shadow effect",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "mobile_width",
+      "label": "Width",
+      "min": 100,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "mobile_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "mobile_x_margin",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Top/Bottom margin",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_y_margin",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Left/Right margin",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video bubble"
+    }
+  ]
+}
+{% endschema %}

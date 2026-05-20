@@ -1,0 +1,38 @@
+<countdown-timer
+  class="countdown"
+  relative-minutes="{{ relative_minutes }}"
+  specific-time="{{ specific_time }}"
+  mode="{{ mode }}"
+  relevant-id="{{ relevant_id }}"
+  {% if hide_on_complete %}
+    hide-on-complete
+  {% endif %}
+>
+  <div class="countdown-container">
+    <dl class="countdown-item">
+      <dt class="countdown-label">{{ 'countdown.days' | t }}</dt>
+      <dd class="countdown-number">00</dd>
+    </dl>
+    <div class="countdown-item">
+      <span class="countdown-number">:</span>
+    </div>
+    <dl class="countdown-item">
+      <dt class="countdown-label">{{ 'countdown.hours' | t }}</dt>
+      <dd class="countdown-number">00</dd>
+    </dl>
+    <div class="countdown-item">
+      <span class="countdown-number">:</span>
+    </div>
+    <dl class="countdown-item">
+      <dt class="countdown-label">{{ 'countdown.mins' | t }}</dt>
+      <dd class="countdown-number">00</dd>
+    </dl>
+    <div class="countdown-item">
+      <span class="countdown-number">:</span>
+    </div>
+    <dl class="countdown-item">
+      <dt class="countdown-label">{{ 'countdown.secs' | t }}</dt>
+      <dd class="countdown-number">00</dd>
+    </dl>
+  </div>
+</countdown-timer>

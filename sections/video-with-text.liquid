@@ -1,0 +1,525 @@
+<style>
+  #shopify-section-{{ section.id }} {
+  	{%- if section.settings.text_color == 'rgba(0,0,0,0)' -%}
+   		{%- assign heading_color = settings.heading_color -%}
+   		{%- assign text_color = settings.text_color -%}
+   	{%- else -%}
+   		{%- assign heading_color = section.settings.text_color -%}
+   		{%- assign text_color = section.settings.text_color -%}
+   	{%- endif -%}
+
+   	{%- unless section.settings.button_text_color == 'rgba(0,0,0,0)' -%}
+   		{%- assign button_text_color = section.settings.button_text_color -%}
+   		--primary-button-text-color: {{ button_text_color.red }}, {{ button_text_color.green }}, {{ button_text_color.blue }};
+   	{%- endunless -%}
+
+   	{%- unless section.settings.button_background == 'rgba(0,0,0,0)' -%}
+   		{%- assign button_background = section.settings.button_background -%}
+   		--primary-button-background: {{ button_background.red }}, {{ button_background.green }}, {{ button_background.blue }};
+   	{%- endunless -%}
+
+   	--heading-color: {{ heading_color.red }}, {{ heading_color.green }}, {{ heading_color.blue }};
+   	--text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+
+   	--section-accent-background: {{ section.settings.background.red }} {{ section.settings.background.green }} {{ section.settings.background.blue }} / {{ section.settings.background.alpha }};
+   	--section-animation-play-state: paused;
+
+   	--top-padding: {{ section.settings.mobile_top_padding }}px;
+   	--bottom-padding: {{ section.settings.mobile_bottom_padding }}px;
+  }
+
+  {%- if section.settings.background != 'rgba(0,0,0,0)' -%}
+    #shopify-section-{{ section.id }} .image-with-text__image-wrapper,
+    #shopify-section-{{ section.id }} .image-with-text::before {
+      --block-border-radius-reduced: 0px;
+    }
+  {%- endif -%}
+
+  #shopify-section-{{ section.id }} .image-with-text__content {
+  	text-align: {{ section.settings.mobile_text_alignment }};
+  }
+
+  [dir='rtl'] #shopify-section-{{ section.id }} .image-with-text__content {
+  	{%- case section.settings.mobile_text_alignment -%}
+  		{% when 'left' %}
+  			{%- assign mobile_text_alignment = 'right' -%}
+  		{% when 'right' %}
+  			{%- assign mobile_text_alignment = 'left' -%}
+  		{% else %}
+  		{%- assign mobile_text_alignment = mobile_text_alignment -%}
+  	{%- endcase -%}
+
+  	text-align: {{ mobile_text_alignment }};
+  }
+
+  {%- if section.settings.ignore_vertical_spacing -%}
+  	#shopify-section-{{ section.id }} .section {
+  		margin-top: 0;
+  		margin-bottom: 0;
+  	}
+
+  	#shopify-section-{{ section.id }} .image-with-text__wrapper {
+  		padding-top: 0;
+  		padding-bottom: 0;
+  	}
+  {%- endif -%}
+
+  @media screen and (min-width: 741px) {
+  	#shopify-section-{{ section.id }} {
+  		--top-padding: {{ section.settings.desktop_top_padding }}px;
+  		--bottom-padding: {{ section.settings.desktop_bottom_padding }}px;
+  		--text-alignment: {{ section.settings.desktop_text_alignment }};
+  	}
+
+  	#shopify-section-{{ section.id }} .image-with-text__content {
+  		text-align: {{ section.settings.desktop_text_alignment }};
+  	}
+
+  	[dir='rtl'] #shopify-section-{{ section.id }} .image-with-text__content {
+  		{%- case section.settings.desktop_text_alignment -%}
+  			{% when 'left' %}
+  				{%- assign desktop_text_alignment = 'right' -%}
+  			{% when 'right' %}
+  				{%- assign desktop_text_alignment = 'left' -%}
+  			{% else %}
+  			{%- assign desktop_text_alignment = desktop_text_alignment -%}
+  		{%- endcase -%}
+
+  		text-align: {{ desktop_text_alignment }};
+  	}
+  }
+</style>
+
+<section class="section">
+  <div class="container">
+    <image-with-text
+      {% if section.settings.reveal_on_scroll %}
+        reveal-on-scroll
+      {% endif %}
+      class="image-with-text section--padding {% if section.settings.video_position == 'right' %}image-with-text--reverse{% endif %} image-with-text--overlap-text"
+      style="--image-aspect-ratio: {{ section.settings.image.aspect_ratio | default: 1 }}; --image-max-height: {{ section.settings.image.height }}px"
+    >
+      <div class="image-with-text__wrapper">
+        <div class="image-with-text__image-wrapper">
+          {%- if section.settings.video_file != blank -%}
+            <native-video
+              class="video-wrapper image-with-text__image video-wrapper--native {% if section.settings.autoplay %}video-wrapper--inert{% endif %}"
+              {% if section.settings.reveal_on_scroll %}
+                reveal-visibility
+              {% endif %}
+              style="--aspect-ratio: {{ section.settings.video_file.aspect_ratio }}"
+              {% if section.settings.autoplay %}
+                autoplay
+              {% endif %}
+            >
+              {%- unless section.settings.autoplay -%}
+                <div class="video-wrapper__poster">
+                  {%- if section.settings.image != blank -%}
+                    {{-
+                      section.settings.image
+                      | image_url: width: section.settings.image.width
+                      | image_tag:
+                        loading: 'lazy',
+                        sizes: '(max-width: 740px) calc(100vw - 96px), (max-width: 999px) calc(100vw - 160px), 600px',
+                        widths: '600,700,800,1000,1200,1400',
+                        class: 'video-wrapper__poster-image'
+                    -}}
+                  {%- else -%}
+                    {{- 'lifestyle-1' | placeholder_svg_tag: 'video-wrapper__poster-image placeholder-background' -}}
+                  {%- endif -%}
+
+                  <div
+                    class="video-wrapper__poster-content content-box content-box--large content-box--text-center"
+                    style="display: flex; align-items: center; justify-content: center"
+                  >
+                    {%- unless section.settings.autoplay -%}
+                      <button
+                        type="button"
+                        class="video-wrapper__play-button"
+                        title="{{ 'general.accessibility.play_video' | t | escape }}"
+                      >
+                        {%- render 'icon' with 'play-fill', width: 28, height: 28 -%}
+                      </button>
+                    {%- endunless -%}
+                  </div>
+                </div>
+              {%- endunless -%}
+
+              <template>
+                {{-
+                  section.settings.video_file
+                  | video_tag:
+                    image_size: '1024x',
+                    controls: section.settings.show_video_controls,
+                    autoplay: section.settings.autoplay,
+                    muted: section.settings.autoplay,
+                    loop: section.settings.autoplay
+                -}}
+              </template>
+            </native-video>
+          {%- elsif section.settings.video_url != blank -%}
+            <external-video
+              class="video-wrapper image-with-text__image {% if section.settings.autoplay %}video-wrapper--inert{% endif %}"
+              {% if section.settings.reveal_on_scroll %}
+                reveal-visibility
+              {% endif %}
+              {% if section.settings.autoplay %}
+                autoplay
+              {% endif %}
+              provider="{{ section.settings.video_url.type | escape }}"
+            >
+              <div class="video-wrapper__poster">
+                {%- if section.settings.image != blank -%}
+                  {{-
+                    section.settings.image
+                    | image_url: width: section.settings.image.width
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: '(max-width: 740px) calc(100vw - 96px), (max-width: 999px) calc(100vw - 160px), 600px',
+                      widths: '600,700,800,1000,1200,1400',
+                      class: 'video-wrapper__poster-image'
+                  -}}
+                {%- else -%}
+                  {{- 'lifestyle-1' | placeholder_svg_tag: 'video-wrapper__poster-image placeholder-background' -}}
+                {%- endif -%}
+
+                <div
+                  class="video-wrapper__poster-content content-box content-box--large content-box--text-center"
+                  style="display: flex; align-items: center; justify-content: center"
+                >
+                  {%- unless section.settings.autoplay -%}
+                    <button
+                      type="button"
+                      class="video-wrapper__play-button"
+                      title="{{ 'general.accessibility.play_video' | t | escape }}"
+                    >
+                      {%- render 'icon' with 'play-fill', width: 28, height: 28 -%}
+                    </button>
+                  {%- endunless -%}
+                </div>
+              </div>
+
+              <template>
+                {%- if section.settings.video_url.type == 'youtube' -%}
+                  <iframe
+                    title="{{ section.settings.title | escape }}"
+                    src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?playsinline=1&autoplay=1{% if section.settings.autoplay %}&controls=0&mute=1&loop=1{% endif %}&playlist={{ section.settings.video_url.id }}&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen="allowfullscreen"
+                  ></iframe>
+                {%- elsif section.settings.video_url.type == 'vimeo' -%}
+                  <iframe
+                    title="{{ section.settings.title | escape }}"
+                    src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&autopause=1{% if section.settings.autoplay %}&background=1&loop=1&muted=1{% endif %}&transparent=0&responsive=1&portrait=0&title=0&byline=0&color={{ settings.text_color | remove_first: '#' }}"
+                    allow="autoplay; encrypted-media;"
+                    allowfullscreen="allowfullscreen"
+                  ></iframe>
+                {%- endif -%}
+              </template>
+            </external-video>
+          {%- endif -%}
+
+          {%- if section.settings.video_file == blank and section.settings.video_url == blank -%}
+            {%- if section.settings.reveal_on_scroll -%}
+              {{-
+                'image'
+                | placeholder_svg_tag: 'image-with-text__image placeholder-background'
+                | replace: '<svg', '<svg reveal-visibility'
+              -}}
+            {%- else -%}
+              {{- 'image' | placeholder_svg_tag: 'image-with-text__image placeholder-background' -}}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+
+        <div class="image-with-text__content-wrapper">
+          <div class="image-with-text__content-list">
+            <image-with-text-item class="image-with-text__content text-container">
+              {%- if section.settings.subheading != blank -%}
+                <h2 class="heading heading--small">
+                  <split-lines
+                    {% if section.settings.reveal_on_scroll or forloop.first != true %}
+                      reveal
+                    {% endif %}
+                  >
+                    {{- section.settings.subheading | escape -}}
+                  </split-lines>
+                </h2>
+              {%- endif -%}
+
+              {%- if section.settings.title != blank -%}
+                {%- if section.settings.subheading != blank -%}
+                  <h3 class="heading h3">
+                    <split-lines
+                      {% if section.settings.reveal_on_scroll or forloop.first != true %}
+                        reveal
+                      {% endif %}
+                    >
+                      {{- section.settings.title | escape -}}
+                    </split-lines>
+                  </h3>
+                {%- else -%}
+                  <h2 class="heading h3">
+                    <split-lines
+                      {% if section.settings.reveal_on_scroll or forloop.first != true %}
+                        reveal
+                      {% endif %}
+                    >
+                      {{- section.settings.title | escape -}}
+                    </split-lines>
+                  </h2>
+                {%- endif -%}
+              {%- endif -%}
+
+              <div
+                class="image-with-text__text-wrapper"
+                {% if section.settings.reveal_on_scroll or forloop.first != true %}
+                  reveal
+                {% endif %}
+              >
+                {%- if section.settings.content != blank -%}
+                  {{- section.settings.content -}}
+                {%- endif -%}
+
+                {%- if section.settings.button_text != blank -%}
+                  <div class="button-wrapper">
+                    <a href="{{ section.settings.button_link }}" class="button button--primary">
+                      {{- section.settings.button_text -}}
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </image-with-text-item>
+          </div>
+        </div>
+      </div>
+    </image-with-text>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video with text",
+  "class": "shopify-section--video-with-text",
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Reveal on scroll",
+      "info": "Show animation when section becomes visible.",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "video_position",
+      "label": "Desktop video position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "desktop_text_alignment",
+      "label": "Desktop text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "mobile_text_alignment",
+      "label": "Mobile text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Cover image",
+      "info": "1400 x 1400px .jpg recommended"
+    },
+    {
+      "type": "video",
+      "id": "video_file",
+      "label": "Video file",
+      "info": "Only .mp4 file is supported."
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["vimeo", "youtube"],
+      "label": "Video",
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "info": "Video is muted automatically to allow autoplay.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "Show video controls",
+      "info": "Only applicable with native video.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Video with text"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Use video with text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "ignore_vertical_spacing",
+      "label": "Ignore vertical spacing in theme settings.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "desktop_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desktop_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video with text"
+    }
+  ]
+}
+{% endschema %}

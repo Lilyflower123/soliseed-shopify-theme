@@ -1,0 +1,411 @@
+{%- if section.settings.background != settings.background and section.settings.background != 'rgba(0,0,0,0)' -%}
+  {%- assign blends_with_background = false -%}
+{%- else -%}
+  {%- assign blends_with_background = true -%}
+{%- endif -%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    {%- if section.settings.background == 'rgba(0,0,0,0)' -%}
+      {%- assign section_background = settings.background -%}
+    {%- else -%}
+      {%- assign section_background = section.settings.background -%}
+    {%- endif -%}
+
+    {%- if section.settings.text_color == 'rgba(0,0,0,0)' -%}
+      {%- assign heading_color = settings.heading_color -%}
+      {%- assign text_color = settings.text_color -%}
+    {%- else -%}
+      {%- assign heading_color = section.settings.text_color -%}
+      {%- assign text_color = section.settings.text_color -%}
+    {%- endif -%}
+
+    --heading-color: {{ heading_color.red }}, {{ heading_color.green }}, {{ heading_color.blue }};
+    --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+
+    --prev-next-button-background: {{ settings.background.red }}, {{ settings.background.green }}, {{ settings.background.blue }};
+    --prev-next-button-color: {{ settings.text_color.red }}, {{ settings.text_color.green }}, {{ settings.text_color.blue }};
+
+    --section-alignment: center;
+   	--section-background: {{ section_background.red }}, {{ section_background.green }}, {{ section_background.blue }};
+   	--section-products-per-row: 2;
+
+    --top-padding: {{ section.settings.mobile_top_padding }}px;
+    --bottom-padding: {{ section.settings.mobile_bottom_padding }}px;
+  }
+
+  {%- if section.settings.ignore_vertical_spacing -%}
+    #shopify-section-{{ section.id }} .section {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  {%- endif -%}
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} {
+  		--section-products-per-row: {{ section.settings.products_per_row | at_most: 3 }};
+      --top-padding: {{ section.settings.desktop_top_padding }}px;
+      --bottom-padding: {{ section.settings.desktop_bottom_padding }}px;
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    #shopify-section-{{ section.id }} {
+      --section-products-per-row: {{ section.settings.products_per_row | at_most: 4 }};
+    }
+
+    #shopify-section-{{ section.id }} .modal {
+      --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    #shopify-section-{{ section.id }} {
+      --section-products-per-row: {{ section.settings.products_per_row }};
+    }
+  }
+</style>
+
+<section class="section {% unless blends_with_background %}section--flush{% endunless %}">
+  <div class="section__color-wrapper section--padding">
+    <div class="container {% unless blends_with_background or section.settings.ignore_vertical_spacing %}vertical-breather{% endunless %}">
+      {%- if section.settings.subheading != blank or section.settings.title != blank -%}
+        <header class="section__header">
+          <div class="text-container">
+            {%- if section.settings.subheading != blank -%}
+              <h2 class="heading heading--small">{{ section.settings.subheading | escape }}</h2>
+            {%- endif -%}
+
+            {%- if section.settings.title != blank -%}
+              {%- if section.settings.subheading != blank -%}
+                <h3 class="heading h2">{{ section.settings.title | escape }}</h3>
+              {%- else -%}
+                <h2 class="heading h2">{{ section.settings.title | escape }}</h2>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </header>
+      {%- endif -%}
+
+      <div class="featured-collections">
+        {%- assign smallest_image_aspect_ratio = 0 -%}
+
+        <video-carousel
+          {% if settings.stagger_products_apparition %}
+            stagger-apparition
+          {% endif %}
+          id="block-{{ section.id }}-{{ block.id }}"
+          class="product-list product-list--center"
+        >
+          <div class="scroller">
+            <div class="product-list__inner product-list__inner--scroller hide-scrollbar">
+              {%- assign number_of_products_minus_one = section.settings.products_per_row | minus: 1 -%}
+              {%- assign gap_width = 24.0
+                | divided_by: section.settings.products_per_row
+                | times: number_of_products_minus_one
+              -%}
+              {%- capture poster_sizes_attribute -%}(max-width: 740px) 52vw, calc(min(100vw - 80px, 1520px) / {{ section.settings.products_per_row }} - {{ gap_width | ceil }}px){%- endcapture -%}
+              {%- capture avatar_sizes_attribute -%}(max-width: 740px) 36px, 48px{%- endcapture -%}
+
+              {%- for block in section.blocks limit: section.settings.products_count -%}
+                {%- assign smallest_image_aspect_ratio = 1 -%}
+                {%- capture look_id -%}block-{{ section.id }}-{{ block.id }}{%- endcapture -%}
+
+                <product-item
+                  class="video-carousel-item"
+                  {% if settings.stagger_products_apparition %}
+                    reveal
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  {%- render 'video-carousel-item',
+                    block: block,
+                    index: forloop.index,
+                    look_id: look_id,
+                    poster_sizes_attribute: poster_sizes_attribute,
+                    avatar_sizes_attribute: avatar_sizes_attribute,
+                    reveal: settings.stagger_products_apparition
+                  -%}
+                </product-item>
+
+                {%- if block.settings.product != blank -%}
+                  <quick-buy-popover
+                    href="{{ block.settings.product.url }}?view=quick-buy-popover"
+                    id="{{ look_id }}-{{ forloop.index }}-popover"
+                    class="popover popover--quick-buy"
+                  ></quick-buy-popover>
+
+                  {%- if block.settings.product.available and block.settings.product.variants.size > 1 -%}
+                    <quick-buy-drawer
+                      href="{{ block.settings.product.url }}?view=quick-buy-drawer"
+                      id="{{ look_id }}-{{ forloop.index }}-drawer"
+                      class="drawer drawer--large drawer--quick-buy"
+                    ></quick-buy-drawer>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- else -%}
+                {%- assign smallest_image_aspect_ratio = 1 -%}
+
+                {%- for i in (1..section.settings.products_count) -%}
+                  {%- capture product_image -%}product-{% cycle '1', '2', '3', '4', '5' %}{% endcapture %}
+                  {%- render 'video-carousel-item-placeholder',
+                    product_image: product_image,
+                    reveal: settings.stagger_products_apparition
+                  -%}
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.blocks.size == 0 -%}
+            {%- assign products_shown = section.settings.products_count -%}
+          {%- else -%}
+            {%- assign products_shown = section.blocks.size
+              | default: section.settings.products_count
+              | at_most: section.settings.products_count
+            -%}
+          {%- endif -%}
+
+          {%- if products_shown > section.settings.products_per_row -%}
+            {%- if smallest_image_aspect_ratio == 0 -%}
+              {%- assign smallest_image_aspect_ratio = 1 -%}
+            {%- endif -%}
+
+            <prev-next-buttons
+              class="product-list__prev-next hidden-pocket"
+              style="--smallest-image-aspect-ratio: {{ smallest_image_aspect_ratio }}"
+            >
+              <button class="product-list__arrow prev-next-button prev-next-button--prev" disabled>
+                <span class="visually-hidden">{{ 'general.accessibility.previous' | t }}</span>
+                {%- render 'icon' with 'arrow-left', block: true, direction_aware: true -%}
+              </button>
+
+              <button class="product-list__arrow prev-next-button prev-next-button--next">
+                <span class="visually-hidden">{{ 'general.accessibility.next' | t }}</span>
+                {%- render 'icon' with 'arrow-right', block: true, direction_aware: true -%}
+              </button>
+            </prev-next-buttons>
+          {%- endif -%}
+        </video-carousel>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video carousel",
+  "class": "shopify-section--video-carousel",
+  "max_blocks": 10,
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Enhance your store with compelling video, with or without product highlights, for a dynamic shopping experience. [Learn more](https://www.zalify.com/theme/help/video-carousel)"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Video carousel"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Products to show",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Mode",
+      "options": [
+        {
+          "value": "only_video",
+          "label": "Video only"
+        },
+        {
+          "value": "video_with_product",
+          "label": "Video with product"
+        }
+      ],
+      "default": "video_with_product"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "ignore_vertical_spacing",
+      "label": "Ignore vertical spacing in theme settings.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "desktop_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desktop_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "Preview video"
+        },
+        {
+          "type": "image_picker",
+          "id": "preview_video_poster",
+          "label": "Cover image"
+        },
+        {
+          "type": "video",
+          "id": "preview_video",
+          "label": "Video file",
+          "info": "When the preview video and preview video url exist at the same time, only the preview video will be displayed."
+        },
+        {
+          "type": "video_url",
+          "id": "preview_video_url",
+          "accept": ["vimeo", "youtube"],
+          "label": "Video"
+        },
+        {
+          "type": "header",
+          "content": "Main video"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Cover image",
+          "info": "2000 x 1125px .jpg recommended. Required if autoplay is allowed."
+        },
+        {
+          "type": "video",
+          "id": "main_video",
+          "label": "Video file",
+          "info": "When the main video and main video address exist at the same time, only the main video will be displayed."
+        },
+        {
+          "type": "video_url",
+          "id": "main_video_url",
+          "accept": ["vimeo", "youtube"],
+          "label": "Video"
+        },
+        {
+          "type": "checkbox",
+          "id": "autoplay",
+          "label": "Autoplay",
+          "info": "Video is muted automatically to allow autoplay.",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_video_controls",
+          "label": "Show controller",
+          "info": "Only applicable with video file.",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video carousel",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

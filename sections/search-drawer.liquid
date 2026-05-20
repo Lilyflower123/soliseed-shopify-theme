@@ -1,0 +1,180 @@
+<predictive-search-drawer
+  section="{{ section.id }}"
+  id="search-drawer"
+  class="predictive-search drawer drawer--large drawer--from-left"
+  initial-focus-selector="#search-drawer [name='q']"
+  reverse-breakpoint="screen and (min-width: 1200px)"
+  append-body
+>
+  {%- if section.settings.show_sorting_numbers -%}
+    <style>
+      #search-drawer {
+        {%- if section.settings.primary_sorting_number_color == 'rgba(0,0,0,0)' -%}
+          {%- assign primary_text_color = settings.text_color -%}
+        {%- else -%}
+          {%- assign primary_text_color = section.settings.primary_sorting_number_color -%}
+        {%- endif -%}
+
+        {%- if section.settings.secondary_sorting_number_color == 'rgba(0,0,0,0)' -%}
+          {%- assign secondary_text_color = settings.text_color -%}
+        {%- else -%}
+          {%- assign secondary_text_color = section.settings.secondary_sorting_number_color -%}
+        {%- endif -%}
+
+        --primary-sorting-number-text-color: {{ primary_text_color.red }}, {{ primary_text_color.green }}, {{ primary_text_color.blue }};
+        --secondary-sorting-number-text-color: {{ secondary_text_color.red }}, {{ secondary_text_color.green }}, {{ secondary_text_color.blue }};
+      }
+
+      #search-drawer .linklist__item:nth-child(1),
+      #search-drawer .linklist__item:nth-child(2),
+      #search-drawer .linklist__item:nth-child(3) {
+        font-weight: bold;
+      }
+    </style>
+  {%- endif -%}
+
+  <span class="drawer__overlay"></span>
+
+  <header class="drawer__header">
+    <form id="predictive-search-form" class="predictive-search__form" action="{{ routes.search_url }}" method="get">
+      {%- render 'icon' with 'header-search', width: 20, height: 20 -%}
+
+      <input
+        type="text"
+        name="q"
+        class="predictive-search__input"
+        autocomplete="off"
+        autocorrect="off"
+        placeholder="{{ 'search.general.search_placeholder' | t }}"
+        aria-label="{{ 'search.general.title' | t }}"
+      >
+    </form>
+
+    <button
+      type="button"
+      class="drawer__close-button tap-area"
+      title="{{ 'general.accessibility.close' | t | escape }}"
+      data-action="close"
+    >
+      {%- render 'icon' with 'close' -%}
+    </button>
+  </header>
+
+  <div class="drawer__content">
+    <div class="predictive-search__content-wrapper">
+      <div class="predictive-search__loading-state" hidden>
+        <div class="spinner">
+          {%- render 'icon' with 'loading-spinner' -%}
+        </div>
+      </div>
+
+      <div class="predictive-search__results" aria-live="polite" hidden>
+        {%- comment -%}
+          Content is filled dynamically in JS.
+        {%- endcomment -%}
+      </div>
+
+      {%- assign search_menu = section.settings.search_menu -%}
+
+      {%- if search_menu.links.size > 0 -%}
+        <div class="predictive-search__menu-list">
+          {%- if search_menu.levels == 1 -%}
+            <div class="predictive-search__menu">
+              <p class="predictive-search__menu-title heading heading--small">{{ search_menu.title }}</p>
+
+              <ul class="linklist list--unstyled" role="list">
+                {%- for link in search_menu.links -%}
+                  <li class="linklist__item">
+                    <a href="{{ link.url }}" class="link--faded">
+                      {%- if section.settings.show_sorting_numbers -%}
+                        <span class="predictive-search__menu-item-number">{{ forloop.index }}</span>
+                      {%- endif -%}
+                      {{- link.title -}}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- else -%}
+            {%- for link in search_menu.links -%}
+              <div class="predictive-search__menu">
+                {%- if link.url != '#' -%}
+                  <a href="{{ link.url }}" class="predictive-search__menu-title heading heading--small">
+                    {{- link.title -}}
+                  </a>
+                {%- else -%}
+                  <p class="predictive-search__menu-title heading heading--small">{{ link.title }}</p>
+                {%- endif -%}
+
+                {%- if link.links.size > 0 -%}
+                  <ul class="linklist list--unstyled" role="list">
+                    {%- for sub_link in link.links -%}
+                      <li class="linklist__item">
+                        <a href="{{ sub_link.url }}" class="link--faded">
+                          {%- if section.settings.show_sorting_numbers -%}
+                            <span class="predictive-search__menu-item-number">{{ forloop.index }}</span>
+                          {%- endif -%}
+                          {{- sub_link.title -}}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <footer class="drawer__footer drawer__footer--no-top-padding" hidden>
+    <button type="submit" form="predictive-search-form" class="button button--primary button--full">
+      {{ 'search.general.view_all_results' | t }}
+    </button>
+  </footer>
+</predictive-search-drawer>
+
+{% schema %}
+{
+  "name": "Search drawer",
+  "class": "shopify-section--search-drawer",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Predictive search shows suggested results as you type. You can customize the behavior of predictive search with the [Search & Discovery app](https://help.shopify.com/en/manual/online-store/search-and-discovery) from Shopify. [Learn more](https://www.zalify.com/theme/help/predictive-search)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Promote collections, products or important pages when search terms is empty."
+    },
+    {
+      "type": "link_list",
+      "id": "search_menu",
+      "label": "Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sorting_numbers",
+      "label": "Show sorting numbers",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "primary_sorting_number_color",
+      "label": "Primary sorting number",
+      "default": "#fb2222"
+    },
+    {
+      "type": "color",
+      "id": "secondary_sorting_number_color",
+      "label": "Secondary sorting number",
+      "default": "#c85b00"
+    }
+  ]
+}
+{% endschema %}

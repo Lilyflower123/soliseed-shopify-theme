@@ -1,0 +1,418 @@
+{%- if section.settings.background != settings.background and section.settings.background != 'rgba(0,0,0,0)' -%}
+  {%- assign blends_with_background = false -%}
+{%- else -%}
+  {%- assign blends_with_background = true -%}
+{%- endif -%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    {%- assign text_position = section.settings.text_position | split: '_' | first -%}
+
+    {%- case text_position -%}
+      {%- when 'top' -%}
+        {%- assign section_items_alignment = 'flex-start' -%}
+      {%- when 'middle' -%}
+        {%- assign section_items_alignment = 'center' -%}
+      {%- when 'bottom' -%}
+        {%- assign section_items_alignment = 'flex-end' -%}
+    {%- endcase -%}
+
+    {%- if section.settings.background == 'rgba(0,0,0,0)' -%}
+      {%- assign section_background = settings.background -%}
+    {%- else -%}
+      {%- assign section_background = section.settings.background -%}
+    {%- endif -%}
+
+    {%- if section.settings.text_color == 'rgba(0,0,0,0)' -%}
+      {%- comment -%}
+        {%- assign heading_color = settings.heading_color -%}
+      {%- endcomment -%}
+      {%- assign text_color = settings.text_color -%}
+    {%- else -%}
+      {%- comment -%}
+        {%- assign heading_color = section.settings.text_color -%}
+      {%- endcomment -%}
+      {%- assign text_color = section.settings.text_color -%}
+    {%- endif -%}
+
+    {%- if section.settings.button_background == 'rgba(0,0,0,0)' -%}
+      {%- assign button_background = settings.primary_button_background -%}
+    {%- else -%}
+      {%- assign button_background = section.settings.button_background -%}
+    {%- endif -%}
+
+    {%- if section.settings.button_text_color == 'rgba(0,0,0,0)' -%}
+      {%- assign button_text_color = settings.primary_button_text_color -%}
+    {%- else -%}
+      {%- assign button_text_color = section.settings.button_text_color -%}
+    {%- endif -%}
+
+    --heading-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+    --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+
+    --primary-button-background: {{ button_background.red }}, {{ button_background.green }}, {{ button_background.blue }};
+    --primary-button-text-color: {{ button_text_color.red }}, {{ button_text_color.green }}, {{ button_text_color.blue }};
+
+    --section-alignment: {{ section_items_alignment }};
+    --section-background: {{ section_background.red }}, {{ section_background.green }}, {{ section_background.blue }};
+
+    --top-padding: {{ section.settings.mobile_top_padding }}px;
+    --bottom-padding: {{ section.settings.mobile_bottom_padding }}px;
+  }
+
+  {%- if section.settings.background_type == 'boxed' and section.settings.ignore_vertical_spacing -%}
+    #shopify-section-{{ section.id }} .section {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  {%- endif -%}
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} {
+      --top-padding: {{ section.settings.desktop_top_padding }}px;
+      --bottom-padding: {{ section.settings.desktop_bottom_padding }}px;
+    }
+  }
+</style>
+
+{%- comment -%}
+  ------------------------------------------------------------------------------------------------------------------------
+  JavaScript: This section composes the "external-video" element, but does not have dedicated custom element.
+  ------------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+<section class="section {% if section.settings.background_type == 'full_width' or section.settings.background_type == 'boxed' and blends_with_background == false %}section--flush{% endif %}">
+  {%- capture section_header -%}
+    {%- if section.settings.subheading != blank or section.settings.title != blank or section.settings.button_text != blank -%}
+      {%- assign text_position = section.settings.text_position | split: '_' | last -%}
+
+      <header class="{% if section.settings.background_type == 'boxed' %}section__header{% endif %} text-container">
+        {%- if section.settings.subheading != blank -%}
+          <h2 class="heading heading--small">{{ section.settings.subheading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.title != blank -%}
+          {%- if section.settings.subheading != blank -%}
+            <h3 class="heading h2">{{ section.settings.title | escape }}</h3>
+          {%- else -%}
+            <h2 class="heading h2">{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link }}" class="button button--primary">{{ section.settings.button_text | escape }}</a>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture video_content -%}
+    <div class="video-section video-section--{% if section.settings.background_type == 'boxed' %}boxed{% else %}full{% endif %} video-section--{{ section.settings.video_size }}">
+      {%- capture video_poster -%}
+        <div class="video-wrapper__poster">
+          {%- unless section.settings.autoplay -%}
+            {%- if section.settings.image != blank -%}
+              {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: '(max-width: 740px) calc(100vw - 24px * 2), 1600px', widths: '400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800', class: 'video-wrapper__poster-image' -}}
+            {%- else -%}
+              {{- 'lifestyle-1' | placeholder_svg_tag: 'video-wrapper__poster-image placeholder-background' -}}
+            {%- endif -%}
+          {%- endunless -%}
+
+          <div class="container">
+            <div class="video-wrapper__poster-content {% if section.settings.background_type != 'boxed' %}content-box content-box--large content-box--text-{{ text_position }} content-box--{{ text_position }}{% endif %} vertical-breather">
+              {%- unless section.settings.autoplay -%}
+                <button type="button" class="video-wrapper__play-button video-wrapper__play-button--large mx-auto" title="{{ 'general.accessibility.play_video' | t | escape }}">
+                  {%- render 'icon' with 'play-fill', width: 28, height: 28 -%}
+                </button>
+              {%- endunless -%}
+
+              {%- if section.settings.background_type != 'boxed' -%}
+                {{- section_header -}}
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endcapture -%}
+
+      {%- if section.settings.video_file != blank -%}
+        <native-video {% if section.settings.autoplay %}autoplay{% endif %} class="video-wrapper video-wrapper--native" style="--aspect-ratio: {{ section.settings.video_file.aspect_ratio }}">
+          {{- video_poster -}}
+
+          <template>
+            {{- section.settings.video_file | video_tag: controls: section.settings.show_video_controls, autoplay: section.settings.autoplay, muted: section.settings.autoplay, playsinline: section.settings.autoplay, loop: section.settings.autoplay -}}
+          </template>
+        </native-video>
+      {%- else -%}
+        <external-video {% if section.settings.autoplay %}autoplay{% endif %} provider="{{ section.settings.video_url.type | escape }}" class="video-wrapper {% if section.settings.autoplay %}video-wrapper--inert{% endif %} {% if section.settings.background_type == 'full_width' and section.settings.video_size != 'auto' %}video-wrapper--cover{% endif %}">
+          {{- video_poster -}}
+
+          <template>
+            {%- if section.settings.video_url.type == 'youtube' -%}
+              <iframe title="{{ section.settings.title | escape }}" src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?playsinline=1&autoplay=1{% if section.settings.autoplay %}&controls=0&mute=1&loop=1{% endif %}&playlist={{ section.settings.video_url.id }}&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" allow="autoplay; encrypted-media" allowfullscreen="allowfullscreen"></iframe>
+              {%- elsif section.settings.video_url.type == 'vimeo' -%}
+              <iframe title="{{ section.settings.title | escape }}" src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&autopause=1{% if section.settings.autoplay %}&background=1&loop=1&muted=1{% endif %}&transparent=0&responsive=1&portrait=0&title=0&byline=0&color={{ settings.text_color | remove_first: '#' }}" allow="autoplay; encrypted-media;" allowfullscreen="allowfullscreen"></iframe>
+            {%- endif -%}
+          </template>
+        </external-video>
+      {%- endif -%}
+    </div>
+  {%- endcapture -%}
+
+  {%- if section.settings.background_type == 'boxed' -%}
+    <div class="section__color-wrapper section--padding">
+      <div class="container">
+        <div
+          {% unless blends_with_background or section.settings.ignore_vertical_spacing %}
+            class="vertical-breather"
+          {% endunless %}
+        >
+          {{- section_header -}}
+          {{- video_content -}}
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    {{- video_content -}}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Video",
+  "class": "shopify-section--video",
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Cover image",
+      "info": "2000 x 1125px .jpg recommended. Required if you turn off autoplay."
+    },
+    {
+      "type": "video",
+      "id": "video_file",
+      "label": "Video file",
+      "info": "Only .mp4 file is supported."
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["vimeo", "youtube"],
+      "label": "Video",
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Video mode",
+      "options": [
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "boxed",
+          "label": "Boxed"
+        }
+      ],
+      "default": "full_width"
+    },
+    {
+      "type": "select",
+      "id": "video_size",
+      "label": "Video size",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Original ratio"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "info": "Video is muted automatically to allow autoplay.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "Show video controls",
+      "info": "Only applicable with native video.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "Top left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top right"
+        },
+        {
+          "value": "middle_left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle_center",
+          "label": "Middle center"
+        },
+        {
+          "value": "middle_right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "middle_center"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)",
+      "info": "Only used for boxed background."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "paragraph",
+      "content": "Only used for boxed background."
+    },
+    {
+      "type": "checkbox",
+      "id": "ignore_vertical_spacing",
+      "label": "Ignore vertical spacing in theme settings.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "desktop_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desktop_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video"
+    }
+  ]
+}
+{% endschema %}
