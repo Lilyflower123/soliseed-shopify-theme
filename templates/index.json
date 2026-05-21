@@ -156,7 +156,8 @@
           "type": "setup",
           "settings": {
             "title": "Pendant Grow Lights",
-            "image_alt": "",
+            "image": "shopify://shop_images/pendant-grow-light-product.jpg",
+            "image_alt": "Soliseed pendant grow light for indoor plant corners",
             "link": "/collections/the-pendant-collection",
             "link_label": "Shop setup"
           }
