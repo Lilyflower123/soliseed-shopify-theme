@@ -18,8 +18,9 @@
   #shopify-section-{{ section.id }} .soliseed-hero__media img,
   #shopify-section-{{ section.id }} .soliseed-hero__placeholder {
     width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+    aspect-ratio: 16 / 9;
+    object-fit: {{ section.settings.image_fit | default: 'contain' }};
+    object-position: {{ section.settings.image_position | default: 'center center' }};
     display: block;
   }
 
@@ -99,6 +100,50 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image display mode",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Show full image"
+        },
+        {
+          "value": "cover",
+          "label": "Crop to fill"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center center"
+        },
+        {
+          "value": "center left",
+          "label": "Center left"
+        },
+        {
+          "value": "center right",
+          "label": "Center right"
+        },
+        {
+          "value": "top center",
+          "label": "Top center"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom center"
+        }
+      ],
+      "default": "center center"
     },
     {
       "type": "text",
