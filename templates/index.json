@@ -13,6 +13,8 @@
       "type": "soliseed-hero",
       "settings": {
         "image": "shopify://shop_images/hero-every-spot-can-grow.png",
+        "image_fit": "contain",
+        "image_position": "center center",
         "subheading": "",
         "heading": "Every Spot Can Grow.",
         "content": "<p>Flexible grow lights for shelves, desks, corners, and indoor growing spaces.</p>",
@@ -62,6 +64,8 @@
           "settings": {
             "title": "Desk Plants",
             "content": "<p>Compact grow light options for workspaces and small plant groupings.</p>",
+            "image": "shopify://shop_images/space-desk-plants.png",
+            "image_alt": "",
             "link": "/pages/grow-lights-for-desk-plants",
             "link_label": "Explore setup"
           }
@@ -71,6 +75,8 @@
           "settings": {
             "title": "Plant Shelves",
             "content": "<p>Lighting ideas for shelf rows, plant racks, and multi-level displays.</p>",
+            "image": "shopify://shop_images/space-plant-shelves.png",
+            "image_alt": "",
             "link": "/pages/grow-lights-for-plant-shelves",
             "link_label": "Explore setup"
           }
@@ -80,6 +86,8 @@
           "settings": {
             "title": "Dark Corners",
             "content": "<p>Flexible grow lights for corners that need a reliable light source.</p>",
+            "image": "shopify://shop_images/space-dark-corners.png",
+            "image_alt": "",
             "link": "/pages/grow-lights-for-dark-corners",
             "link_label": "Explore setup"
           }
@@ -89,6 +97,7 @@
           "settings": {
             "title": "Kitchen Herbs",
             "content": "<p>Simple setups for herbs on counters, windowsills, and compact kitchen spaces.</p>",
+            "image_alt": "",
             "link": "/pages/grow-lights-for-kitchen-herbs",
             "link_label": "Explore setup"
           }
@@ -98,6 +107,7 @@
           "settings": {
             "title": "Living Room Plant Corners",
             "content": "<p>Grow light forms that support plant corners without taking over the room.</p>",
+            "image_alt": "",
             "link": "/pages/grow-lights-for-living-room-plant-corners",
             "link_label": "Explore setup"
           }
@@ -107,6 +117,7 @@
           "settings": {
             "title": "Greenhouse & Seedlings",
             "content": "<p>Practical lighting for seedlings, greenhouse starts, and wider growing areas.</p>",
+            "image_alt": "",
             "link": "/pages/grow-lights-for-greenhouse-seedlings",
             "link_label": "Explore setup"
           }
@@ -132,6 +143,7 @@
           "type": "setup",
           "settings": {
             "title": "Clip-on Grow Lights",
+            "image_alt": "",
             "link": "/collections/compact-clip",
             "link_label": "Shop setup"
           }
@@ -140,6 +152,7 @@
           "type": "setup",
           "settings": {
             "title": "Pendant Grow Lights",
+            "image_alt": "",
             "link": "/collections/the-pendant-collection",
             "link_label": "Shop setup"
           }
@@ -148,6 +161,7 @@
           "type": "setup",
           "settings": {
             "title": "Herb Garden Kits",
+            "image_alt": "",
             "link": "/collections/grow-kits-cabinets",
             "link_label": "Shop setup"
           }
@@ -156,6 +170,7 @@
           "type": "setup",
           "settings": {
             "title": "Greenhouse String Lights",
+            "image_alt": "",
             "link": "/collections/floor-flex-system",
             "link_label": "Shop setup"
           }
