@@ -7,7 +7,8 @@
   #shopify-section-{{ section.id }} .soliseed-product-card {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    height: 100%;
+    gap: 18px;
   }
 
   #shopify-section-{{ section.id }} .soliseed-product-card__media {
@@ -24,9 +25,54 @@
     display: block;
   }
 
+  #shopify-section-{{ section.id }} .soliseed-product-card__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-card__title {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.28;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-card__title a,
+  #shopify-section-{{ section.id }} .soliseed-product-card__title span {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-card__description {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-card__description p {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-card__cta {
+    margin-top: auto;
+  }
+
   @media screen and (min-width: 741px) {
     #shopify-section-{{ section.id }} .soliseed-product-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    #shopify-section-{{ section.id }} .soliseed-product-card__title {
+      font-size: 20px;
+      line-height: 1.25;
     }
   }
 </style>
@@ -66,22 +112,24 @@
               {%- endif -%}
             </a>
 
-            <div class="text-container">
-              <h3 class="heading h4">
+            <div class="soliseed-product-card__content text-container">
+              <h3 class="soliseed-product-card__title">
                 {%- if featured_product != blank -%}
                   <a href="{{ featured_product.url }}">{{ featured_product.title | escape }}</a>
                 {%- else -%}
-                  {{ block.settings.placeholder_title | escape }}
+                  <span>{{ block.settings.placeholder_title | escape }}</span>
                 {%- endif -%}
               </h3>
 
               {%- if block.settings.content != blank -%}
-                <div class="rte">
+                <div class="soliseed-product-card__description rte">
                   {{ block.settings.content }}
                 </div>
               {%- endif -%}
 
-              {%- render 'buy-on-amazon-button', product: featured_product, button_class: 'button button--primary button--full' -%}
+              <div class="soliseed-product-card__cta">
+                {%- render 'buy-on-amazon-button', product: featured_product, button_class: 'button button--primary button--full' -%}
+              </div>
             </div>
           </div>
         {%- endfor -%}
