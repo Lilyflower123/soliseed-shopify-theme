@@ -146,7 +146,8 @@
           "type": "setup",
           "settings": {
             "title": "Clip-on Grow Lights",
-            "image_alt": "",
+            "image": "shopify://shop_images/clip-on-grow-light-product.jpg",
+            "image_alt": "Soliseed clip-on grow light for small indoor plants",
             "link": "/collections/compact-clip",
             "link_label": "Shop setup"
           }
