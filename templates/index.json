@@ -176,7 +176,8 @@
           "type": "setup",
           "settings": {
             "title": "Greenhouse String Lights",
-            "image_alt": "",
+            "image": "shopify://shop_images/greenhouse-string-light-product.jpg",
+            "image_alt": "Soliseed greenhouse string grow lights for seedlings",
             "link": "/collections/floor-flex-system",
             "link_label": "Shop setup"
           }
