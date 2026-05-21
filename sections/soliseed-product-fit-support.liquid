@@ -1,0 +1,233 @@
+<style>
+  #shopify-section-{{ section.id }} .soliseed-product-support {
+    display: grid;
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-support__card {
+    padding: 24px;
+    background: rgb(var(--secondary-background));
+    border-radius: var(--block-border-radius);
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-support__grid {
+    display: grid;
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-support__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-support__card .rte ul {
+    margin-top: 12px;
+  }
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} .soliseed-product-support__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
+
+<section class="section">
+  <div class="section__color-wrapper section--padding">
+    <div class="container">
+      <div class="soliseed-product-support">
+        <header class="section__header text-container">
+          {%- if section.settings.title != blank -%}
+            <h2 class="heading h2">{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.content != blank -%}
+            <div class="rte">
+              {{ section.settings.content }}
+            </div>
+          {%- endif -%}
+        </header>
+
+        <div class="soliseed-product-support__grid">
+          <div class="soliseed-product-support__card text-container">
+            <h3 class="heading h4">{{ section.settings.best_for_title | escape }}</h3>
+            <div class="rte">
+              {{ section.settings.best_for_content }}
+            </div>
+          </div>
+
+          <div class="soliseed-product-support__card text-container">
+            <h3 class="heading h4">{{ section.settings.setup_type_title | escape }}</h3>
+            <div class="rte">
+              {{ section.settings.setup_type_content }}
+            </div>
+          </div>
+
+          <div class="soliseed-product-support__card text-container">
+            <h3 class="heading h4">{{ section.settings.plant_fit_title | escape }}</h3>
+            <div class="rte">
+              {{ section.settings.plant_fit_content }}
+            </div>
+          </div>
+        </div>
+
+        <div class="soliseed-product-support__card text-container">
+          <h3 class="heading h3">{{ section.settings.setup_tips_title | escape }}</h3>
+          <div class="rte">
+            {{ section.settings.setup_tips_content }}
+          </div>
+
+          {%- if section.settings.setup_guide_label != blank and section.settings.setup_guide_link != blank -%}
+            <div class="soliseed-product-support__buttons">
+              <a href="{{ section.settings.setup_guide_link }}" class="button button--primary">
+                {{- section.settings.setup_guide_label | escape -}}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="soliseed-product-support__card text-container">
+          <h3 class="heading h3">{{ section.settings.support_title | escape }}</h3>
+          {%- if section.settings.support_content != blank -%}
+            <div class="rte">
+              {{ section.settings.support_content }}
+            </div>
+          {%- endif -%}
+
+          <div class="soliseed-product-support__buttons">
+            {%- if section.settings.warranty_label != blank and section.settings.warranty_link != blank -%}
+              <a href="{{ section.settings.warranty_link }}" class="button button--secondary">
+                {{- section.settings.warranty_label | escape -}}
+              </a>
+            {%- endif -%}
+
+            {%- if section.settings.contact_label != blank and section.settings.contact_link != blank -%}
+              <a href="{{ section.settings.contact_link }}" class="button button--secondary">
+                {{- section.settings.contact_label | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Soliseed product support",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Choose the right Soliseed setup for your growing spot."
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Use this product page to confirm where the light fits, how to set it up, and where to get support after purchase.</p>"
+    },
+    {
+      "type": "text",
+      "id": "best_for_title",
+      "label": "Best for heading",
+      "default": "Best for"
+    },
+    {
+      "type": "richtext",
+      "id": "best_for_content",
+      "label": "Best for content",
+      "default": "<ul><li>Desk plants</li><li>Plant shelves</li><li>Dark corners</li><li>Kitchen herbs</li><li>Living room plant corners</li><li>Greenhouse & seedlings</li></ul>"
+    },
+    {
+      "type": "text",
+      "id": "setup_type_title",
+      "label": "Setup type heading",
+      "default": "Setup type"
+    },
+    {
+      "type": "richtext",
+      "id": "setup_type_content",
+      "label": "Setup type content",
+      "default": "<ul><li>Clip-on</li><li>Pendant</li><li>Herb kit</li><li>Greenhouse string light</li></ul>"
+    },
+    {
+      "type": "text",
+      "id": "plant_fit_title",
+      "label": "Plant fit heading",
+      "default": "Plant fit"
+    },
+    {
+      "type": "richtext",
+      "id": "plant_fit_content",
+      "label": "Plant fit content",
+      "default": "<ul><li>Houseplants</li><li>Herbs</li><li>Seedlings</li><li>Succulents</li><li>Larger indoor plants</li></ul>"
+    },
+    {
+      "type": "text",
+      "id": "setup_tips_title",
+      "label": "Setup tips heading",
+      "default": "Setup tips"
+    },
+    {
+      "type": "richtext",
+      "id": "setup_tips_content",
+      "label": "Setup tips content",
+      "default": "<ul><li>Place the light close enough for the plant, but avoid direct leaf burn.</li><li>Use the timer for consistent daily light.</li><li>Adjust the angle as your plant grows.</li><li>Start with the setup guide if you are not sure about distance or timing.</li></ul>"
+    },
+    {
+      "type": "text",
+      "id": "setup_guide_label",
+      "label": "Setup guide button label",
+      "default": "View Setup Guide"
+    },
+    {
+      "type": "url",
+      "id": "setup_guide_link",
+      "label": "Setup guide link"
+    },
+    {
+      "type": "text",
+      "id": "support_title",
+      "label": "Support heading",
+      "default": "Warranty and support"
+    },
+    {
+      "type": "richtext",
+      "id": "support_content",
+      "label": "Support content",
+      "default": "<p>Register your warranty or contact Soliseed support if you need help with setup, placement, or product care.</p>"
+    },
+    {
+      "type": "text",
+      "id": "warranty_label",
+      "label": "Warranty button label",
+      "default": "Register Warranty"
+    },
+    {
+      "type": "url",
+      "id": "warranty_link",
+      "label": "Warranty link"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact button label",
+      "default": "Contact Support"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Contact link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soliseed product support"
+    }
+  ]
+}
+{% endschema %}
