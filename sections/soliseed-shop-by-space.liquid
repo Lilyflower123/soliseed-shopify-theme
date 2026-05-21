@@ -6,12 +6,28 @@
 
   #shopify-section-{{ section.id }} .soliseed-card {
     min-height: 160px;
-    padding: 24px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background: rgb(var(--secondary-background));
     border-radius: var(--block-border-radius);
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-card__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-card__content {
+    padding: 24px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
   }
 
   @media screen and (min-width: 741px) {
@@ -39,17 +55,32 @@
       <div class="soliseed-card-grid">
         {%- for block in section.blocks -%}
           <a href="{{ block.settings.link | default: '#' }}" class="soliseed-card text-container" {{ block.shopify_attributes }}>
-            <span>
-              {%- if block.settings.title != blank -%}
-                <span class="heading h4">{{ block.settings.title | escape }}</span>
-              {%- endif -%}
+            {%- if block.settings.image != blank -%}
+              {{-
+                block.settings.image
+                | image_url: width: 900
+                | image_tag:
+                  class: 'soliseed-card__image',
+                  loading: 'lazy',
+                  alt: block.settings.image_alt,
+                  sizes: '(max-width: 740px) 100vw, 33vw',
+                  widths: '360,540,720,900'
+              -}}
+            {%- endif -%}
 
-              {%- if block.settings.content != blank -%}
-                <span class="rte">{{ block.settings.content }}</span>
-              {%- endif -%}
+            <span class="soliseed-card__content">
+              <span>
+                {%- if block.settings.title != blank -%}
+                  <span class="heading h4">{{ block.settings.title | escape }}</span>
+                {%- endif -%}
+
+                {%- if block.settings.content != blank -%}
+                  <span class="rte">{{ block.settings.content }}</span>
+                {%- endif -%}
+              </span>
+
+              <span class="heading heading--small link">{{ block.settings.link_label | escape }}</span>
             </span>
-
-            <span class="heading heading--small link">{{ block.settings.link_label | escape }}</span>
           </a>
         {%- endfor -%}
       </div>
@@ -88,6 +119,16 @@
           "type": "richtext",
           "id": "content",
           "label": "Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
         },
         {
           "type": "url",
