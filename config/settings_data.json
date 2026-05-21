@@ -1,1 +1,85 @@
-{"current":{"social_twitter":"https:\/\/twitter.com\/zalifyapp","social_youtube":"https:\/\/www.youtube.com\/@zalify3959","social_tiktok":"https:\/\/v.douyin.com\/iCQUA7V\/","block_cn_hk_ips":true,"unavailable_page":"contact","content_for_index":[]},"presets":{"Default":{"icon_stroke_width":4,"button_border_radius":0,"block_border_radius":"none","vertical_spacing":"medium","heading_color":"#000000","text_color":"#000000","background":"#ffffff","secondary_background":"#f4f5f5","success_color":"#00a341","error_color":"#f83a3a","header_background":"#ffffff","header_text_color":"#000000","footer_background":"#f4f5f5","footer_text_color":"#000000","bottom_bar_background":"#000000","bottom_bar_text_color":"#ffffff","primary_button_background":"#f0c417","primary_button_text_color":"#000000","secondary_button_background":"#000000","secondary_button_text_color":"#ffffff","product_rating_color":"#ffb74a","product_on_sale_accent":"#f83a3a","product_sold_out_accent":"#000000","product_custom_label_background":"#ff6128","product_custom_label_2_background":"#a95ebe","heading_font":"din_next_n7","h1_font_size":64,"h2_font_size":48,"h3_font_size":36,"heading_text_transform":"normal","text_font":"din_next_n4","text_font_size":14,"currency_code_enabled":false,"show_image_zoom":true,"stagger_products_apparition":true,"stagger_blog_posts_apparition":true,"reveal_product_media":true,"round_color_swatches":false,"show_vendor":false,"show_secondary_image":true,"product_add_to_cart":true,"show_product_rating":false,"show_empty":false,"rating_app":"product_reviews","show_discount":true,"discount_mode":"saving","product_color_display":"count","product_custom_label_position":"over_image","product_image_size":"square","product_title_truncation":"none","product_info_alignment":"center","cart_type":"drawer","cart_icon":"shopping_cart","cart_show_free_shipping_threshold":true,"cart_free_shipping_threshold":"50","social_tiktok":"https:\/\/v.douyin.com\/iCQUA7V\/","social_twitter":"https:\/\/twitter.com\/zalifyapp","social_youtube":"https:\/\/www.youtube.com\/@zalify3959","block_cn_hk_ips":false,"block_cn_lang_browsers":false,"block_right_click":false}}}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "social_twitter": "https://twitter.com/zalifyapp",
+    "social_youtube": "https://www.youtube.com/@zalify3959",
+    "social_tiktok": "https://v.douyin.com/iCQUA7V/",
+    "amazon_store_url": "https://www.amazon.com/stores/page/86C33D17-58A3-4438-9FC2-1037300F42A5?ingress=3",
+    "block_cn_hk_ips": true,
+    "unavailable_page": "contact",
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {
+      "icon_stroke_width": 4,
+      "button_border_radius": 0,
+      "block_border_radius": "none",
+      "vertical_spacing": "medium",
+      "heading_color": "#000000",
+      "text_color": "#000000",
+      "background": "#ffffff",
+      "secondary_background": "#f4f5f5",
+      "success_color": "#00a341",
+      "error_color": "#f83a3a",
+      "header_background": "#ffffff",
+      "header_text_color": "#000000",
+      "footer_background": "#f4f5f5",
+      "footer_text_color": "#000000",
+      "bottom_bar_background": "#000000",
+      "bottom_bar_text_color": "#ffffff",
+      "primary_button_background": "#f0c417",
+      "primary_button_text_color": "#000000",
+      "secondary_button_background": "#000000",
+      "secondary_button_text_color": "#ffffff",
+      "product_rating_color": "#ffb74a",
+      "product_on_sale_accent": "#f83a3a",
+      "product_sold_out_accent": "#000000",
+      "product_custom_label_background": "#ff6128",
+      "product_custom_label_2_background": "#a95ebe",
+      "heading_font": "din_next_n7",
+      "h1_font_size": 64,
+      "h2_font_size": 48,
+      "h3_font_size": 36,
+      "heading_text_transform": "normal",
+      "text_font": "din_next_n4",
+      "text_font_size": 14,
+      "currency_code_enabled": false,
+      "show_image_zoom": true,
+      "stagger_products_apparition": true,
+      "stagger_blog_posts_apparition": true,
+      "reveal_product_media": true,
+      "round_color_swatches": false,
+      "show_vendor": false,
+      "show_secondary_image": true,
+      "product_add_to_cart": true,
+      "show_product_rating": false,
+      "show_empty": false,
+      "rating_app": "product_reviews",
+      "show_discount": true,
+      "discount_mode": "saving",
+      "product_color_display": "count",
+      "product_custom_label_position": "over_image",
+      "product_image_size": "square",
+      "product_title_truncation": "none",
+      "product_info_alignment": "center",
+      "cart_type": "drawer",
+      "cart_icon": "shopping_cart",
+      "cart_show_free_shipping_threshold": true,
+      "cart_free_shipping_threshold": "50",
+      "social_tiktok": "https://v.douyin.com/iCQUA7V/",
+      "social_twitter": "https://twitter.com/zalifyapp",
+      "social_youtube": "https://www.youtube.com/@zalify3959",
+      "block_cn_hk_ips": false,
+      "block_cn_lang_browsers": false,
+      "block_right_click": false
+    }
+  }
+}
