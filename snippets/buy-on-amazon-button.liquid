@@ -1,0 +1,20 @@
+{%- liquid
+  assign cta_product = product
+  assign amazon_url = blank
+  assign button_text = label | default: 'Buy on Amazon'
+  assign button_classes = button_class | default: 'button button--primary'
+
+  if cta_product != blank and cta_product.metafields.custom.amazon_url != blank
+    assign amazon_url = cta_product.metafields.custom.amazon_url.value | default: cta_product.metafields.custom.amazon_url
+  endif
+
+  if amazon_url == blank and settings.amazon_store_url != blank
+    assign amazon_url = settings.amazon_store_url
+  endif
+-%}
+
+{%- if amazon_url != blank -%}
+  <a href="{{ amazon_url }}" class="{{ button_classes }}" target="_blank" rel="noopener">
+    {{- button_text | escape -}}
+  </a>
+{%- endif -%}
