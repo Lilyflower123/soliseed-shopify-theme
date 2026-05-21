@@ -1,0 +1,81 @@
+<style>
+  #shopify-section-{{ section.id }} .soliseed-product-amazon {
+    display: grid;
+    gap: 20px;
+    align-items: center;
+    padding: 24px;
+    background: rgb(var(--secondary-background));
+    border-radius: var(--block-border-radius);
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-product-amazon__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} .soliseed-product-amazon {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+</style>
+
+<section class="section">
+  <div class="section__color-wrapper section--padding">
+    <div class="container">
+      <div class="soliseed-product-amazon">
+        <div class="text-container">
+          {%- if section.settings.title != blank -%}
+            <h2 class="heading h3">{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.content != blank -%}
+            <div class="rte">
+              {{ section.settings.content }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="soliseed-product-amazon__buttons">
+          {%- render 'buy-on-amazon-button',
+            product: product,
+            label: section.settings.amazon_label,
+            button_class: 'button button--primary button--full'
+          -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Soliseed Amazon CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Ready to buy this Soliseed setup?"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Amazon is the primary checkout channel. Use this product page to confirm the right growing spot and setup form before purchase.</p>"
+    },
+    {
+      "type": "text",
+      "id": "amazon_label",
+      "label": "Amazon button label",
+      "default": "Buy on Amazon"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soliseed Amazon CTA"
+    }
+  ]
+}
+{% endschema %}
