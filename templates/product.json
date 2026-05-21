@@ -1,1 +1,180 @@
-{"sections":{"main":{"type":"main-product","blocks":{"buy_buttons":{"type":"buy_buttons","settings":{"show_payment_button":true,"atc_button_background":"rgba(0,0,0,0)","atc_button_text_color":"rgba(0,0,0,0)","buy_now_button_background":"rgba(0,0,0,0)","buy_now_button_text_color":"rgba(0,0,0,0)"}},"price":{"type":"price","settings":{}},"quantity_selector":{"type":"quantity_selector","settings":{}},"separator":{"type":"separator","settings":{}},"share_buttons":{"type":"share_buttons","settings":{}},"title":{"type":"title","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"hide_sold_out_variants":false,"selector_type":"block","color_mode":"variant_image"}}},"block_order":["title","price","separator","variant_picker","quantity_selector","buy_buttons","share_buttons"],"settings":{}},"product-content":{"type":"product-content","blocks":{"description":{"type":"description","settings":{}}},"block_order":["description"],"settings":{"desktop_top_padding":0,"desktop_bottom_padding":0,"mobile_top_padding":0,"mobile_bottom_padding":0}},"product-recommendations":{"type":"product-recommendations","settings":{"subheading":"","title":"You may also like","recommendations_count":4,"background":"rgba(0,0,0,0)","text_color":"rgba(0,0,0,0)","ignore_vertical_spacing":false,"desktop_top_padding":0,"desktop_bottom_padding":0,"mobile_top_padding":0,"mobile_bottom_padding":0}},"separator":{"type":"separator","settings":{"ignore_vertical_spacing":true}},"text-with-icons":{"type":"text-with-icons","blocks":{"item-1":{"type":"item","settings":{"icon":"truck","title":"Amazon checkout","content":"<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"}},"item-2":{"type":"item","settings":{"icon":"shopping-cart","title":"Find your setup","content":"<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"}},"item-3":{"type":"item","settings":{"icon":"headset","title":"Setup guidance","content":"<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"}},"item-4":{"type":"item","settings":{"icon":"fingerprint","title":"Warranty support","content":"<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"}}},"block_order":["item-1","item-2","item-3","item-4"],"settings":{}}},"order":["main","product-content","product-recommendations","separator","text-with-icons"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true,
+            "atc_button_background": "rgba(0,0,0,0)",
+            "atc_button_text_color": "rgba(0,0,0,0)",
+            "buy_now_button_background": "rgba(0,0,0,0)",
+            "buy_now_button_text_color": "rgba(0,0,0,0)"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "separator": {
+          "type": "separator",
+          "settings": {}
+        },
+        "share_buttons": {
+          "type": "share_buttons",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "selector_type": "block",
+            "color_mode": "variant_image"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "separator",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "share_buttons"
+      ],
+      "settings": {}
+    },
+    "soliseed-amazon-cta": {
+      "type": "soliseed-product-amazon-cta",
+      "settings": {
+        "title": "Ready to buy this Soliseed setup?",
+        "content": "<p>Amazon is the primary checkout channel. Use this product page to confirm the right growing spot and setup form before purchase.</p>",
+        "amazon_label": "Buy on Amazon"
+      }
+    },
+    "product-content": {
+      "type": "product-content",
+      "blocks": {
+        "description": {
+          "type": "description",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "description"
+      ],
+      "settings": {
+        "desktop_top_padding": 0,
+        "desktop_bottom_padding": 0,
+        "mobile_top_padding": 0,
+        "mobile_bottom_padding": 0
+      }
+    },
+    "soliseed-product-support": {
+      "type": "soliseed-product-fit-support",
+      "settings": {
+        "title": "Choose the right Soliseed setup for your growing spot.",
+        "content": "<p>Use this product page to confirm where the light fits, how to set it up, and where to get support after purchase.</p>",
+        "best_for_title": "Best for",
+        "best_for_content": "<ul><li>Desk plants</li><li>Plant shelves</li><li>Dark corners</li><li>Kitchen herbs</li><li>Living room plant corners</li><li>Greenhouse & seedlings</li></ul>",
+        "setup_type_title": "Setup type",
+        "setup_type_content": "<ul><li>Clip-on</li><li>Pendant</li><li>Herb kit</li><li>Greenhouse string light</li></ul>",
+        "plant_fit_title": "Plant fit",
+        "plant_fit_content": "<ul><li>Houseplants</li><li>Herbs</li><li>Seedlings</li><li>Succulents</li><li>Larger indoor plants</li></ul>",
+        "setup_tips_title": "Setup tips",
+        "setup_tips_content": "<ul><li>Place the light close enough for the plant, but avoid direct leaf burn.</li><li>Use the timer for consistent daily light.</li><li>Adjust the angle as your plant grows.</li><li>Start with the setup guide if you are not sure about distance or timing.</li></ul>",
+        "setup_guide_label": "View Setup Guide",
+        "setup_guide_link": "/pages/setup-guide",
+        "support_title": "Warranty and support",
+        "support_content": "<p>Register your warranty or contact Soliseed support if you need help with setup, placement, or product care.</p>",
+        "warranty_label": "Register Warranty",
+        "warranty_link": "/pages/warranty-registration",
+        "contact_label": "Contact Support",
+        "contact_link": "/pages/contact"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "subheading": "",
+        "title": "You may also like",
+        "recommendations_count": 4,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "ignore_vertical_spacing": false,
+        "desktop_top_padding": 0,
+        "desktop_bottom_padding": 0,
+        "mobile_top_padding": 0,
+        "mobile_bottom_padding": 0
+      }
+    },
+    "separator": {
+      "type": "separator",
+      "settings": {
+        "ignore_vertical_spacing": true
+      }
+    },
+    "text-with-icons": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Amazon checkout",
+            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "icon": "shopping-cart",
+            "title": "Find your setup",
+            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "icon": "headset",
+            "title": "Setup guidance",
+            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+          }
+        },
+        "item-4": {
+          "type": "item",
+          "settings": {
+            "icon": "fingerprint",
+            "title": "Warranty support",
+            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item-1",
+        "item-2",
+        "item-3",
+        "item-4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "soliseed-amazon-cta",
+    "product-content",
+    "soliseed-product-support",
+    "product-recommendations",
+    "separator",
+    "text-with-icons"
+  ]
+}
