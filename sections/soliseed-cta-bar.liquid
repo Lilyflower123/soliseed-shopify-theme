@@ -1,0 +1,130 @@
+{%- liquid
+  assign cta_product = product
+
+  if section.settings.product != blank
+    assign cta_product = section.settings.product
+  endif
+
+  capture amazon_button
+    if section.settings.show_amazon_cta
+      render 'buy-on-amazon-button', product: cta_product, label: section.settings.amazon_label, button_class: 'button button--primary'
+    endif
+  endcapture
+
+  assign amazon_button = amazon_button | strip
+  assign setup_guide_link = section.settings.setup_guide_link | default: '/pages/setup-guide'
+  assign warranty_link = section.settings.warranty_link | default: '/pages/warranty-registration'
+-%}
+
+<section class="section">
+  <div class="container">
+    <div class="section__color-wrapper">
+      <div class="content-box content-box--medium content-box--text-center">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="heading h3">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.content != blank -%}
+          <div class="rte">
+            {{ section.settings.content }}
+          </div>
+        {%- endif -%}
+
+        {%- if amazon_button != blank or section.settings.show_setup_guide_cta or section.settings.show_warranty_cta -%}
+          <div class="button-wrapper">
+            {{ amazon_button }}
+
+            {%- if section.settings.show_setup_guide_cta and setup_guide_link != blank -%}
+              <a href="{{ setup_guide_link }}" class="button button--secondary">
+                {{- section.settings.setup_guide_label | escape -}}
+              </a>
+            {%- endif -%}
+
+            {%- if section.settings.show_warranty_cta and warranty_link != blank -%}
+              <a href="{{ warranty_link }}" class="button button--secondary">
+                {{- section.settings.warranty_label | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Soliseed CTA bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Every Spot Can Grow."
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Choose a Soliseed grow light by the spot you want to support and the setup that fits your space.</p>"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product for Amazon CTA",
+      "info": "Optional. On product pages, the current product is used when this is empty."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_amazon_cta",
+      "label": "Show Buy on Amazon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "amazon_label",
+      "label": "Amazon button label",
+      "default": "Buy on Amazon"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_setup_guide_cta",
+      "label": "Show setup guide CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "setup_guide_label",
+      "label": "Setup guide label",
+      "default": "View Setup Guide"
+    },
+    {
+      "type": "url",
+      "id": "setup_guide_link",
+      "label": "Setup guide link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_warranty_cta",
+      "label": "Show warranty CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "warranty_label",
+      "label": "Warranty label",
+      "default": "Register Warranty"
+    },
+    {
+      "type": "url",
+      "id": "warranty_link",
+      "label": "Warranty link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soliseed CTA bar"
+    }
+  ]
+}
+{% endschema %}
