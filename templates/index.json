@@ -1,1 +1,244 @@
-{"sections":{"soliseed-hero":{"type":"soliseed-hero","settings":{"image":"shopify://shop_images/1_83b91b63-5502-4aa1-9552-c4d3b43df58c.jpg","subheading":"","heading":"Every Spot Can Grow.","content":"<p>Flexible grow lights for shelves, desks, corners, and indoor growing spaces.</p>","primary_label":"Find My Setup","primary_link":"/pages/find-my-setup","show_amazon_cta":true,"amazon_label":"Shop on Amazon"}},"soliseed-value-points":{"type":"soliseed-value-points","blocks":{"full-spectrum":{"type":"point","settings":{"title":"Full-spectrum white grow light","content":"<p>Support everyday indoor plant care with a clean white light that fits your room.</p>"}},"flexible-setup":{"type":"point","settings":{"title":"Flexible setup for real plant spots","content":"<p>Choose a form that works for shelves, desks, corners, and compact growing areas.</p>"}},"simple-care":{"type":"point","settings":{"title":"Simple timer and everyday plant care","content":"<p>Use practical timer and dimming options to make daily plant lighting easier.</p>"}}},"block_order":["full-spectrum","flexible-setup","simple-care"],"settings":{}},"shop-by-space":{"type":"soliseed-shop-by-space","blocks":{"desk-plants":{"type":"space","settings":{"title":"Desk Plants","content":"<p>Compact grow light options for workspaces and small plant groupings.</p>","link":"/pages/grow-lights-for-desk-plants","link_label":"Explore setup"}},"plant-shelves":{"type":"space","settings":{"title":"Plant Shelves","content":"<p>Lighting ideas for shelf rows, plant racks, and multi-level displays.</p>","link":"/pages/grow-lights-for-plant-shelves","link_label":"Explore setup"}},"dark-corners":{"type":"space","settings":{"title":"Dark Corners","content":"<p>Flexible grow lights for corners that need a reliable light source.</p>","link":"/pages/grow-lights-for-dark-corners","link_label":"Explore setup"}},"kitchen-herbs":{"type":"space","settings":{"title":"Kitchen Herbs","content":"<p>Simple setups for herbs on counters, windowsills, and compact kitchen spaces.</p>","link":"/pages/grow-lights-for-kitchen-herbs","link_label":"Explore setup"}},"living-room-corners":{"type":"space","settings":{"title":"Living Room Plant Corners","content":"<p>Grow light forms that support plant corners without taking over the room.</p>","link":"/pages/grow-lights-for-living-room-plant-corners","link_label":"Explore setup"}},"greenhouse-seedlings":{"type":"space","settings":{"title":"Greenhouse & Seedlings","content":"<p>Practical lighting for seedlings, greenhouse starts, and wider growing areas.</p>","link":"/pages/grow-lights-for-greenhouse-seedlings","link_label":"Explore setup"}}},"block_order":["desk-plants","plant-shelves","dark-corners","kitchen-herbs","living-room-corners","greenhouse-seedlings"],"settings":{"title":"Start with where your plant lives.","content":"<p>Choose a grow light by desk, shelf, corner, kitchen, living room, or greenhouse setup.</p>"}},"shop-by-setup":{"type":"soliseed-shop-by-setup","blocks":{"clip-on":{"type":"setup","settings":{"title":"Clip-on Grow Lights","link":"/collections/compact-clip","link_label":"Shop setup"}},"pendant":{"type":"setup","settings":{"title":"Pendant Grow Lights","link":"/collections/the-pendant-collection","link_label":"Shop setup"}},"herb-kits":{"type":"setup","settings":{"title":"Herb Garden Kits","link":"/collections/grow-kits-cabinets","link_label":"Shop setup"}},"greenhouse-string":{"type":"setup","settings":{"title":"Greenhouse String Lights","link":"/collections/floor-flex-system","link_label":"Shop setup"}}},"block_order":["clip-on","pendant","herb-kits","greenhouse-string"],"settings":{"title":"Clip it. Hang it. Place it. Grow there.","content":"<p>From clip-on lights to pendant grow lights, Soliseed gives every growing spot a better way to receive light.</p>"}},"best-sellers":{"type":"soliseed-featured-products","blocks":{"product-1":{"type":"product","settings":{"product":"soliseed-6w-round-panel-led-grow-light-clip-on-full-spectrum-plant-lamp-with-10-level-dimming-timer-for-plant-racks-nursery-trays-indoor-gardens-led-grow-light-2pack","placeholder_title":"Soliseed grow light","content":"<p>A compact setup for shelves, desks, and small indoor plant spots.</p>"}},"product-2":{"type":"product","settings":{"product":"soliseed-led-grow-light-10w-full-spectrum-4000k-clip-on-plant-light-spotlight-with-timer-10-dimming-levels-indoor-plants-growing-lamp-with-gooseneck-2pack","placeholder_title":"Soliseed grow light","content":"<p>Flexible spotlight-style support for focused plant placement.</p>"}},"product-3":{"type":"product","settings":{"product":"soliseed-indoor-herb-garden-kit-window-herbpots-gardening-tools-for-beginners-kitchen-windowsill-planter-diy-grow-gift-for-home-outdoor-plants-herb-pots-with-drainage-holes","placeholder_title":"Soliseed grow light","content":"<p>A practical kitchen herb setup for everyday growing spaces.</p>"}},"product-4":{"type":"product","settings":{"product":"soliseed-outdoor-led-grow-lights-for-greenhouses-adjustable-height-position-12-lights-full-spectrum-grow-light-bulbs-outdoor-waterproof-greenhouse-accessories-33ft-string-grow-lights","placeholder_title":"Soliseed grow light","content":"<p>A wider setup option for greenhouse and seedling areas.</p>"}}},"block_order":["product-1","product-2","product-3","product-4"],"settings":{"title":"Best Sellers for Real Growing Spots.","content":"<p>Choose the Soliseed setup that fits where your plant actually lives.</p>"}},"support":{"type":"soliseed-support-block","settings":{"title":"Set up once. Grow with confidence.","content":"<p>Get placement, distance, timer, and warranty support for your Soliseed grow light.</p>","setup_guide_label":"View Setup Guide","setup_guide_link":"/pages/setup-guide","warranty_label":"Register Warranty","warranty_link":"/pages/warranty-registration","contact_label":"Contact Support","contact_link":"/pages/contact"}}},"order":["soliseed-hero","soliseed-value-points","shop-by-space","shop-by-setup","best-sellers","support"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "soliseed-hero": {
+      "type": "soliseed-hero",
+      "settings": {
+        "image": "shopify://shop_images/hero-every-spot-can-grow.png",
+        "subheading": "",
+        "heading": "Every Spot Can Grow.",
+        "content": "<p>Flexible grow lights for shelves, desks, corners, and indoor growing spaces.</p>",
+        "primary_label": "Find My Setup",
+        "primary_link": "/pages/find-my-setup",
+        "show_amazon_cta": true,
+        "amazon_label": "Shop on Amazon"
+      }
+    },
+    "soliseed-value-points": {
+      "type": "soliseed-value-points",
+      "blocks": {
+        "full-spectrum": {
+          "type": "point",
+          "settings": {
+            "title": "Full-spectrum white grow light",
+            "content": "<p>Support everyday indoor plant care with a clean white light that fits your room.</p>"
+          }
+        },
+        "flexible-setup": {
+          "type": "point",
+          "settings": {
+            "title": "Flexible setup for real plant spots",
+            "content": "<p>Choose a form that works for shelves, desks, corners, and compact growing areas.</p>"
+          }
+        },
+        "simple-care": {
+          "type": "point",
+          "settings": {
+            "title": "Simple timer and everyday plant care",
+            "content": "<p>Use practical timer and dimming options to make daily plant lighting easier.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "full-spectrum",
+        "flexible-setup",
+        "simple-care"
+      ],
+      "settings": {}
+    },
+    "shop-by-space": {
+      "type": "soliseed-shop-by-space",
+      "blocks": {
+        "desk-plants": {
+          "type": "space",
+          "settings": {
+            "title": "Desk Plants",
+            "content": "<p>Compact grow light options for workspaces and small plant groupings.</p>",
+            "link": "/pages/grow-lights-for-desk-plants",
+            "link_label": "Explore setup"
+          }
+        },
+        "plant-shelves": {
+          "type": "space",
+          "settings": {
+            "title": "Plant Shelves",
+            "content": "<p>Lighting ideas for shelf rows, plant racks, and multi-level displays.</p>",
+            "link": "/pages/grow-lights-for-plant-shelves",
+            "link_label": "Explore setup"
+          }
+        },
+        "dark-corners": {
+          "type": "space",
+          "settings": {
+            "title": "Dark Corners",
+            "content": "<p>Flexible grow lights for corners that need a reliable light source.</p>",
+            "link": "/pages/grow-lights-for-dark-corners",
+            "link_label": "Explore setup"
+          }
+        },
+        "kitchen-herbs": {
+          "type": "space",
+          "settings": {
+            "title": "Kitchen Herbs",
+            "content": "<p>Simple setups for herbs on counters, windowsills, and compact kitchen spaces.</p>",
+            "link": "/pages/grow-lights-for-kitchen-herbs",
+            "link_label": "Explore setup"
+          }
+        },
+        "living-room-corners": {
+          "type": "space",
+          "settings": {
+            "title": "Living Room Plant Corners",
+            "content": "<p>Grow light forms that support plant corners without taking over the room.</p>",
+            "link": "/pages/grow-lights-for-living-room-plant-corners",
+            "link_label": "Explore setup"
+          }
+        },
+        "greenhouse-seedlings": {
+          "type": "space",
+          "settings": {
+            "title": "Greenhouse & Seedlings",
+            "content": "<p>Practical lighting for seedlings, greenhouse starts, and wider growing areas.</p>",
+            "link": "/pages/grow-lights-for-greenhouse-seedlings",
+            "link_label": "Explore setup"
+          }
+        }
+      },
+      "block_order": [
+        "desk-plants",
+        "plant-shelves",
+        "dark-corners",
+        "kitchen-herbs",
+        "living-room-corners",
+        "greenhouse-seedlings"
+      ],
+      "settings": {
+        "title": "Start with where your plant lives.",
+        "content": "<p>Choose a grow light by desk, shelf, corner, kitchen, living room, or greenhouse setup.</p>"
+      }
+    },
+    "shop-by-setup": {
+      "type": "soliseed-shop-by-setup",
+      "blocks": {
+        "clip-on": {
+          "type": "setup",
+          "settings": {
+            "title": "Clip-on Grow Lights",
+            "link": "/collections/compact-clip",
+            "link_label": "Shop setup"
+          }
+        },
+        "pendant": {
+          "type": "setup",
+          "settings": {
+            "title": "Pendant Grow Lights",
+            "link": "/collections/the-pendant-collection",
+            "link_label": "Shop setup"
+          }
+        },
+        "herb-kits": {
+          "type": "setup",
+          "settings": {
+            "title": "Herb Garden Kits",
+            "link": "/collections/grow-kits-cabinets",
+            "link_label": "Shop setup"
+          }
+        },
+        "greenhouse-string": {
+          "type": "setup",
+          "settings": {
+            "title": "Greenhouse String Lights",
+            "link": "/collections/floor-flex-system",
+            "link_label": "Shop setup"
+          }
+        }
+      },
+      "block_order": [
+        "clip-on",
+        "pendant",
+        "herb-kits",
+        "greenhouse-string"
+      ],
+      "settings": {
+        "title": "Clip it. Hang it. Place it. Grow there.",
+        "content": "<p>From clip-on lights to pendant grow lights, Soliseed gives every growing spot a better way to receive light.</p>"
+      }
+    },
+    "best-sellers": {
+      "type": "soliseed-featured-products",
+      "blocks": {
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "product": "soliseed-6w-round-panel-led-grow-light-clip-on-full-spectrum-plant-lamp-with-10-level-dimming-timer-for-plant-racks-nursery-trays-indoor-gardens-led-grow-light-2pack",
+            "placeholder_title": "Soliseed grow light",
+            "content": "<p>A compact setup for shelves, desks, and small indoor plant spots.</p>"
+          }
+        },
+        "product-2": {
+          "type": "product",
+          "settings": {
+            "product": "soliseed-led-grow-light-10w-full-spectrum-4000k-clip-on-plant-light-spotlight-with-timer-10-dimming-levels-indoor-plants-growing-lamp-with-gooseneck-2pack",
+            "placeholder_title": "Soliseed grow light",
+            "content": "<p>Flexible spotlight-style support for focused plant placement.</p>"
+          }
+        },
+        "product-3": {
+          "type": "product",
+          "settings": {
+            "product": "soliseed-indoor-herb-garden-kit-window-herbpots-gardening-tools-for-beginners-kitchen-windowsill-planter-diy-grow-gift-for-home-outdoor-plants-herb-pots-with-drainage-holes",
+            "placeholder_title": "Soliseed grow light",
+            "content": "<p>A practical kitchen herb setup for everyday growing spaces.</p>"
+          }
+        },
+        "product-4": {
+          "type": "product",
+          "settings": {
+            "product": "soliseed-outdoor-led-grow-lights-for-greenhouses-adjustable-height-position-12-lights-full-spectrum-grow-light-bulbs-outdoor-waterproof-greenhouse-accessories-33ft-string-grow-lights",
+            "placeholder_title": "Soliseed grow light",
+            "content": "<p>A wider setup option for greenhouse and seedling areas.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "product-1",
+        "product-2",
+        "product-3",
+        "product-4"
+      ],
+      "settings": {
+        "title": "Best Sellers for Real Growing Spots.",
+        "content": "<p>Choose the Soliseed setup that fits where your plant actually lives.</p>"
+      }
+    },
+    "support": {
+      "type": "soliseed-support-block",
+      "settings": {
+        "title": "Set up once. Grow with confidence.",
+        "content": "<p>Get placement, distance, timer, and warranty support for your Soliseed grow light.</p>",
+        "setup_guide_label": "View Setup Guide",
+        "setup_guide_link": "/pages/setup-guide",
+        "warranty_label": "Register Warranty",
+        "warranty_link": "/pages/warranty-registration",
+        "contact_label": "Contact Support",
+        "contact_link": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "soliseed-hero",
+    "soliseed-value-points",
+    "shop-by-space",
+    "shop-by-setup",
+    "best-sellers",
+    "support"
+  ]
+}
