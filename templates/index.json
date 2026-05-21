@@ -166,7 +166,8 @@
           "type": "setup",
           "settings": {
             "title": "Herb Garden Kits",
-            "image_alt": "",
+            "image": "shopify://shop_images/herb-garden-kit-product.jpg",
+            "image_alt": "Soliseed indoor herb garden kit for kitchen herbs",
             "link": "/collections/grow-kits-cabinets",
             "link_label": "Shop setup"
           }
