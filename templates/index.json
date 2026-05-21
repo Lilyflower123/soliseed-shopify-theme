@@ -97,6 +97,7 @@
           "settings": {
             "title": "Kitchen Herbs",
             "content": "<p>Simple setups for herbs on counters, windowsills, and compact kitchen spaces.</p>",
+            "image": "shopify://shop_images/space-kitchen-herbs.png",
             "image_alt": "",
             "link": "/pages/grow-lights-for-kitchen-herbs",
             "link_label": "Explore setup"
@@ -107,6 +108,7 @@
           "settings": {
             "title": "Living Room Plant Corners",
             "content": "<p>Grow light forms that support plant corners without taking over the room.</p>",
+            "image": "shopify://shop_images/space-living-room-plant-corners.png",
             "image_alt": "",
             "link": "/pages/grow-lights-for-living-room-plant-corners",
             "link_label": "Explore setup"
@@ -117,6 +119,7 @@
           "settings": {
             "title": "Greenhouse & Seedlings",
             "content": "<p>Practical lighting for seedlings, greenhouse starts, and wider growing areas.</p>",
+            "image": "shopify://shop_images/space-greenhouse-seedlings.png",
             "image_alt": "",
             "link": "/pages/grow-lights-for-greenhouse-seedlings",
             "link_label": "Explore setup"
