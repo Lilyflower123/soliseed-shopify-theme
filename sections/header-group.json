@@ -1,1 +1,69 @@
-{"type":"header","name":"Header group","sections":{"announcement-bar":{"type":"announcement-bar","blocks":{"message-1":{"type":"message","settings":{"text":"Our 3-Year 'No-Nonsense' Warranty！SEE THE <a href=\"https:\/\/zalify.featurebase.app\/changelog\" target=\"_blank\" title=\"https:\/\/zalify.featurebase.app\/changelog\">CHANGELOG<\/a>."}}},"block_order":["message-1"],"settings":{"position":"non_sticky","text_size":"small","navigation_mode":"scrolling","autoplay":true,"show_arrows":true,"cycle_speed":5,"message_width":"boxed","scrolling_speed":20,"background":"#000000","text_color":"#ffffff"}},"header":{"type":"header","settings":{"position":"sticky","cart_badge_background":"rgba(0,0,0,0)","cart_badge_text_color":"rgba(0,0,0,0)","logo":"shopify:\/\/shop_images\/logo.png","logo_max_width":120,"mobile_logo_max_width":100,"navigation_menu":"main-menu","sidebar_navigation_menu":"","header_layout":"logo_left_navigation_inline","show_icons":true,"reduce_desktop_padding":false,"enable_transparent_header":true,"transparent_header_text_color":"#ffffff","transparent_header_cart_badge_background":"rgba(0,0,0,0)","transparent_header_cart_badge_text_color":"rgba(0,0,0,0)","show_country_selector":false,"show_country_flag":false,"show_country_name":false,"show_locale_selector":false}}},"order":["announcement-bar","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "message-1": {
+          "type": "message",
+          "settings": {
+            "text": "Our 3-Year 'No-Nonsense' Warranty！SEE THE <a href=\"https://zalify.featurebase.app/changelog\" target=\"_blank\" title=\"https://zalify.featurebase.app/changelog\">CHANGELOG</a>."
+          }
+        }
+      },
+      "block_order": [
+        "message-1"
+      ],
+      "settings": {
+        "position": "non_sticky",
+        "text_size": "small",
+        "navigation_mode": "scrolling",
+        "autoplay": true,
+        "show_arrows": true,
+        "cycle_speed": 5,
+        "message_width": "boxed",
+        "scrolling_speed": 20,
+        "background": "#000000",
+        "text_color": "#ffffff"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "position": "sticky",
+        "cart_badge_background": "rgba(0,0,0,0)",
+        "cart_badge_text_color": "rgba(0,0,0,0)",
+        "logo": "shopify://shop_images/logo.png",
+        "logo_max_width": 120,
+        "mobile_logo_max_width": 100,
+        "navigation_menu": "soliseed-draft-main-menu",
+        "sidebar_navigation_menu": "",
+        "header_layout": "logo_left_navigation_inline",
+        "show_icons": true,
+        "reduce_desktop_padding": false,
+        "enable_transparent_header": true,
+        "transparent_header_text_color": "#ffffff",
+        "transparent_header_cart_badge_background": "rgba(0,0,0,0)",
+        "transparent_header_cart_badge_text_color": "rgba(0,0,0,0)",
+        "show_country_selector": false,
+        "show_country_flag": false,
+        "show_country_name": false,
+        "show_locale_selector": false
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}
