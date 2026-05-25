@@ -2,10 +2,11 @@
   #shopify-section-{{ section.id }} .soliseed-space-grid {
     display: grid;
     gap: 18px;
+    align-items: start;
   }
 
   #shopify-section-{{ section.id }} .soliseed-space-card {
-    padding: 24px;
+    padding: 20px;
     background: rgb(var(--secondary-background));
     border-radius: var(--block-border-radius);
   }
@@ -21,20 +22,45 @@
   #shopify-section-{{ section.id }} .soliseed-space-card__placeholder {
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-space-card__title {
+    margin: 0 0 10px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-space-card__product-title {
+    margin: 0 0 10px;
+    font-size: 17px;
+    line-height: 1.28;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-space-card__product-title a,
+  #shopify-section-{{ section.id }} .soliseed-space-card__product-title span {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
 
   #shopify-section-{{ section.id }} .soliseed-space-card__buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 18px;
+    margin-top: 14px;
   }
 
   @media screen and (min-width: 741px) {
     #shopify-section-{{ section.id }} .soliseed-space-grid {
       grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    }
+
+    #shopify-section-{{ section.id }} .soliseed-space-card__product-title {
+      font-size: 20px;
+      line-height: 1.25;
     }
   }
 </style>
@@ -58,7 +84,7 @@
 
       <div class="soliseed-space-grid">
         {%- for block in section.blocks -%}
-          <article class="soliseed-space-card text-container" {{ block.shopify_attributes }}>
+          <article class="soliseed-space-card text-container {% if block.type == 'product' %}soliseed-space-card--product{% endif %}" {{ block.shopify_attributes }}>
             {%- if block.type == 'product' -%}
               {%- assign featured_product = block.settings.product -%}
 
@@ -77,16 +103,16 @@
                 {%- endif -%}
               </a>
 
-              <h3 class="heading h4">
+              <h3 class="soliseed-space-card__product-title">
                 {%- if featured_product != blank -%}
                   <a href="{{ featured_product.url }}">{{ featured_product.title | escape }}</a>
                 {%- else -%}
-                  {{ block.settings.title | escape }}
+                  <span>{{ block.settings.title | escape }}</span>
                 {%- endif -%}
               </h3>
             {%- else -%}
               {%- if block.settings.title != blank -%}
-                <h3 class="heading h4">{{ block.settings.title | escape }}</h3>
+                <h3 class="heading h4 soliseed-space-card__title">{{ block.settings.title | escape }}</h3>
               {%- endif -%}
             {%- endif -%}
 
