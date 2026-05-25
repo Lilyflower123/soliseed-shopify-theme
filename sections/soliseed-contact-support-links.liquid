@@ -1,0 +1,189 @@
+<style>
+  #shopify-section-{{ section.id }} .soliseed-contact-support {
+    display: grid;
+    gap: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-contact-support__header {
+    margin-bottom: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-contact-support__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-contact-support__card {
+    display: block;
+    height: 100%;
+    padding: 20px;
+    color: rgb(var(--text-color));
+    background: rgb(var(--secondary-background));
+    border: 1px solid rgba(var(--text-color), 0.12);
+    border-radius: var(--block-border-radius);
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-contact-support__card:hover {
+    border-color: rgba(var(--text-color), 0.28);
+    box-shadow: 0 10px 24px rgba(var(--text-color), 0.08);
+    transform: translateY(-2px);
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-contact-support__title {
+    margin: 0 0 8px;
+  }
+
+  #shopify-section-{{ section.id }} .soliseed-contact-support__text {
+    margin: 0;
+  }
+
+  @media screen and (min-width: 741px) {
+    #shopify-section-{{ section.id }} .soliseed-contact-support__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    #shopify-section-{{ section.id }} .soliseed-contact-support__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>
+
+<section class="section">
+  <div class="section__color-wrapper section--padding">
+    <div class="container">
+      <div class="soliseed-contact-support">
+        {%- if section.settings.heading != blank or section.settings.content != blank -%}
+          <header class="soliseed-contact-support__header text-container">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="heading h3">{{ section.settings.heading | escape }}</h2>
+            {%- endif -%}
+
+            {%- if section.settings.content != blank -%}
+              <div class="rte">
+                {{ section.settings.content }}
+              </div>
+            {%- endif -%}
+          </header>
+        {%- endif -%}
+
+        <div class="soliseed-contact-support__grid">
+          {%- if settings.amazon_store_url != blank -%}
+            <a class="soliseed-contact-support__card" href="{{ settings.amazon_store_url }}" target="_blank" rel="noopener">
+              <h3 class="heading h4 soliseed-contact-support__title">{{ section.settings.amazon_title | escape }}</h3>
+              <p class="soliseed-contact-support__text">{{ section.settings.amazon_text | escape }}</p>
+            </a>
+          {%- endif -%}
+
+          <a class="soliseed-contact-support__card" href="/pages/find-my-setup">
+            <h3 class="heading h4 soliseed-contact-support__title">{{ section.settings.find_title | escape }}</h3>
+            <p class="soliseed-contact-support__text">{{ section.settings.find_text | escape }}</p>
+          </a>
+
+          <a class="soliseed-contact-support__card" href="/pages/setup-guide">
+            <h3 class="heading h4 soliseed-contact-support__title">{{ section.settings.setup_title | escape }}</h3>
+            <p class="soliseed-contact-support__text">{{ section.settings.setup_text | escape }}</p>
+          </a>
+
+          <a class="soliseed-contact-support__card" href="/pages/warranty-registration">
+            <h3 class="heading h4 soliseed-contact-support__title">{{ section.settings.warranty_title | escape }}</h3>
+            <p class="soliseed-contact-support__text">{{ section.settings.warranty_text | escape }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Soliseed contact support",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Need a different kind of help?"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Use these support paths to continue shopping, choose a setup, or register your product.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Amazon checkout"
+    },
+    {
+      "type": "text",
+      "id": "amazon_title",
+      "label": "Title",
+      "default": "Amazon Checkout"
+    },
+    {
+      "type": "text",
+      "id": "amazon_text",
+      "label": "Text",
+      "default": "Buy Soliseed products through our Amazon store."
+    },
+    {
+      "type": "header",
+      "content": "Find your setup"
+    },
+    {
+      "type": "text",
+      "id": "find_title",
+      "label": "Title",
+      "default": "Find Your Setup"
+    },
+    {
+      "type": "text",
+      "id": "find_text",
+      "label": "Text",
+      "default": "Choose the right grow light by plant spot and setup type."
+    },
+    {
+      "type": "header",
+      "content": "Setup guidance"
+    },
+    {
+      "type": "text",
+      "id": "setup_title",
+      "label": "Title",
+      "default": "Setup Guidance"
+    },
+    {
+      "type": "text",
+      "id": "setup_text",
+      "label": "Text",
+      "default": "Learn placement, distance, timer, and adjustment basics."
+    },
+    {
+      "type": "header",
+      "content": "Warranty support"
+    },
+    {
+      "type": "text",
+      "id": "warranty_title",
+      "label": "Title",
+      "default": "Warranty Support"
+    },
+    {
+      "type": "text",
+      "id": "warranty_text",
+      "label": "Text",
+      "default": "Register your product or find post-purchase support."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soliseed contact support"
+    }
+  ]
+}
+{% endschema %}
