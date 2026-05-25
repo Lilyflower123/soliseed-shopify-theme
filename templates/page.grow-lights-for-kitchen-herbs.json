@@ -1,18 +1,95 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {"type": "soliseed-page-hero", "settings": {"eyebrow": "Kitchen Herbs", "title": "Grow lights for kitchen herbs.", "content": "<p>Kitchen herbs need a setup that fits counters, windowsills, and everyday cooking routines.</p>", "primary_label": "View Setup Guide", "primary_link": "/pages/setup-guide", "secondary_label": "Find My Setup", "secondary_link": "/pages/find-my-setup", "show_image": true}},
+    "hero": {
+      "type": "soliseed-page-hero",
+      "settings": {
+        "eyebrow": "Kitchen Herbs",
+        "title": "Grow lights for kitchen herbs.",
+        "content": "<p>Kitchen herbs need a setup that fits counters, windowsills, and everyday cooking routines.</p>",
+        "primary_label": "View Setup Guide",
+        "primary_link": "/pages/setup-guide",
+        "secondary_label": "Find My Setup",
+        "secondary_link": "/pages/find-my-setup",
+        "show_image": true,
+        "image": "shopify://shop_images/Kitchen_Herbs.png",
+        "image_position": "center"
+      }
+    },
     "content": {
       "type": "soliseed-space-page",
       "blocks": {
-        "problem": {"type": "card", "settings": {"title": "The kitchen herb problem", "content": "<p>Kitchen spots are often small, busy, and inconsistent in natural light.</p>", "link_label": "", "link": ""}},
-        "setup": {"type": "card", "settings": {"title": "Recommended setup", "content": "<p>Use a compact herb kit or small grow light setup that stays easy to clean and easy to reach.</p>", "link_label": "Shop herb setups", "link": "/collections/grow-kits-cabinets"}},
-        "product": {"type": "product", "settings": {"product": "soliseed-indoor-herb-garden-kit-window-herbpots-gardening-tools-for-beginners-kitchen-windowsill-planter-diy-grow-gift-for-home-outdoor-plants-herb-pots-with-drainage-holes", "title": "Soliseed herb garden kit", "content": "<p>A beginner-friendly setup for kitchen herbs and small indoor growing spots.</p>", "link_label": "View setup guide", "link": "/pages/setup-guide"}},
-        "tips": {"type": "card", "settings": {"title": "Setup tips", "content": "<p>Keep the setup away from heavy splashes, leave room for harvesting, and check timer settings after moving pots.</p>", "link_label": "", "link": ""}},
-        "faq": {"type": "faq", "settings": {"title": "Is a window enough for kitchen herbs?", "content": "<p>Some windows help, but a grow light can support herbs when window light is limited or inconsistent.</p>", "link_label": "", "link": ""}}
+        "problem": {
+          "type": "card",
+          "settings": {
+            "title": "The kitchen herb problem",
+            "content": "<p>Kitchen spots are often small, busy, and inconsistent in natural light.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "setup": {
+          "type": "card",
+          "settings": {
+            "title": "Recommended setup",
+            "content": "<p>Use a compact herb kit or small grow light setup that stays easy to clean and easy to reach.</p>",
+            "link_label": "Shop herb setups",
+            "link": "/collections/grow-kits-cabinets"
+          }
+        },
+        "product": {
+          "type": "product",
+          "settings": {
+            "product": "soliseed-indoor-herb-garden-kit-window-herbpots-gardening-tools-for-beginners-kitchen-windowsill-planter-diy-grow-gift-for-home-outdoor-plants-herb-pots-with-drainage-holes",
+            "title": "Soliseed herb garden kit",
+            "content": "<p>A beginner-friendly setup for kitchen herbs and small indoor growing spots.</p>",
+            "link_label": "View setup guide",
+            "link": "/pages/setup-guide"
+          }
+        },
+        "tips": {
+          "type": "card",
+          "settings": {
+            "title": "Setup tips",
+            "content": "<p>Keep the setup away from heavy splashes, leave room for harvesting, and check timer settings after moving pots.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "faq": {
+          "type": "faq",
+          "settings": {
+            "title": "Is a window enough for kitchen herbs?",
+            "content": "<p>Some windows help, but a grow light can support herbs when window light is limited or inconsistent.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["problem", "setup", "product", "tips", "faq"],
-      "settings": {"title": "Fresh herbs, better light, right where you cook.", "content": "<p>Support basil, mint, rosemary, and everyday kitchen herbs with compact countertop-friendly grow light setups.</p>", "columns_desktop": 3}
+      "block_order": [
+        "problem",
+        "setup",
+        "product",
+        "tips",
+        "faq"
+      ],
+      "settings": {
+        "title": "Fresh herbs, better light, right where you cook.",
+        "content": "<p>Support basil, mint, rosemary, and everyday kitchen herbs with compact countertop-friendly grow light setups.</p>",
+        "columns_desktop": 3
+      }
     }
   },
-  "order": ["hero", "content"]
+  "order": [
+    "hero",
+    "content"
+  ]
 }
