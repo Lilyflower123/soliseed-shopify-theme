@@ -1,12 +1,14 @@
 <style>
-  #shopify-section-{{ section.id }} .soliseed-space-grid {
+  #shopify-section-{{ section.id }} .soliseed-space-layout,
+  #shopify-section-{{ section.id }} .soliseed-space-card-list,
+  #shopify-section-{{ section.id }} .soliseed-space-product-list {
     display: grid;
-    gap: 18px;
+    gap: 14px;
     align-items: start;
   }
 
   #shopify-section-{{ section.id }} .soliseed-space-card {
-    padding: 20px;
+    padding: 18px;
     background: rgb(var(--secondary-background));
     border-radius: var(--block-border-radius);
   }
@@ -54,8 +56,13 @@
   }
 
   @media screen and (min-width: 741px) {
-    #shopify-section-{{ section.id }} .soliseed-space-grid {
-      grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    #shopify-section-{{ section.id }} .soliseed-space-layout {
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.95fr);
+      gap: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .soliseed-space-card-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     #shopify-section-{{ section.id }} .soliseed-space-card__product-title {
@@ -82,59 +89,81 @@
         </header>
       {%- endif -%}
 
-      <div class="soliseed-space-grid">
-        {%- for block in section.blocks -%}
-          <article class="soliseed-space-card text-container {% if block.type == 'product' %}soliseed-space-card--product{% endif %}" {{ block.shopify_attributes }}>
+      <div class="soliseed-space-layout">
+        <div class="soliseed-space-card-list">
+          {%- for block in section.blocks -%}
+            {%- unless block.type == 'product' -%}
+              <article class="soliseed-space-card text-container" {{ block.shopify_attributes }}>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="heading h4 soliseed-space-card__title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.content != blank -%}
+                  <div class="rte">
+                    {{ block.settings.content }}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+                  <div class="soliseed-space-card__buttons">
+                    <a href="{{ block.settings.link }}" class="button button--secondary">
+                      {{- block.settings.link_label | escape -}}
+                    </a>
+                  </div>
+                {%- endif -%}
+              </article>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="soliseed-space-product-list">
+          {%- for block in section.blocks -%}
             {%- if block.type == 'product' -%}
               {%- assign featured_product = block.settings.product -%}
 
-              <a href="{{ featured_product.url | default: '#' }}" class="soliseed-space-card__media">
-                {%- if featured_product.featured_media != blank -%}
-                  {{-
-                    featured_product.featured_media
-                    | image_url: width: 700
-                    | image_tag:
-                      loading: 'lazy',
-                      sizes: '(max-width: 740px) 100vw, 33vw',
-                      widths: '350,500,700'
-                  -}}
-                {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'soliseed-space-card__placeholder' }}
-                {%- endif -%}
-              </a>
-
-              <h3 class="soliseed-space-card__product-title">
-                {%- if featured_product != blank -%}
-                  <a href="{{ featured_product.url }}">{{ featured_product.title | escape }}</a>
-                {%- else -%}
-                  <span>{{ block.settings.title | escape }}</span>
-                {%- endif -%}
-              </h3>
-            {%- else -%}
-              {%- if block.settings.title != blank -%}
-                <h3 class="heading h4 soliseed-space-card__title">{{ block.settings.title | escape }}</h3>
-              {%- endif -%}
-            {%- endif -%}
-
-            {%- if block.settings.content != blank -%}
-              <div class="rte">
-                {{ block.settings.content }}
-              </div>
-            {%- endif -%}
-
-            <div class="soliseed-space-card__buttons">
-              {%- if block.type == 'product' -%}
-                {%- render 'buy-on-amazon-button', product: featured_product, button_class: 'button button--primary' -%}
-              {%- endif -%}
-
-              {%- if block.settings.link_label != blank and block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}" class="button button--secondary">
-                  {{- block.settings.link_label | escape -}}
+              <article class="soliseed-space-card soliseed-space-card--product text-container" {{ block.shopify_attributes }}>
+                <a href="{{ featured_product.url | default: '#' }}" class="soliseed-space-card__media">
+                  {%- if featured_product.featured_media != blank -%}
+                    {{-
+                      featured_product.featured_media
+                      | image_url: width: 700
+                      | image_tag:
+                        loading: 'lazy',
+                        sizes: '(max-width: 740px) 100vw, 38vw',
+                        widths: '350,500,700'
+                    -}}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'soliseed-space-card__placeholder' }}
+                  {%- endif -%}
                 </a>
-              {%- endif -%}
-            </div>
-          </article>
-        {%- endfor -%}
+
+                <h3 class="soliseed-space-card__product-title">
+                  {%- if featured_product != blank -%}
+                    <a href="{{ featured_product.url }}">{{ featured_product.title | escape }}</a>
+                  {%- else -%}
+                    <span>{{ block.settings.title | escape }}</span>
+                  {%- endif -%}
+                </h3>
+
+                {%- if block.settings.content != blank -%}
+                  <div class="rte">
+                    {{ block.settings.content }}
+                  </div>
+                {%- endif -%}
+
+                <div class="soliseed-space-card__buttons">
+                  {%- render 'buy-on-amazon-button', product: featured_product, button_class: 'button button--primary' -%}
+
+                  {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+                    <a href="{{ block.settings.link }}" class="button button--secondary">
+                      {{- block.settings.link_label | escape -}}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       </div>
     </div>
   </div>
