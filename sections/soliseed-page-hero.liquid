@@ -17,6 +17,7 @@
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    object-position: {{ section.settings.image_position }} center;
   }
 
   #shopify-section-{{ section.id }} .soliseed-page-hero__buttons {
@@ -28,8 +29,13 @@
 
   @media screen and (min-width: 741px) {
     #shopify-section-{{ section.id }} .soliseed-page-hero {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-      gap: 48px;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+      gap: 36px;
+    }
+
+    #shopify-section-{{ section.id }} .soliseed-page-hero__media img,
+    #shopify-section-{{ section.id }} .soliseed-page-hero__placeholder {
+      aspect-ratio: 16 / 10;
     }
   }
 </style>
@@ -141,6 +147,26 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
     }
   ],
   "presets": [
