@@ -75,7 +75,7 @@
           "settings": {
             "title": "Plant Shelves",
             "content": "<p>Lighting ideas for shelf rows, plant racks, and multi-level displays.</p>",
-            "image": "shopify://shop_images/space-plant-shelves.png",
+            "image": "shopify://shop_images/plant_shelves_square.png",
             "image_alt": "Soliseed grow light setup for plant shelves",
             "link": "/pages/grow-lights-for-plant-shelves",
             "link_label": "Explore setup"
@@ -86,7 +86,7 @@
           "settings": {
             "title": "Dark Corners",
             "content": "<p>Flexible grow lights for corners that need a reliable light source.</p>",
-            "image": "shopify://shop_images/space-dark-corners.png",
+            "image": "shopify://shop_images/dark_corner_square.png",
             "image_alt": "oliseed grow light setup for dark indoor corners",
             "link": "/pages/grow-lights-for-dark-corners",
             "link_label": "Explore setup"
@@ -97,7 +97,7 @@
           "settings": {
             "title": "Kitchen Herbs",
             "content": "<p>Simple setups for herbs on counters, windowsills, and compact kitchen spaces.</p>",
-            "image": "shopify://shop_images/space-kitchen-herbs.png",
+            "image": "shopify://shop_images/kitchen_herbs_squre.png",
             "image_alt": "Soliseed grow light setup for kitchen herbs",
             "link": "/pages/grow-lights-for-kitchen-herbs",
             "link_label": "Explore setup"
