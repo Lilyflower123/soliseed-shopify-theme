@@ -1,1 +1,118 @@
-{"sections":{"hero":{"type":"soliseed-page-hero","settings":{"eyebrow":"Find My Setup","title":"Choose a grow light by where your plant lives.","content":"<p>Start with the spot: desk, shelf, corner, kitchen, living room, or greenhouse. Soliseed helps match the setup form to the place your plants actually grow.</p>","primary_label":"View Setup Guide","primary_link":"/pages/setup-guide","secondary_label":"Register Warranty","secondary_link":"/pages/warranty-registration","show_image":true}},"spots":{"type":"soliseed-space-page","blocks":{"desk":{"type":"card","settings":{"title":"Desk Plants","content":"<p>For small plant groups, compact desks, and clip-on placement.</p>","link_label":"Explore desk setups","link":"/pages/grow-lights-for-desk-plants"}},"shelf":{"type":"card","settings":{"title":"Plant Shelves","content":"<p>For plant racks, shelf rows, and multi-level growing spots.</p>","link_label":"Explore shelf setups","link":"/pages/grow-lights-for-plant-shelves"}},"corner":{"type":"card","settings":{"title":"Dark Corners","content":"<p>For corners where natural light does not reach consistently.</p>","link_label":"Explore corner setups","link":"/pages/grow-lights-for-dark-corners"}},"kitchen":{"type":"card","settings":{"title":"Kitchen Herbs","content":"<p>For herbs on counters, windowsills, and compact kitchen spots.</p>","link_label":"Explore kitchen setups","link":"/pages/grow-lights-for-kitchen-herbs"}},"living":{"type":"card","settings":{"title":"Living Room Plant Corners","content":"<p>For larger houseplants and visible living spaces.</p>","link_label":"Explore living room setups","link":"/pages/grow-lights-for-living-room-plant-corners"}},"greenhouse":{"type":"card","settings":{"title":"Greenhouse & Seedlings","content":"<p>For seed starts, greenhouse benches, and wider growing areas.</p>","link_label":"Explore greenhouse setups","link":"/pages/grow-lights-for-greenhouse-seedlings"}}},"block_order":["desk","shelf","corner","kitchen","living","greenhouse"],"settings":{"title":"Start with the growing spot.","content":"<p>Each place has different constraints: distance, mounting, footprint, and how often you adjust the light.</p>","columns_desktop":3}},"support":{"type":"soliseed-support-block","settings":{"title":"Need help after choosing?","content":"<p>Use the setup guide for placement, distance, timer, and adjustment basics.</p>","setup_guide_label":"View Setup Guide","setup_guide_link":"/pages/setup-guide","warranty_label":"Register Warranty","warranty_link":"/pages/warranty-registration","contact_label":"Contact Support","contact_link":"/pages/contact"}}},"order":["hero","spots","support"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "soliseed-page-hero",
+      "settings": {
+        "eyebrow": "Find My Setup",
+        "title": "Choose a grow light by where your plant lives.",
+        "content": "<p>Start with the spot: desk, shelf, corner, kitchen, living room, or greenhouse. Soliseed helps match the setup form to the place your plants actually grow.</p>",
+        "primary_label": "View Setup Guide",
+        "primary_link": "/pages/setup-guide",
+        "secondary_label": "Register Warranty",
+        "secondary_link": "/pages/warranty-registration",
+        "show_image": true,
+        "image": "shopify://shop_images/find_my_set_up.png",
+        "image_position": "center"
+      }
+    },
+    "spots": {
+      "type": "soliseed-space-page",
+      "blocks": {
+        "desk": {
+          "type": "card",
+          "settings": {
+            "title": "Desk Plants",
+            "content": "<p>For small plant groups, compact desks, and clip-on placement.</p>",
+            "link_label": "Explore desk setups",
+            "link": "/pages/grow-lights-for-desk-plants"
+          }
+        },
+        "shelf": {
+          "type": "card",
+          "settings": {
+            "title": "Plant Shelves",
+            "content": "<p>For plant racks, shelf rows, and multi-level growing spots.</p>",
+            "link_label": "Explore shelf setups",
+            "link": "/pages/grow-lights-for-plant-shelves"
+          }
+        },
+        "corner": {
+          "type": "card",
+          "settings": {
+            "title": "Dark Corners",
+            "content": "<p>For corners where natural light does not reach consistently.</p>",
+            "link_label": "Explore corner setups",
+            "link": "/pages/grow-lights-for-dark-corners"
+          }
+        },
+        "kitchen": {
+          "type": "card",
+          "settings": {
+            "title": "Kitchen Herbs",
+            "content": "<p>For herbs on counters, windowsills, and compact kitchen spots.</p>",
+            "link_label": "Explore kitchen setups",
+            "link": "/pages/grow-lights-for-kitchen-herbs"
+          }
+        },
+        "living": {
+          "type": "card",
+          "settings": {
+            "title": "Living Room Plant Corners",
+            "content": "<p>For larger houseplants and visible living spaces.</p>",
+            "link_label": "Explore living room setups",
+            "link": "/pages/grow-lights-for-living-room-plant-corners"
+          }
+        },
+        "greenhouse": {
+          "type": "card",
+          "settings": {
+            "title": "Greenhouse & Seedlings",
+            "content": "<p>For seed starts, greenhouse benches, and wider growing areas.</p>",
+            "link_label": "Explore greenhouse setups",
+            "link": "/pages/grow-lights-for-greenhouse-seedlings"
+          }
+        }
+      },
+      "block_order": [
+        "desk",
+        "shelf",
+        "corner",
+        "kitchen",
+        "living",
+        "greenhouse"
+      ],
+      "settings": {
+        "title": "Start with the growing spot.",
+        "content": "<p>Each place has different constraints: distance, mounting, footprint, and how often you adjust the light.</p>",
+        "columns_desktop": 3
+      }
+    },
+    "support": {
+      "type": "soliseed-support-block",
+      "settings": {
+        "title": "Need help after choosing?",
+        "content": "<p>Use the setup guide for placement, distance, timer, and adjustment basics.</p>",
+        "setup_guide_label": "View Setup Guide",
+        "setup_guide_link": "/pages/setup-guide",
+        "warranty_label": "Register Warranty",
+        "warranty_link": "/pages/warranty-registration",
+        "contact_label": "Contact Support",
+        "contact_link": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "spots",
+    "support"
+  ]
+}
