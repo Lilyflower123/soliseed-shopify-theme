@@ -1,1 +1,34 @@
-{"sections":{"hero":{"type":"soliseed-page-hero","settings":{"eyebrow":"Desk Plants","title":"Grow lights for desk plants.","content":"<p>Compact plant spots need grow lights that fit the workspace without taking over the desk.</p>","primary_label":"View Setup Guide","primary_link":"/pages/setup-guide","secondary_label":"Find My Setup","secondary_link":"/pages/find-my-setup","show_image":true}},"content":{"type":"soliseed-space-page","blocks":{"problem":{"type":"card","settings":{"title":"The desk plant problem","content":"<p>Desk plants often sit away from windows or share space with monitors, notebooks, and daily work tools.</p>","link_label":"","link":""}},"setup":{"type":"card","settings":{"title":"Recommended setup","content":"<p>Look for compact clip-on or small spotlight-style grow lights with adjustable direction and timer control.</p>","link_label":"Shop clip-on setups","link":"/collections/compact-clip"}},"product":{"type":"product","settings":{"product":"soliseed-led-grow-light-10w-full-spectrum-4000k-clip-on-plant-light-spotlight-with-timer-10-dimming-levels-indoor-plants-growing-lamp-with-gooseneck-2pack","title":"Soliseed desk grow light","content":"<p>A focused setup option for small plant groups and desk placement.</p>","link_label":"View setup guide","link":"/pages/setup-guide"}},"tips":{"type":"card","settings":{"title":"Setup tips","content":"<p>Keep the base stable, avoid glare toward your eyes, and adjust the head as plants grow.</p>","link_label":"","link":""}},"faq":{"type":"faq","settings":{"title":"Can a grow light sit on a work desk?","content":"<p>Yes. Choose a compact setup and place it so the plant receives light without blocking daily workspace use.</p>","link_label":"","link":""}}},"block_order":["problem","setup","product","tips","faq"],"settings":{"title":"A compact setup for real desk spaces.","content":"<p>Use this page to explain the desk constraint, recommend a setup form, and guide customers toward Amazon purchase or setup education.</p>","columns_desktop":3}}},"order":["hero","content"]}
+{
+  "sections": {
+    "hero": {
+      "type": "soliseed-page-hero",
+      "settings": {
+        "eyebrow": "Desk Plants",
+        "title": "Grow lights for desk plants.",
+        "content": "<p>Compact plant spots need grow lights that fit the workspace without taking over the desk.</p>",
+        "primary_label": "View Setup Guide",
+        "primary_link": "/pages/setup-guide",
+        "secondary_label": "Find My Setup",
+        "secondary_link": "/pages/find-my-setup",
+        "show_image": true
+      }
+    },
+    "content": {
+      "type": "soliseed-space-page",
+      "blocks": {
+        "problem": {"type": "card", "settings": {"title": "The desk plant problem", "content": "<p>Desk plants often sit away from windows or share space with monitors, notebooks, and daily work tools.</p>", "link_label": "", "link": ""}},
+        "setup": {"type": "card", "settings": {"title": "Recommended setup", "content": "<p>Look for compact clip-on or small spotlight-style grow lights with adjustable direction and timer control.</p>", "link_label": "Shop clip-on setups", "link": "/collections/compact-clip"}},
+        "product": {"type": "product", "settings": {"product": "soliseed-led-grow-light-10w-full-spectrum-4000k-clip-on-plant-light-spotlight-with-timer-10-dimming-levels-indoor-plants-growing-lamp-with-gooseneck-2pack", "title": "Soliseed desk grow light", "content": "<p>A focused setup option for small plant groups and desk placement.</p>", "link_label": "View setup guide", "link": "/pages/setup-guide"}},
+        "tips": {"type": "card", "settings": {"title": "Setup tips", "content": "<p>Keep the base stable, avoid glare toward your eyes, and adjust the head as plants grow.</p>", "link_label": "", "link": ""}},
+        "faq": {"type": "faq", "settings": {"title": "Can a grow light sit on a work desk?", "content": "<p>Yes. Choose a compact setup and place it so the plant receives light without blocking daily workspace use.</p>", "link_label": "", "link": ""}}
+      },
+      "block_order": ["problem", "setup", "product", "tips", "faq"],
+      "settings": {
+        "title": "A compact setup for real desk spaces.",
+        "content": "<p>Keep small plants supported on desks, work tables, and compact corners without taking over your workspace.</p>",
+        "columns_desktop": 3
+      }
+    }
+  },
+  "order": ["hero", "content"]
+}
