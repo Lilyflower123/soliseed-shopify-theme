@@ -1,18 +1,95 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {"type": "soliseed-page-hero", "settings": {"eyebrow": "Dark Corners", "title": "Grow lights for dark corners.", "content": "<p>Corner plants often look right in the room but sit outside the best natural light. The setup should bring light to that exact spot.</p>", "primary_label": "View Setup Guide", "primary_link": "/pages/setup-guide", "secondary_label": "Find My Setup", "secondary_link": "/pages/find-my-setup", "show_image": true}},
+    "hero": {
+      "type": "soliseed-page-hero",
+      "settings": {
+        "eyebrow": "Dark Corners",
+        "title": "Grow lights for dark corners.",
+        "content": "<p>Corner plants often look right in the room but sit outside the best natural light. The setup should bring light to that exact spot.</p>",
+        "primary_label": "View Setup Guide",
+        "primary_link": "/pages/setup-guide",
+        "secondary_label": "Find My Setup",
+        "secondary_link": "/pages/find-my-setup",
+        "show_image": true,
+        "image": "shopify://shop_images/Dark_Corners.png",
+        "image_position": "center"
+      }
+    },
     "content": {
       "type": "soliseed-space-page",
       "blocks": {
-        "problem": {"type": "card", "settings": {"title": "The corner problem", "content": "<p>Light can fall off quickly in corners, especially behind furniture or away from windows.</p>", "link_label": "", "link": ""}},
-        "setup": {"type": "card", "settings": {"title": "Recommended setup", "content": "<p>Consider pendant, spotlight, or flexible setups that can reach the plant without cluttering the corner.</p>", "link_label": "Shop pendant setups", "link": "/collections/the-pendant-collection"}},
-        "product": {"type": "product", "settings": {"product": "growing-lamps", "title": "Soliseed corner grow light", "content": "<p>A flexible option for larger plants and low-light corners.</p>", "link_label": "View setup guide", "link": "/pages/setup-guide"}},
-        "tips": {"type": "card", "settings": {"title": "Setup tips", "content": "<p>Aim the light at the plant canopy, keep access for watering, and avoid placing cables where people walk.</p>", "link_label": "", "link": ""}},
-        "faq": {"type": "faq", "settings": {"title": "Can a dark corner become a plant spot?", "content": "<p>Often yes, if the setup can safely and consistently bring light to that corner.</p>", "link_label": "", "link": ""}}
+        "problem": {
+          "type": "card",
+          "settings": {
+            "title": "The corner problem",
+            "content": "<p>Light can fall off quickly in corners, especially behind furniture or away from windows.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "setup": {
+          "type": "card",
+          "settings": {
+            "title": "Recommended setup",
+            "content": "<p>Consider pendant, spotlight, or flexible setups that can reach the plant without cluttering the corner.</p>",
+            "link_label": "Shop pendant setups",
+            "link": "/collections/the-pendant-collection"
+          }
+        },
+        "product": {
+          "type": "product",
+          "settings": {
+            "product": "growing-lamps",
+            "title": "Soliseed corner grow light",
+            "content": "<p>A flexible option for larger plants and low-light corners.</p>",
+            "link_label": "View setup guide",
+            "link": "/pages/setup-guide"
+          }
+        },
+        "tips": {
+          "type": "card",
+          "settings": {
+            "title": "Setup tips",
+            "content": "<p>Aim the light at the plant canopy, keep access for watering, and avoid placing cables where people walk.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "faq": {
+          "type": "faq",
+          "settings": {
+            "title": "Can a dark corner become a plant spot?",
+            "content": "<p>Often yes, if the setup can safely and consistently bring light to that corner.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["problem", "setup", "product", "tips", "faq"],
-      "settings": {"title": "Make low-light corners plant-ready.", "content": "<p>Use focused supplemental light to support plants in rooms and corners that natural light does not reach well.</p>", "columns_desktop": 3}
+      "block_order": [
+        "problem",
+        "setup",
+        "product",
+        "tips",
+        "faq"
+      ],
+      "settings": {
+        "title": "Bring light to the corner where the plant belongs.",
+        "content": "<p>Positioning matters as much as the light itself.</p>",
+        "columns_desktop": 3
+      }
     }
   },
-  "order": ["hero", "content"]
+  "order": [
+    "hero",
+    "content"
+  ]
 }
