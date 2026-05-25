@@ -1,1 +1,71 @@
-{"sections":{"hero":{"type":"soliseed-page-hero","settings":{"eyebrow":"Warranty Registration","title":"Register your Soliseed grow light.","content":"<p>Keep product support easier to find after purchase. Use this page to guide customers toward warranty registration or support contact.</p>","primary_label":"Contact Support","primary_link":"/pages/contact","secondary_label":"View Setup Guide","secondary_link":"/pages/setup-guide","show_image":true}},"warranty":{"type":"soliseed-warranty-info","blocks":{"purchase":{"type":"item","settings":{"title":"Have your order details ready","content":"<p>Keep your Amazon order information and product model nearby before submitting a warranty request.</p>"}},"product":{"type":"item","settings":{"title":"Tell us about the product","content":"<p>Include the product name, setup type, and the growing spot where the light is used.</p>"}},"support":{"type":"item","settings":{"title":"Use support when needed","content":"<p>If a registration form is not connected yet, direct customers to the contact page for warranty support.</p>"}}},"block_order":["purchase","product","support"],"settings":{"title":"Warranty support starts with clear product details.","content":"<p>This section can be updated in the theme editor once the final warranty form or app is connected.</p>","primary_label":"Contact Support","primary_link":"/pages/contact","secondary_label":"View Setup Guide","secondary_link":"/pages/setup-guide"}}},"order":["hero","warranty"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "soliseed-page-hero",
+      "settings": {
+        "eyebrow": "Warranty Registration",
+        "title": "Register your Soliseed grow light.",
+        "content": "<p>Keep product support easier to find after purchase. Use this page to guide customers toward warranty registration or support contact.</p>",
+        "primary_label": "Contact Support",
+        "primary_link": "/pages/contact",
+        "secondary_label": "View Setup Guide",
+        "secondary_link": "/pages/setup-guide",
+        "show_image": true,
+        "image": "shopify://shop_images/warrant_1.png",
+        "image_position": "center"
+      }
+    },
+    "warranty": {
+      "type": "soliseed-warranty-info",
+      "blocks": {
+        "purchase": {
+          "type": "item",
+          "settings": {
+            "title": "Have your order details ready",
+            "content": "<p>Keep your Amazon order information and product model nearby before submitting a warranty request.</p>"
+          }
+        },
+        "product": {
+          "type": "item",
+          "settings": {
+            "title": "Tell us about the product",
+            "content": "<p>Include the product name, setup type, and the growing spot where the light is used.</p>"
+          }
+        },
+        "support": {
+          "type": "item",
+          "settings": {
+            "title": "Use support when needed",
+            "content": "<p>If a registration form is not connected yet, direct customers to the contact page for warranty support.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "purchase",
+        "product",
+        "support"
+      ],
+      "settings": {
+        "title": "Warranty support starts with clear product details.",
+        "content": "<p>This section can be updated in the theme editor once the final warranty form or app is connected.</p>",
+        "primary_label": "Contact Support",
+        "primary_link": "/pages/contact",
+        "secondary_label": "View Setup Guide",
+        "secondary_link": "/pages/setup-guide"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "warranty"
+  ]
+}
