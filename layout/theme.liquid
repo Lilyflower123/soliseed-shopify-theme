@@ -9,17 +9,57 @@
     >
     <meta name="theme-color" content="{{ settings.header_background }}">
 
+    {%- liquid
+      assign seo_title = page_title
+      assign seo_description = page_description
+
+      if request.page_type == 'index'
+        assign seo_title = 'Soliseed Grow Lights for Indoor Plants | Every Spot Can Grow'
+        assign seo_description = 'Find full-spectrum white grow lights for desk plants, plant shelves, kitchen herbs, dark corners, living room plant corners, and indoor growing setups.'
+      elsif request.page_type == 'collection' and collection.handle == 'all'
+        assign seo_title = 'Soliseed Grow Lights and Indoor Plant Lighting Setups'
+        assign seo_description = 'Shop Soliseed grow lights for indoor plants, shelves, desks, kitchen herbs, seedlings, and home growing spaces.'
+      elsif request.page_type == 'blog' and blog.handle == 'how-to'
+        assign seo_title = 'Indoor Plant Grow Light Guides | Soliseed How To'
+        assign seo_description = 'Read Soliseed grow light guides for indoor plants, setup tips, plant care, light placement, timers, and choosing the right grow light for your space.'
+      elsif request.page_type == 'page'
+        case page.handle
+          when 'contact'
+            assign seo_title = 'Contact Soliseed Support'
+            assign seo_description = 'Contact Soliseed for grow light setup help, warranty support, product questions, and Amazon order guidance.'
+          when 'find-my-setup'
+            assign seo_description = 'Choose the right Soliseed grow light setup by plant spot, space, and setup type.'
+          when 'grow-lights-for-desk-plants'
+            assign seo_description = 'Find compact grow light setups for desk plants, small workspaces, and indoor plant groupings.'
+          when 'grow-lights-for-plant-shelves'
+            assign seo_description = 'Explore grow light setups for plant shelves, plant racks, and multi-level indoor displays.'
+          when 'grow-lights-for-dark-corners'
+            assign seo_description = 'Make low-light corners plant-ready with focused Soliseed grow light setups for indoor plants.'
+          when 'grow-lights-for-kitchen-herbs'
+            assign seo_description = 'Support basil, mint, rosemary, and kitchen herbs with compact grow light setups for counters and windowsills.'
+          when 'grow-lights-for-living-room-plant-corners'
+            assign seo_description = 'Find home-friendly grow light setups for living room plant corners and grouped houseplants.'
+          when 'grow-lights-for-greenhouse-seedlings'
+            assign seo_description = 'Support seedlings, propagation trays, and greenhouse starts with practical supplemental grow light setups.'
+          when 'setup-guide'
+            assign seo_description = 'Learn how to set up your Soliseed grow light with placement, distance, timer, and adjustment basics.'
+          when 'warranty-registration'
+            assign seo_description = 'Register your Soliseed grow light and find post-purchase support.'
+        endcase
+      endif
+    -%}
+
     <title>
-      {%- if page_title == blank -%}
+      {%- if seo_title == blank -%}
         {{- shop.name -}}
       {%- else -%}
-        {{- page_title -}}
+        {{- seo_title -}}
         {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page -}}{% endif -%}
       {%- endif -%}
     </title>
 
-    {%- if page_description -%}
-      <meta name="description" content="{{ page_description | escape }}">
+    {%- if seo_description != blank -%}
+      <meta name="description" content="{{ seo_description | escape }}">
     {%- endif -%}
 
     <link rel="canonical" href="{{ canonical_url }}">

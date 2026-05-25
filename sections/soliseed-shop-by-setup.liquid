@@ -56,13 +56,14 @@
         {%- for block in section.blocks -%}
           <a href="{{ block.settings.link | default: '#' }}" class="soliseed-setup-card text-container" {{ block.shopify_attributes }}>
             {%- if block.settings.image != blank -%}
+              {%- assign setup_image_alt = block.settings.image_alt | default: block.settings.title -%}
               {{-
                 block.settings.image
                 | image_url: width: 800
                 | image_tag:
                   class: 'soliseed-setup-card__image',
                   loading: 'lazy',
-                  alt: block.settings.image_alt,
+                  alt: setup_image_alt,
                   sizes: '(max-width: 740px) 100vw, 25vw',
                   widths: '320,480,640,800'
               -}}

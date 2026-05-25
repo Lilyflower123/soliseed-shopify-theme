@@ -160,7 +160,7 @@
 
           <div class="article__content">
             <div class="rte" {{ block.shopify_attributes }}>
-              {{- article.content -}}
+              {{- article.content | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' -}}
             </div>
           </div>
         </div>

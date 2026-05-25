@@ -64,11 +64,13 @@
 >
   {%- if article.image -%}
     <a href="{{ article.url }}" class="article-item__image-container">
+      {%- assign article_image_alt = article.image.alt | default: article.title -%}
       {{-
         article.image
         | image_url: width: article.image.width
         | image_tag:
           loading: 'lazy',
+          alt: article_image_alt,
           sizes: '(max-width: 740px) 81vw, (max-width: 999px) 37vw, 425px',
           sizes: '600,700,800,1000,1200,1400,1600,1800,2000',
           class: 'article-item__image'

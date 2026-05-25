@@ -45,7 +45,11 @@
   <section>
     {%- if section.settings.navigation_mode == 'scrolling' -%}
       <div class="announcement-bar announcement-bar--scrolling">
-        <marquee-text scrolling-speed="{{ section.settings.scrolling_speed }}" class="announcement-bar__scrolling-list">
+        {%- if section.blocks.first.settings.text != blank -%}
+          <p class="visually-hidden">{{ section.blocks.first.settings.text | strip_html }}</p>
+        {%- endif -%}
+
+        <marquee-text scrolling-speed="{{ section.settings.scrolling_speed }}" class="announcement-bar__scrolling-list" aria-hidden="true">
           {%- for i in (1..10) -%}
             <span class="announcement-bar__item">
               {%- for block in section.blocks -%}

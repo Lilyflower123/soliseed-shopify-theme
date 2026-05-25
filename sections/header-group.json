@@ -17,7 +17,7 @@
         "message-1": {
           "type": "message",
           "settings": {
-            "text": "Our 3-Year 'No-Nonsense' Warranty！SEE THE <a href=\"https://zalify.featurebase.app/changelog\" target=\"_blank\" title=\"https://zalify.featurebase.app/changelog\">CHANGELOG</a>."
+            "text": "Our 3-Year 'No-Nonsense' Warranty. <a href=\"/pages/warranty-registration\">Register warranty</a>."
           }
         }
       },
@@ -27,8 +27,8 @@
       "settings": {
         "position": "non_sticky",
         "text_size": "small",
-        "navigation_mode": "scrolling",
-        "autoplay": true,
+        "navigation_mode": "carousel",
+        "autoplay": false,
         "show_arrows": true,
         "cycle_speed": 5,
         "message_width": "boxed",

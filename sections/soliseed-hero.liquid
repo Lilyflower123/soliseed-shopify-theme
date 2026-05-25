@@ -75,11 +75,13 @@
 
         <div class="soliseed-hero__media">
           {%- if section.settings.image != blank -%}
+            {%- assign hero_image_alt = section.settings.image.alt | default: section.settings.heading -%}
             {{-
               section.settings.image
               | image_url: width: 1400
               | image_tag:
                 loading: 'eager',
+                alt: hero_image_alt,
                 sizes: '(max-width: 740px) 100vw, 50vw',
                 widths: '600,800,1000,1200,1400'
             -}}

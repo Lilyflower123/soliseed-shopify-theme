@@ -10,6 +10,7 @@
 
 <section>
   {%- if collection.image and section.settings.show_collection_image -%}
+    {%- assign collection_image_alt = collection.image.alt | default: collection.title -%}
     <image-with-text-overlay
       reveal-on-scroll
       parallax
@@ -49,6 +50,7 @@
             | image_url: width: collection.image.width
             | image_tag:
               widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600',
+              alt: collection_image_alt,
               class: 'image-overlay__image',
               reveal: true
           -}}

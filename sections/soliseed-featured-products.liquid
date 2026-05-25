@@ -99,11 +99,13 @@
           <div class="soliseed-product-card" {{ block.shopify_attributes }}>
             <a href="{{ featured_product.url | default: '#' }}" class="soliseed-product-card__media">
               {%- if featured_product.featured_media != blank -%}
+                {%- assign featured_product_alt = featured_product.featured_media.alt | default: featured_product.title -%}
                 {{-
                   featured_product.featured_media
                   | image_url: width: 700
                   | image_tag:
                     loading: 'lazy',
+                    alt: featured_product_alt,
                     sizes: '(max-width: 740px) 100vw, 25vw',
                     widths: '350,500,700'
                 -}}

@@ -369,11 +369,7 @@
         </a>
       {%- endcapture -%}
 
-      {%- if request.page_type == 'index' -%}
-        <h1 class="header__logo">{{ logo }}</h1>
-      {%- else -%}
-        <span class="header__logo">{{ logo }}</span>
-      {%- endif -%}
+      <span class="header__logo">{{ logo }}</span>
 
       <!-- SECONDARY LINKS PART -->
       <div class="header__secondary-links">

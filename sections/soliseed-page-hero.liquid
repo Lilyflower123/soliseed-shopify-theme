@@ -79,11 +79,13 @@
         {%- if section.settings.show_image -%}
           <div class="soliseed-page-hero__media">
             {%- if section.settings.image != blank -%}
+              {%- assign page_hero_image_alt = section.settings.image.alt | default: section.settings.title -%}
               {{-
                 section.settings.image
                 | image_url: width: 1200
                 | image_tag:
                   loading: 'lazy',
+                  alt: page_hero_image_alt,
                   sizes: '(max-width: 740px) 100vw, 45vw',
                   widths: '500,700,900,1200'
               -}}
