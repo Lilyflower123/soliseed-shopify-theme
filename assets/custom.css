@@ -34,6 +34,27 @@ a[href*="zalify.com" i][href*="madeinbadge" i] {
 }
 
 @media screen and (max-width: 740px) {
+  .shopify-section--header {
+    margin-bottom: 0 !important;
+  }
+
+  .shopify-section--header .header--transparent {
+    --header-background: var(--root-background);
+    --header-text-color: var(--root-text-color);
+    --header-border-color: var(--root-border-color);
+    background: rgb(var(--header-background));
+    color: rgb(var(--header-text-color));
+    box-shadow: 0 1px rgb(var(--border-color));
+  }
+
+  .shopify-section--header .header--transparent .header__logo-image:not(:last-child) {
+    opacity: 1;
+  }
+
+  .shopify-section--header .header--transparent .header__logo-image--transparent {
+    opacity: 0;
+  }
+
   .shopify-section--main-collection .product-item__image-wrapper {
     margin-bottom: 12px;
   }
