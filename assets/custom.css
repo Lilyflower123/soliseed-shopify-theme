@@ -1,1 +1,66 @@
 /* Include your custom CSS here. */
+
+/* Hide the front-end Zalify attribution without touching the theme activation script. */
+#activate-popup,
+.zalify-badge,
+.zalify-badge-wrapper,
+[class*="zalify-badge" i],
+[id*="zalify-badge" i],
+a[href*="zalify.com" i][href*="madeinbadge" i] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Keep collection cards visually consistent for white-background product images. */
+.shopify-section--main-collection .product-item__aspect-ratio {
+  aspect-ratio: 1 / 1;
+  background: rgb(var(--secondary-background));
+  border-radius: var(--block-border-radius-reduced);
+}
+
+.shopify-section--main-collection .product-item__primary-image,
+.shopify-section--main-collection .product-item__secondary-image {
+  object-fit: contain;
+  padding: 10px;
+}
+
+.shopify-section--main-collection .product-item-meta__title {
+  display: -webkit-box;
+  overflow: hidden;
+  min-height: 3.1em;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media screen and (max-width: 740px) {
+  .shopify-section--main-collection .product-item__image-wrapper {
+    margin-bottom: 12px;
+  }
+
+  .shopify-section--main-collection .product-item__primary-image,
+  .shopify-section--main-collection .product-item__secondary-image {
+    padding: 8px;
+  }
+
+  .shopify-section--main-product .product {
+    row-gap: 18px;
+  }
+
+  .shopify-section--main-product .product__info {
+    margin-top: 0;
+  }
+
+  .shopify-section--main-product .product-form__title {
+    margin-bottom: 8px;
+  }
+
+  .shopify-section--main-product .product-form__title .heading {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: clamp(24px, 7vw, 32px);
+    line-height: 1.16;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+}

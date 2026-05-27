@@ -124,11 +124,13 @@
               <article class="soliseed-space-card soliseed-space-card--product text-container" {{ block.shopify_attributes }}>
                 <a href="{{ featured_product.url | default: '#' }}" class="soliseed-space-card__media">
                   {%- if featured_product.featured_media != blank -%}
+                    {%- assign space_product_alt = featured_product.featured_media.alt | default: featured_product.title -%}
                     {{-
                       featured_product.featured_media
                       | image_url: width: 700
                       | image_tag:
                         loading: 'lazy',
+                        alt: space_product_alt,
                         sizes: '(max-width: 740px) 100vw, 38vw',
                         widths: '350,500,700'
                     -}}

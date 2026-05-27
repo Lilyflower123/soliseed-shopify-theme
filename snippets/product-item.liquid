@@ -82,11 +82,13 @@
                   {%- if variant.options contains color_option -%}
                     {%- unless variant.featured_media == product.featured_media -%}
                       {%- if variant.featured_media -%}
+                        {%- assign variant_image_alt = variant.featured_media.alt | default: product.title -%}
                         {{
                           variant.featured_media
                           | image_url: width: variant.featured_media.width
                           | image_tag:
                             loading: 'lazy',
+                            alt: variant_image_alt,
                             sizes: sizes_attribute,
                             widths: '200,300,400,500,600,700,800,900,1000,1100,1200',
                             class: 'product-item__primary-image',
@@ -105,11 +107,13 @@
 
         {%- if settings.show_secondary_image and product.media.size > 1 and hide_secondary_image != true -%}
           {%- assign next_media = product.media[product.featured_media.position] | default: product.media[1] -%}
+          {%- assign secondary_image_alt = next_media.alt | default: product.title -%}
           {{-
             next_media
             | image_url: width: next_media.width
             | image_tag:
               loading: 'lazy',
+              alt: secondary_image_alt,
               sizes: sizes_attribute,
               widths: '200,300,400,500,600,700,800,900,1000,1100,1200',
               class: 'product-item__secondary-image'
@@ -433,11 +437,13 @@
                       <label class="color-swatch__item" for="{{ color_id }}">
                         <span class="visually-hidden">{{ value }}</span>
                         {% if variant_for_value.featured_media %}
+                          {%- assign swatch_image_alt = variant_for_value.featured_media.alt | default: value -%}
                           {{-
                             variant_for_value.featured_media
                             | image_url: width: variant_for_value.featured_media.width
                             | image_tag:
                               loading: 'lazy',
+                              alt: swatch_image_alt,
                               sizes: '(max-width: 740px) 64px, 72px',
                               sizes: '64,72,128,144,192,216',
                               class: 'variant-swatch__image'

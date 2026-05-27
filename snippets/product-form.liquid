@@ -461,20 +461,21 @@
           {%- capture class -%}product-form__image text--{{ block.settings.alignment }}{%- endcapture -%}
           {%- capture image_sizes -%}{{ block.settings.width }}, {{ block.settings.width | times: 2 }}, {{ block.settings.width | times: 3 }}{%- endcapture -%}
           {%- capture style_attribute -%}max-width: {{ block.settings.width }}px{%- endcapture -%}
+          {%- assign product_form_image_alt = block.settings.image.alt | default: block.settings.title | default: product.title -%}
           {%- capture image_content -%}
             {%- if block.settings.link -%}
-              <a href="{{ block.settings.link }}" aria-label="{{ block.settings.image.alt | escape }}">
+              <a href="{{ block.settings.link }}" aria-label="{{ product_form_image_alt | escape }}">
                 {{-
                   block.settings.image
                   | image_url: width: block.settings.image.width
-                  | image_tag: loading: 'lazy', widths: image_sizes, style: style_attribute
+                  | image_tag: loading: 'lazy', alt: product_form_image_alt, widths: image_sizes, style: style_attribute
                 -}}
               </a>
             {%- else -%}
               {{-
                 block.settings.image
                 | image_url: width: block.settings.image.width
-                | image_tag: loading: 'lazy', widths: image_sizes, style: style_attribute
+                | image_tag: loading: 'lazy', alt: product_form_image_alt, widths: image_sizes, style: style_attribute
               -}}
             {%- endif -%}
           {%- endcapture -%}
@@ -1265,11 +1266,13 @@
             {%- assign enable_size_chart = true -%}
 
             {%- capture size_chart_image_item -%}
+              {%- assign size_chart_image_alt = size_chart_image.alt | default: block.settings.size_chart_title | default: product.title -%}
               {{-
                 size_chart_image
                 | image_url: width: size_chart_image.width
                 | image_tag:
                   loading: 'lazy',
+                  alt: size_chart_image_alt,
                   sizes: '100vw',
                   widths: '400,500,600,700,800,900,1000',
                   class: 'size-chart__image'
@@ -1394,11 +1397,13 @@
                               >
                               <label class="variant-swatch__item" for="{{ option_id }}-{{ forloop.index }}">
                                 <span class="visually-hidden">{{ value }}</span>
+                                {%- assign product_variant_swatch_alt = variant.featured_media.alt | default: value -%}
                                 {{-
                                   variant.featured_media
                                   | image_url: width: variant.featured_media.width
                                   | image_tag:
                                     loading: 'lazy',
+                                    alt: product_variant_swatch_alt,
                                     sizes: '(max-width: 740px) 64px, 72px',
                                     sizes: '64,72,128,144,192,216',
                                     class: 'variant-swatch__image'

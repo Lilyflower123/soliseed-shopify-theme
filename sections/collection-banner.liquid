@@ -9,6 +9,11 @@
 </style>
 
 <section>
+  {%- assign collection_display_title = collection.title -%}
+  {%- if collection.handle == 'all' -%}
+    {%- assign collection_display_title = 'Soliseed Grow Lights for Indoor Plants' -%}
+  {%- endif -%}
+
   {%- if collection.image and section.settings.show_collection_image -%}
     {%- assign collection_image_alt = collection.image.alt | default: collection.title -%}
     <image-with-text-overlay
@@ -62,7 +67,7 @@
           <div class="image-overlay__content content-box content-box--{{ section.settings.text_width }} content-box--text-center content-box--center text-container">
             {%- if section.settings.show_collection_title -%}
               <h1 class="heading h1">
-                <split-lines reveal>{{ collection.title }}</split-lines>
+                <split-lines reveal>{{ collection_display_title }}</split-lines>
               </h1>
             {%- endif -%}
 
@@ -80,7 +85,7 @@
       <div class="page-header">
         <div class="page-header__text-wrapper text-container {% unless section.settings.show_collection_title or section.settings.show_collection_description and collection.description != blank %}page-header__text-wrapper--empty{% endunless %}">
           {%- if section.settings.show_collection_title -%}
-            <h1 class="heading h1">{{ collection.title }}</h1>
+            <h1 class="heading h1">{{ collection_display_title }}</h1>
           {%- endif -%}
 
           {%- if section.settings.show_collection_description and collection.description != blank -%}
