@@ -65,8 +65,8 @@
     "soliseed-amazon-cta": {
       "type": "soliseed-product-amazon-cta",
       "settings": {
-        "title": "Ready to buy this Soliseed setup?",
-        "content": "<p>Amazon is the primary checkout channel. Use this product page to confirm the right growing spot and setup form before purchase.</p>",
+        "title": "Ready to buy on Amazon?",
+        "content": "<p>Use this page to confirm the setup, then choose Amazon for the fastest Soliseed checkout path.</p>",
         "amazon_label": "Buy on Amazon"
       }
     },
@@ -91,16 +91,16 @@
     "soliseed-product-support": {
       "type": "soliseed-product-fit-support",
       "settings": {
-        "title": "Choose the right Soliseed setup for your growing spot.",
-        "content": "<p>Use this product page to confirm where the light fits, how to set it up, and where to get support after purchase.</p>",
-        "best_for_title": "Best for",
-        "best_for_content": "<ul><li>Desk plants</li><li>Plant shelves</li><li>Dark corners</li><li>Kitchen herbs</li><li>Living room plant corners</li><li>Greenhouse & seedlings</li></ul>",
-        "setup_type_title": "Setup type",
-        "setup_type_content": "<ul><li>Clip-on</li><li>Pendant</li><li>Herb kit</li><li>Greenhouse string light</li></ul>",
-        "plant_fit_title": "Plant fit",
-        "plant_fit_content": "<ul><li>Houseplants</li><li>Herbs</li><li>Seedlings</li><li>Succulents</li><li>Larger indoor plants</li></ul>",
-        "setup_tips_title": "Setup tips",
-        "setup_tips_content": "<ul><li>Place the light close enough for the plant, but avoid direct leaf burn.</li><li>Use the timer for consistent daily light.</li><li>Adjust the angle as your plant grows.</li><li>Start with the setup guide if you are not sure about distance or timing.</li></ul>",
+        "title": "Check the setup before you buy.",
+        "content": "<p>Match the light to the plant spot, mounting style, and daily routine before heading to Amazon.</p>",
+        "best_for_title": "Good for",
+        "best_for_content": "<ul><li>Indoor plant spots that need extra light</li><li>Desks, shelves, counters, corners, and seedling areas</li><li>Plant owners who want simple setup guidance</li></ul>",
+        "setup_type_title": "Confirm",
+        "setup_type_content": "<ul><li>Where the light will sit or mount</li><li>How much adjustment you need</li><li>Whether the product form fits the space</li></ul>",
+        "plant_fit_title": "Use with",
+        "plant_fit_content": "<ul><li>Houseplants</li><li>Kitchen herbs</li><li>Seedlings</li><li>Small indoor growing setups</li></ul>",
+        "setup_tips_title": "Quick setup checks",
+        "setup_tips_content": "<ul><li>Keep the light close enough to be useful without crowding the plant.</li><li>Use the timer for a consistent daily routine.</li><li>Adjust height or angle as the plant grows.</li></ul>",
         "setup_guide_label": "View Setup Guide",
         "setup_guide_link": "/pages/setup-guide",
         "support_title": "Warranty and support",
@@ -140,7 +140,7 @@
           "settings": {
             "icon": "truck",
             "title": "Amazon checkout",
-            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+            "content": "<p>Use Amazon for product purchase, shipping updates, returns, and order changes.</p>"
           }
         },
         "item-2": {
@@ -148,7 +148,7 @@
           "settings": {
             "icon": "shopping-cart",
             "title": "Find your setup",
-            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+            "content": "<p>Choose by the spot your plant lives in: desk, shelf, kitchen, corner, or seedling area.</p>"
           }
         },
         "item-3": {
@@ -156,7 +156,7 @@
           "settings": {
             "icon": "headset",
             "title": "Setup guidance",
-            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+            "content": "<p>Use Soliseed guides for placement, distance, timer use, and simple adjustments.</p>"
           }
         },
         "item-4": {
@@ -164,7 +164,7 @@
           "settings": {
             "icon": "fingerprint",
             "title": "Warranty support",
-            "content": "<p>Helpful Soliseed support for choosing, setting up, and caring for your grow light.</p>"
+            "content": "<p>Register your warranty and contact support with setup or product care questions.</p>"
           }
         }
       },
@@ -180,8 +180,8 @@
   "order": [
     "main",
     "soliseed-amazon-cta",
-    "product-content",
     "soliseed-product-support",
+    "product-content",
     "product-recommendations",
     "separator",
     "text-with-icons"

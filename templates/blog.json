@@ -1,1 +1,15 @@
-{"sections":{"main":{"type":"main-blog","settings":{}}},"order":["main"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "custom_blog_title": "Indoor Plant Grow Light Guides",
+        "blog_intro": "Practical setup advice for desk plants, plant shelves, kitchen herbs, dark corners, and everyday indoor growing spaces.",
+        "featured_tag_handles": "grow-light\nkitchen-herb-garden\nplant-shelf\nclip-on-grow-light\nwindowsill-herbs"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

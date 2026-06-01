@@ -1,7 +1,19 @@
 <section>
+  {%- assign blog_display_title = blog.title -%}
+  {%- if section.settings.custom_blog_title != blank -%}
+    {%- assign blog_display_title = section.settings.custom_blog_title -%}
+  {%- elsif blog.handle == 'how-to' -%}
+    {%- assign blog_display_title = 'Indoor Plant Grow Light Guides' -%}
+  {%- endif -%}
+
+  {%- assign blog_intro = section.settings.blog_intro -%}
+  {%- if blog_intro == blank and blog.handle == 'how-to' -%}
+    {%- assign blog_intro = 'Practical setup advice for desk plants, plant shelves, kitchen herbs, dark corners, and everyday indoor growing spaces.' -%}
+  {%- endif -%}
+
   {%- if blog.articles_count == 0 -%}
     <div class="empty-state text-container">
-      <h1 class="heading h1">{{ blog.title }}</h1>
+      <h1 class="heading h1">{{ blog_display_title }}</h1>
 
       <p class="text--large">{{ 'blog.general.empty' | t }}</p>
 
@@ -14,7 +26,11 @@
       <div class="container">
         <div class="page-header">
           <div class="page-header__text-wrapper text-container">
-            <h1 class="heading h1">{{ blog.title }}</h1>
+            <h1 class="heading h1">{{ blog_display_title }}</h1>
+
+            {%- if blog_intro != blank -%}
+              <p class="text--large">{{ blog_intro | escape }}</p>
+            {%- endif -%}
           </div>
         </div>
       </div>
@@ -38,6 +54,26 @@
                 </li>
 
                 {%- for tag in blog.all_tags -%}
+                  {%- assign show_tag = true -%}
+
+                  {%- if section.settings.featured_tag_handles != blank -%}
+                    {%- assign show_tag = false -%}
+                    {%- assign featured_tag_handles = section.settings.featured_tag_handles | newline_to_br | split: '<br />' -%}
+                    {%- assign tag_handle = tag | handle -%}
+
+                    {%- for featured_tag_handle in featured_tag_handles -%}
+                      {%- assign featured_tag_handle_clean = featured_tag_handle | strip -%}
+                      {%- if featured_tag_handle_clean == tag_handle -%}
+                        {%- assign show_tag = true -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+
+                  {%- unless show_tag -%}
+                    {%- continue -%}
+                  {%- endunless -%}
+
                   <li class="link-bar__link-item {% if current_tags contains tag %}link-bar__link-item--selected{% endif %}">
                     {%- capture link_to_tag_replacement -%}class="link-bar__link link--animated {% if current_tags contains tag %}text--underlined{% endif %}" title={%- endcapture -%}
 
@@ -86,6 +122,23 @@
       "id": "show_blog_title",
       "label": "Show blog title",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "custom_blog_title",
+      "label": "Custom blog title"
+    },
+    {
+      "type": "text",
+      "id": "blog_intro",
+      "label": "Blog intro"
+    },
+    {
+      "type": "textarea",
+      "id": "featured_tag_handles",
+      "label": "Featured tag handles",
+      "info": "Optional. Add one tag handle per line to limit the blog tag bar.",
+      "default": "grow-light\nkitchen-herb-garden\nplant-shelf\nclip-on-grow-light\nwindowsill-herbs"
     },
     {
       "type": "checkbox",

@@ -27,6 +27,11 @@
       "type": "main-collection",
       "settings": {
         "show_product_count": true,
+        "show_amazon_checkout_note": true,
+        "amazon_checkout_heading": "Prefer Amazon checkout?",
+        "amazon_checkout_text": "Shop Soliseed through Amazon for the fastest purchase path, then use this site for setup help, warranty registration, and product guidance.",
+        "amazon_checkout_label": "Shop on Amazon",
+        "amazon_checkout_link": "",
         "products_per_page": 24,
         "mobile_products_per_row": "2",
         "desktop_products_per_row": 4,

@@ -207,6 +207,28 @@
         {%- endif -%}
 
         {%- if collection.products_count > 0 -%}
+          {%- if collection.handle == 'all' and section.settings.show_amazon_checkout_note -%}
+            {%- assign collection_amazon_url = section.settings.amazon_checkout_link | default: settings.amazon_store_url -%}
+
+            <div class="soliseed-collection-amazon-note text-container">
+              <div>
+                {%- if section.settings.amazon_checkout_heading != blank -%}
+                  <p class="heading h5">{{ section.settings.amazon_checkout_heading | escape }}</p>
+                {%- endif -%}
+
+                {%- if section.settings.amazon_checkout_text != blank -%}
+                  <p>{{ section.settings.amazon_checkout_text | escape }}</p>
+                {%- endif -%}
+              </div>
+
+              {%- if collection_amazon_url != blank and section.settings.amazon_checkout_label != blank -%}
+                <a href="{{ collection_amazon_url }}" class="button button--secondary button--small" target="_blank" rel="noopener">
+                  {{- section.settings.amazon_checkout_label | escape -}}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
           <div class="product-facet__meta-bar anchor">
             {%- if section.settings.filter_position == 'drawer'
               and section.settings.show_filters
@@ -558,6 +580,39 @@
       "id": "show_product_count",
       "label": "Show product count",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "All products Amazon note"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_amazon_checkout_note",
+      "label": "Show Amazon checkout note on /collections/all",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "amazon_checkout_heading",
+      "label": "Heading",
+      "default": "Prefer Amazon checkout?"
+    },
+    {
+      "type": "text",
+      "id": "amazon_checkout_text",
+      "label": "Text",
+      "default": "Shop Soliseed through Amazon for the fastest purchase path, then use this site for setup help, warranty registration, and product guidance."
+    },
+    {
+      "type": "text",
+      "id": "amazon_checkout_label",
+      "label": "Button label",
+      "default": "Shop on Amazon"
+    },
+    {
+      "type": "url",
+      "id": "amazon_checkout_link",
+      "label": "Button link"
     },
     {
       "type": "range",
