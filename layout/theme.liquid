@@ -196,6 +196,8 @@
       {%- endunless -%}
     {%- endif -%}
 
-    {%- render 'activate-popup' -%}
+    {%- if request.design_mode -%}
+      {%- render 'activate-popup' -%}
+    {%- endif -%}
   </body>
 </html>

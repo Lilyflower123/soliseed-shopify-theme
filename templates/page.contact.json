@@ -8,7 +8,14 @@
     },
     "contact-form": {
       "type": "contact-form",
-      "settings": {}
+      "settings": {
+        "title": "Contact Soliseed Support",
+        "content": "<p>Need help choosing a grow light, setting up your product, or finding warranty support? Send us a note and we will point you to the right next step.</p>",
+        "text_1_heading": "Support hours",
+        "text_1_text": "<p>Monday-Friday, 9:00 AM-5:00 PM Pacific Time. Most messages receive a reply within 1-2 business days.</p>",
+        "text_2_heading": "Amazon order help",
+        "text_2_text": "<p>For shipping status, returns, refunds, or order changes, please use your Amazon order page first. For setup or warranty questions, include your Amazon order ID when you contact us.</p>"
+      }
     },
     "separator": {
       "type": "separator",
@@ -19,16 +26,16 @@
     "support-links": {
       "type": "soliseed-contact-support-links",
       "settings": {
-        "heading": "Need a different kind of help?",
-        "content": "<p>Use these support paths to continue shopping, choose a setup, or register your product.</p>",
+        "heading": "Choose the fastest support path.",
+        "content": "<p>These links help you shop, choose a setup, learn installation basics, or register your Soliseed product.</p>",
         "amazon_title": "Amazon Checkout",
-        "amazon_text": "Buy Soliseed products through our Amazon store.",
+        "amazon_text": "Shop current Soliseed products and manage Amazon orders from your Amazon account.",
         "find_title": "Find Your Setup",
         "find_text": "Choose the right grow light by plant spot and setup type.",
         "setup_title": "Setup Guidance",
         "setup_text": "Learn placement, distance, timer, and adjustment basics.",
         "warranty_title": "Warranty Support",
-        "warranty_text": "Register your product or find post-purchase support."
+        "warranty_text": "Register your product and keep warranty information in one place."
       }
     }
   },

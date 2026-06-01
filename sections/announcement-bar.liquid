@@ -46,11 +46,18 @@
     {%- if section.settings.navigation_mode == 'scrolling' -%}
       <div class="announcement-bar announcement-bar--scrolling">
         {%- if section.blocks.first.settings.text != blank -%}
-          <p class="visually-hidden">{{ section.blocks.first.settings.text | strip_html }}</p>
+          {%- assign first_announcement_text = section.blocks.first.settings.text
+            | replace: 'https://zalify.featurebase.app/changelog', '/pages/warranty-registration'
+            | replace: 'http://zalify.featurebase.app/changelog', '/pages/warranty-registration'
+            | replace: 'SEE THE CHANGELOG', 'Register warranty'
+            | replace: 'See the changelog', 'Register warranty'
+            | replace: 'CHANGELOG', 'warranty details'
+          -%}
+          <p class="visually-hidden">{{ first_announcement_text | strip_html }}</p>
         {%- endif -%}
 
         <marquee-text scrolling-speed="{{ section.settings.scrolling_speed }}" class="announcement-bar__scrolling-list" aria-hidden="true">
-          {%- for i in (1..10) -%}
+          {%- for i in (1..1) -%}
             <span class="announcement-bar__item">
               {%- for block in section.blocks -%}
                 <span {{ block.shopify_attributes }}>
@@ -63,7 +70,14 @@
                       {%- assign text_size_class = '' -%}
                   {%- endcase -%}
 
-                  <p class="announcement-bar__message {{ text_size_class }}">{{ block.settings.text }}</p>
+                  {%- assign announcement_text = block.settings.text
+                    | replace: 'https://zalify.featurebase.app/changelog', '/pages/warranty-registration'
+                    | replace: 'http://zalify.featurebase.app/changelog', '/pages/warranty-registration'
+                    | replace: 'SEE THE CHANGELOG', 'Register warranty'
+                    | replace: 'See the changelog', 'Register warranty'
+                    | replace: 'CHANGELOG', 'warranty details'
+                  -%}
+                  <p class="announcement-bar__message {{ text_size_class }}">{{ announcement_text }}</p>
                 </span>
 
                 <span class="square-separator"></span>
@@ -104,8 +118,15 @@
                   {%- assign text_size_class = '' -%}
               {%- endcase -%}
 
+              {%- assign announcement_text = block.settings.text
+                | replace: 'https://zalify.featurebase.app/changelog', '/pages/warranty-registration'
+                | replace: 'http://zalify.featurebase.app/changelog', '/pages/warranty-registration'
+                | replace: 'SEE THE CHANGELOG', 'Register warranty'
+                | replace: 'See the changelog', 'Register warranty'
+                | replace: 'CHANGELOG', 'warranty details'
+              -%}
               <div class="announcement-bar__message {% if is_boxed %}announcement-bar__message--boxed{% endif %} {{ text_size_class }}">
-                <p>{{ block.settings.text }}</p>
+                <p>{{ announcement_text }}</p>
               </div>
             </announcement-bar-item>
           {%- endfor -%}
