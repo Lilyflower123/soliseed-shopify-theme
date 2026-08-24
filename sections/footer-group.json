@@ -49,11 +49,22 @@
             "mobile_width": "full_width",
             "collapse_content_on_mobile": false
           }
+        },
+        "product-links": {
+          "type": "links",
+          "settings": {
+            "menu": "soliseed-product-collections",
+            "mobile_width": "half_width",
+            "show_menu_title": true,
+            "menu_title": "Shop Products",
+            "collapse_content_on_mobile": false
+          }
         }
       },
       "block_order": [
         "newsletter",
         "links",
+        "product-links",
         "text",
         "contact"
       ],
