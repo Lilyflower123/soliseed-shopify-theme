@@ -72,12 +72,34 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "new-tripod": {
+          "type": "product",
+          "settings": {
+            "product": "40w-full-spectrum-tripod-grow-light",
+            "title": "Soliseed 40W Tripod Grow Light",
+            "content": "<p>Adjustable floor-standing support for visible plant corners.</p>",
+            "link_label": "View product details",
+            "link": "/products/40w-full-spectrum-tripod-grow-light"
+          }
+        },
+        "new-par38": {
+          "type": "product",
+          "settings": {
+            "product": "par38-full-spectrum-pendant-grow-light",
+            "title": "Soliseed PAR38 Pendant Grow Light",
+            "content": "<p>A compact overhead option for grouped living-room plants.</p>",
+            "link_label": "View product details",
+            "link": "/products/par38-full-spectrum-pendant-grow-light"
+          }
         }
       },
       "block_order": [
         "problem",
         "setup",
         "product",
+        "new-tripod",
+        "new-par38",
         "tips",
         "faq"
       ],

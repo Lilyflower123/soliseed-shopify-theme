@@ -72,12 +72,23 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "new-a19": {
+          "type": "product",
+          "settings": {
+            "product": "a19-full-spectrum-e26-grow-light-bulb",
+            "title": "Soliseed A19 Full-Spectrum E26 Grow Light Bulb",
+            "content": "<p>A compact E26 bulb option for kitchen herbs and counters.</p>",
+            "link_label": "View product details",
+            "link": "/products/a19-full-spectrum-e26-grow-light-bulb"
+          }
         }
       },
       "block_order": [
         "problem",
         "setup",
         "product",
+        "new-a19",
         "tips",
         "faq"
       ],

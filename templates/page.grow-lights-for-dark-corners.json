@@ -72,12 +72,23 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "new-tripod": {
+          "type": "product",
+          "settings": {
+            "product": "40w-full-spectrum-tripod-grow-light",
+            "title": "Soliseed 40W Tripod Grow Light",
+            "content": "<p>A floor-standing light that can reach plants where mounting is not practical.</p>",
+            "link_label": "View product details",
+            "link": "/products/40w-full-spectrum-tripod-grow-light"
+          }
         }
       },
       "block_order": [
         "problem",
         "setup",
         "product",
+        "new-tripod",
         "tips",
         "faq"
       ],

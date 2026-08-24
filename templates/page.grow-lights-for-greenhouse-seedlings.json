@@ -72,12 +72,34 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "new-3mode": {
+          "type": "product",
+          "settings": {
+            "product": "3-mode-switchable-spectrum-e26-grow-light-bulb-3-pack",
+            "title": "Soliseed 3-Mode E26 Grow Light Bulbs",
+            "content": "<p>Switchable-spectrum bulbs for seedling and propagation routines.</p>",
+            "link_label": "View product details",
+            "link": "/products/3-mode-switchable-spectrum-e26-grow-light-bulb-3-pack"
+          }
+        },
+        "new-redblue": {
+          "type": "product",
+          "settings": {
+            "product": "10w-red-blue-e26-grow-light-bulb-3-pack",
+            "title": "Soliseed 10W Red-Blue E26 Grow Light Bulbs",
+            "content": "<p>A three-pack option for multiple seedling or bench positions.</p>",
+            "link_label": "View product details",
+            "link": "/products/10w-red-blue-e26-grow-light-bulb-3-pack"
+          }
         }
       },
       "block_order": [
         "problem",
         "setup",
         "product",
+        "new-3mode",
+        "new-redblue",
         "tips",
         "faq"
       ],
