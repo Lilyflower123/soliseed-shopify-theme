@@ -181,13 +181,33 @@
             "link": "/collections/floor-flex-system",
             "link_label": "Shop setup"
           }
+        },
+        "floor-tripod": {
+          "type": "setup",
+          "settings": {
+            "title": "Floor & Tripod Grow Lights",
+            "image_alt": "Soliseed floor and tripod grow lights",
+            "link": "/collections/floor-flex-system",
+            "link_label": "Shop setup"
+          }
+        },
+        "bulbs": {
+          "type": "setup",
+          "settings": {
+            "title": "Grow Light Bulbs",
+            "image_alt": "Soliseed E26 grow light bulbs",
+            "link": "/collections/grow-light-bulbs",
+            "link_label": "Shop setup"
+          }
         }
       },
       "block_order": [
         "clip-on",
         "pendant",
         "herb-kits",
-        "greenhouse-string"
+        "greenhouse-string",
+        "floor-tripod",
+        "bulbs"
       ],
       "settings": {
         "title": "Clip it. Hang it. Place it. Grow there.",
