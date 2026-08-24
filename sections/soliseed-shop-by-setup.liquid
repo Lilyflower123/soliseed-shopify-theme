@@ -32,7 +32,7 @@
 
   @media screen and (min-width: 741px) {
     #shopify-section-{{ section.id }} .soliseed-setup-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>
@@ -55,10 +55,14 @@
       <div class="soliseed-setup-grid">
         {%- for block in section.blocks -%}
           <a href="{{ block.settings.link | default: '#' }}" class="soliseed-setup-card text-container" {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}
+            {%- assign setup_card_image = block.settings.image -%}
+            {%- if setup_card_image == blank and block.settings.product != blank -%}
+              {%- assign setup_card_image = block.settings.product.featured_media -%}
+            {%- endif -%}
+            {%- if setup_card_image != blank -%}
               {%- assign setup_image_alt = block.settings.image_alt | default: block.settings.title -%}
               {{-
-                block.settings.image
+                setup_card_image
                 | image_url: width: 800
                 | image_tag:
                   class: 'soliseed-setup-card__image',
@@ -111,6 +115,11 @@
           "type": "text",
           "id": "title",
           "label": "Title"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Featured product (optional image source)"
         },
         {
           "type": "image_picker",
