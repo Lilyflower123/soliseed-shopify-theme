@@ -38,11 +38,18 @@
         </div>
 
         <div class="soliseed-product-amazon__buttons">
-          {%- render 'buy-on-amazon-button',
+          {%- comment -%}SP-2026-005: approved single-PDP primary-CTA Attribution pilot.{%- endcomment -%}
+          {%- if request.page_type == 'product' and product.id == 9029137039517 -%}
+            <a href="https://www.amazon.com/dp/B0H3KNSJPZ?maas=maas_adg_39BA1EFE9EA2EFF688C5405C9BDE8FAB_afap_abs&amp;ref_=aa_maas&amp;tag=maas" class="button button--primary button--full" target="_blank" rel="noopener">
+              {{- section.settings.amazon_label | default: 'Buy on Amazon' | escape -}}
+            </a>
+          {%- else -%}
+            {%- render 'buy-on-amazon-button',
             product: product,
             label: section.settings.amazon_label,
             button_class: 'button button--primary button--full'
           -%}
+          {%- endif -%}
         </div>
       </div>
     </div>
