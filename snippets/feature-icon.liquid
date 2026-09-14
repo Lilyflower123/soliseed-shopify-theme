@@ -44,7 +44,7 @@
 		</span>
 	{%- elsif block.settings.icon != 'none' -%}
 		<span class="label-icon">
-			{% render 'icon' with block.settings.icon | width: 12 %}
+			{% render 'icon' with block.settings.icon, width: 12 %}
 		</span>
 	{%- endif -%}
 	{{- block.settings.content | escape -}}
@@ -67,3 +67,13 @@
     </span>
   </div>
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'icon' with block.settings.icon | width: 12 %}"
+  to: "{% render 'icon' with block.settings.icon, width: 12 %}"
+  position: 1869..1924
+{% endcomment %}
