@@ -68,7 +68,8 @@
         "title": "Ready to buy on Amazon?",
         "content": "<p>Use this page to confirm the setup, then choose Amazon for the fastest Soliseed checkout path.</p>",
         "amazon_label": "Buy on Amazon"
-      }
+      },
+      "disabled": true
     },
     "product-content": {
       "type": "product-content",
@@ -92,7 +93,7 @@
       "type": "soliseed-product-fit-support",
       "settings": {
         "title": "Check the setup before you buy.",
-        "content": "<p>Match the light to the plant spot, mounting style, and daily routine before heading to Amazon.</p>",
+        "content": "<p>Match the light to the plant spot, mounting style, and daily routine before you buy.</p>",
         "best_for_title": "Good for",
         "best_for_content": "<ul><li>Indoor plant spots that need extra light</li><li>Desks, shelves, counters, corners, and seedling areas</li><li>Plant owners who want simple setup guidance</li></ul>",
         "setup_type_title": "Confirm",
@@ -139,8 +140,8 @@
           "type": "item",
           "settings": {
             "icon": "truck",
-            "title": "Amazon checkout",
-            "content": "<p>Use Amazon for product purchase, shipping updates, returns, and order changes.</p>"
+            "title": "Order on this site",
+            "content": "<p>Check out securely here. Orders ship from US fulfillment centers.</p>"
           }
         },
         "item-2": {

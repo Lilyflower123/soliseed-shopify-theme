@@ -130,7 +130,7 @@
               {%- endif -%}
 
               <div class="soliseed-product-card__cta">
-                {%- render 'buy-on-amazon-button', product: featured_product, button_class: 'button button--primary button--full' -%}
+                {%- if featured_product != blank -%}<a href="{{ featured_product.url }}" class="button button--primary button--full">{{ 'product.general.view_details' | t }}</a>{%- endif -%}
               </div>
             </div>
           </div>

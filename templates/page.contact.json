@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -13,8 +22,8 @@
         "content": "<p>Need help choosing a grow light, setting up your product, or finding warranty support? Send us a note and we will point you to the right next step.</p>",
         "text_1_heading": "Support hours",
         "text_1_text": "<p>Monday-Friday, 9:00 AM-5:00 PM Pacific Time. Most messages receive a reply within 1-2 business days.</p>",
-        "text_2_heading": "Amazon order help",
-        "text_2_text": "<p>For shipping status, returns, refunds, or order changes, please use your Amazon order page first. For setup or warranty questions, include your Amazon order ID when you contact us.</p>"
+        "text_2_heading": "Order help",
+        "text_2_text": "<p>Ordered on this site? Reply to your order confirmation email or send us your order number. Ordered on Amazon? Use your Amazon order page for shipping status, returns, refunds, or order changes.</p>"
       }
     },
     "separator": {
@@ -28,6 +37,7 @@
       "settings": {
         "heading": "Choose the fastest support path.",
         "content": "<p>These links help you shop, choose a setup, learn installation basics, or register your Soliseed product.</p>",
+        "show_amazon_card": false,
         "amazon_title": "Amazon Checkout",
         "amazon_text": "Shop current Soliseed products and manage Amazon orders from your Amazon account.",
         "find_title": "Find Your Setup",

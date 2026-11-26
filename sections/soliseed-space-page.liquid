@@ -154,7 +154,7 @@
                 {%- endif -%}
 
                 <div class="soliseed-space-card__buttons">
-                  {%- render 'buy-on-amazon-button', product: featured_product, button_class: 'button button--primary' -%}
+                  {%- if featured_product != blank -%}<a href="{{ featured_product.url }}" class="button button--primary">{{ 'product.general.view_details' | t }}</a>{%- endif -%}
 
                   {%- if block.settings.link_label != blank and block.settings.link != blank -%}
                     <a href="{{ block.settings.link }}" class="button button--secondary">

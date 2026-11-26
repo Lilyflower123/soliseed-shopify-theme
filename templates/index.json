@@ -20,7 +20,7 @@
         "content": "<p>Flexible grow lights for shelves, desks, corners, and indoor growing spaces.</p>",
         "primary_label": "Find My Setup",
         "primary_link": "/pages/find-my-setup",
-        "show_amazon_cta": true,
+        "show_amazon_cta": false,
         "amazon_label": "Shop on Amazon"
       }
     },
